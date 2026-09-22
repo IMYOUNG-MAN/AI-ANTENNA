@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>제미나이 라이브, 지금 바로 써보는 법 | AI ANTENNA</title>
+<meta property="og:title" content="제미나이 라이브, 지금 바로 써보는 법">
+<meta property="og:description" content="휴대폰으로 제미나이와 말로 대화하고, 카메라·화면을 보여주며 물어볼 수 있게 됩니다. 개발자라면 AI 스튜디오에서 새 라이브 모델을 직접 시험해봅니다.">
+<meta property="og:type" content="article">
+<meta name="robots" content="noindex">
+<style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+<div class="wordmark">AI <span class="hi">ANT</span>ENNA</div>
+<div class="kicker">정리본</div>
+<h1>제미나이 라이브, 지금 바로 써보는 법</h1>
+<p class="outcome">휴대폰으로 제미나이와 말로 대화하고, 카메라·화면을 보여주며 물어볼 수 있게 됩니다. 개발자라면 AI 스튜디오에서 새 라이브 모델을 직접 시험해봅니다.</p>
+</div>
+<section>
+<h2>준비물</h2>
+<ul class="needs">
+<li>구글 계정</li>
+<li>휴대폰에 제미나이 앱 또는 구글 앱 (안드로이드·아이폰 모두)</li>
+<li>마이크·카메라 권한 허용</li>
+<li>개발자라면 PC 브라우저로 Google AI Studio 접속</li>
+</ul>
+</section>
+<section>
+<h2>순서</h2>
+<div class="step">
+<div class="no">1</div>
+<h3>제미나이 앱을 최신 버전으로 업데이트</h3>
+<p>새 모델은 순차적으로 배포됩니다. 앱스토어나 플레이스토어에서 제미나이 앱을 먼저 업데이트해 두세요.<br>아이폰은 구글 앱 안에서 제미나이를 여는 경우도 있습니다.</p>
+<p class="check">✓ 앱 첫 화면 아래 입력창 옆에 마이크와 라이브(물결 모양) 버튼이 보입니다.</p>
+</div>
+<div class="step">
+<div class="no">2</div>
+<h3>라이브 버튼을 눌러 말로 대화 시작</h3>
+<p>입력창 오른쪽의 물결 모양 라이브 버튼을 누르면 바로 음성 대화가 시작됩니다.<br>버튼을 누르고 기다릴 필요 없이 사람과 통화하듯 말하면 됩니다. 제미나이가 말하는 도중에 끼어들어 질문을 바꿔도 알아듣습니다.</p>
+<pre class="copy">오늘 할 일 세 가지만 같이 정리해줘. 제일 급한 것부터.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 화면이 대화 모드로 바뀌고 제미나이 목소리로 답이 나옵니다.</p>
+</div>
+<div class="step">
+<div class="no">3</div>
+<h3>한국어·영어 섞어서 말해보기</h3>
+<p>새 라이브 모델은 대화 중간에 언어가 바뀌어도 스스로 알아채고 따라갑니다. 지원 언어는 97개입니다.<br>설정을 바꿀 필요 없이 그냥 섞어서 말해보세요.</p>
+<pre class="copy">이 문장 영어로 자연스럽게 바꿔줘. Then say it again more casually.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 언어 설정을 바꾸지 않았는데도 두 언어 모두에 맞게 답합니다.</p>
+</div>
+<div class="step">
+<div class="no">4</div>
+<h3>카메라로 보여주며 물어보기</h3>
+<p>라이브 대화 화면의 카메라 버튼을 누르면 제미나이가 카메라에 비친 것을 거의 실시간으로 봅니다.<br>물건, 메뉴판, 고장 난 기계, 풀던 문제처럼 말로 설명하기 어려운 것을 비추고 물어보세요.</p>
+<pre class="copy">지금 보이는 거 뭔지 알려주고, 어떻게 쓰는지 설명해줘.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 제미나이가 화면에 비친 물건을 짚어서 설명합니다.</p>
+</div>
+<div class="step">
+<div class="no">5</div>
+<h3>휴대폰 화면 공유로 도움 받기</h3>
+<p>라이브 대화 화면의 화면 공유 버튼을 누르면, 지금 보고 있는 앱이나 웹페이지를 제미나이가 같이 봅니다.<br>쇼핑 비교, 앱 설정 찾기, 긴 글 요약할 때 편합니다. 개인정보가 보이는 화면은 공유 전에 닫아두세요.</p>
+<pre class="copy">지금 보고 있는 두 상품 차이점만 짧게 비교해줘.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 화면 위쪽에 공유 중 표시가 뜨고, 제미나이가 화면 내용을 근거로 답합니다.</p>
+</div>
+<div class="step">
+<div class="no">6</div>
+<h3>구글 검색에서 라이브로 묻기 (Search Live)</h3>
+<p>구글 앱을 열고 검색창 아래 라이브 버튼을 누르면 검색을 말로 할 수 있습니다.<br>답을 들으면서 이어서 질문하고, 관련 웹페이지 링크도 함께 받습니다.</p>
+<pre class="copy">주말에 비 오면 서울에서 아이랑 갈 만한 실내 장소 추천해줘.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 음성 답과 함께 화면에 참고 링크가 뜹니다.</p>
+</div>
+<div class="step">
+<div class="no">7</div>
+<h3>(개발자) AI 스튜디오에서 새 라이브 모델 시험</h3>
+<p>PC에서 Google AI Studio에 접속해 실시간 대화(Live) 메뉴로 들어갑니다.<br>모델 목록에서 Gemini 3.8 Live 또는 3.8 Live Extended Thinking을 고르고, 마이크·웹캠·화면 공유를 켜서 바로 대화해봅니다. 마음에 들면 Gemini API의 Live API로 내 서비스에 붙이면 됩니다.</p>
+<p class="check">✓ 모델 목록에 3.8 Live 모델이 보이고, 말을 걸면 음성으로 답합니다.</p>
+</div>
+</section>
+<section>
+<h2>여기서 막힙니다</h2>
+<div class="pit"><p class="sym">라이브 버튼이 안 보여요</p><p class="fix">앱을 최신 버전으로 업데이트하고 다시 열어보세요. 새 모델은 계정·지역별로 순차 배포라 며칠 늦게 뜰 수 있습니다.</p></div>
+<div class="pit"><p class="sym">말을 해도 반응이 없어요</p><p class="fix">휴대폰 설정에서 제미나이(또는 구글) 앱의 마이크 권한이 허용돼 있는지 확인하세요. 이어폰 마이크가 연결돼 있으면 그쪽으로 소리가 들어갑니다.</p></div>
+<div class="pit"><p class="sym">카메라·화면 공유 버튼이 없어요</p><p class="fix">카메라 권한을 허용하고 앱을 다시 켜세요. 기기나 계정에 따라 순차 적용 중일 수 있습니다.</p></div>
+<div class="pit"><p class="sym">Docs·Gmail에서 라이브가 안 떠요</p><p class="fix">문서·메일 안에서 쓰는 Extended Thinking 기능은 Google AI 구독자 대상으로 먼저 열립니다. 무료 계정은 제미나이 앱과 구글 검색 라이브부터 써보세요.</p></div>
+</section>
+<section>
+<h2>바꿔볼 것</h2>
+<ul class="plain">
+<li>요리하면서 손 안 쓰고 레시피 단계별로 물어보기</li>
+<li>외국어 회화 상대로 쓰기 — 틀린 표현만 짧게 고쳐달라고 부탁하기</li>
+</ul>
+</section>
+<section>
+<h2>링크</h2>
+<ul class="links">
+<li><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/" target="_blank" rel="noopener">구글 공식 발표 — Gemini 3.8 Live</a></li>
+<li><a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a></li>
+</ul>
+</section>
+<div class="end">
+<p>도움이 되셨다면</p>
+<p class="handle">@ai.antenna.kr</p>
+<p>에서 매일 새 결과물을 정리해 올립니다.</p>
+</div>
+</div>
+<script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script>
+</body>
+</html>
