@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>편집 프로그램 없이 나온 모션그래픽 — 따라 하기 | AI ANTENNA</title>
+<meta property="og:title" content="편집 프로그램 없이 나온 모션그래픽 — 따라 하기">
+<meta property="og:description" content="카드에 나온 결과물 5개를 각각 어떻게 만드는지 정리했습니다.">
+<meta name="robots" content="noindex">
+<style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.sub{font-size:17px;font-weight:700;margin:22px 0 10px;color:var(--muted)}</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+<div class="wordmark">AI <span class="hi">ANT</span>ENNA</div>
+<div class="kicker">정리본</div>
+<h1>편집 프로그램 없이 나온 모션그래픽 — 따라 하기</h1>
+<p class="outcome">카드에 나온 결과물 5개를 각각 어떻게 만드는지 정리했습니다.</p>
+</div>
+<section><h2>목차</h2><ul class="links"><li><a href="#r1">1. Claude로 런치 영상 만들기</a></li><li><a href="#r2">2. 코드로만 22초 홍보 영상 만들기</a></li><li><a href="#r3">3. Claude로 짧은 영상 만들기</a></li><li><a href="#r4">4. Claude Code로 설명 영상 만들기</a></li><li><a href="#r5">5. 문장 하나로 모션그래픽 만들기</a></li></ul></section>
+<section id="r1">
+<h2>1. Claude로 런치 영상 만들기</h2>
+<p class="outcome">영상 한 편과 그대로 손볼 수 있는 After Effects 파일</p>
+<div class="credit-line">이 결과물은 <b>@higgsfield</b>님이 X에 올린 것입니다. 정리본은 그 글을 보고 저희가 따로 정리했습니다.<br><a href="https://x.com/higgsfield/status/2104573404552819196" target="_blank" rel="noopener">원본 보러 가기 →</a></div>
+<h3 class="sub">준비물</h3><ul class="needs"><li>Claude 유료 요금제</li><li>Higgsfield 계정 (유료 크레딧)</li><li>After Effects (유료)</li><li>소개할 제품 이름 한 줄</li></ul>
+<h3 class="sub">순서</h3><div class="step">
+<div class="no">1</div>
+<h3>Higgsfield에 가입하고 로그인합니다</h3>
+<p>higgsfield.ai에 들어가 계정을 만들고 로그인합니다.</p>
+<p class="check">✓ 작업 화면이 열린다</p>
+</div>
+<div class="step">
+<div class="no">2</div>
+<h3>Higgsfield의 MCP 연결 주소를 복사합니다</h3>
+<p>로그인한 뒤 설정 화면에서 MCP 항목을 찾아 연결 주소를 복사합니다.</p>
+<p class="check">✓ 주소 한 줄이 복사된다</p>
+</div>
+<div class="step">
+<div class="no">3</div>
+<h3>Claude에 그 주소를 커넥터로 붙입니다</h3>
+<p>Claude 설정의 커넥터 화면에서 새로 추가를 누르고 복사한 주소를 넣습니다.</p>
+<p class="check">✓ 커넥터 목록에 Higgsfield가 보인다</p>
+</div>
+<div class="step">
+<div class="no">4</div>
+<h3>새 대화를 열고 아래 문장을 붙여넣습니다</h3>
+<p>대화창 아래에서 Higgsfield 도구가 켜져 있는지 보고 보냅니다.</p>
+<pre class="copy">Higgsfield로 제품 런치 영상을 한 편 만들어 줘.
+
+제품: [여기에 제품 이름과 한 줄 설명]
+분위기: [예: 차분하고 깔끔하게]
+길이: 20초 안팎
+
+이 순서로 진행해 줘.
+1. 장면을 나눠서 구성안을 먼저 보여준다
+2. 장면마다 쓸 그림을 Higgsfield로 만든다
+3. 그림에 움직임을 붙여 이어 붙인다
+4. 마지막에 After Effects에서 바로 열어 고칠 수 있는 프로젝트 파일로 묶어 준다
+
+각 단계가 끝날 때마다 결과를 보여주고 다음으로 넘어가 줘.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 구성안이 장면별로 나온다</p>
+</div>
+<div class="step">
+<div class="no">5</div>
+<h3>묶여 나온 파일을 받아 After Effects에서 엽니다</h3>
+<p>대화에 올라온 프로젝트 파일을 내려받아 두 번 눌러 엽니다.</p>
+<p class="check">✓ 타임라인에 장면이 깔려 있다</p>
+</div>
+<h3 class="sub">여기서 막힙니다</h3><div class="pit"><p class="sym">대화창에 Higgsfield 도구가 안 보입니다</p><p class="fix">커넥터를 붙인 뒤 열어둔 대화는 그대로라서, 새 대화를 열면 잡힙니다.</p></div><div class="pit"><p class="sym">중간에 멈추거나 한참 걸립니다</p><p class="fix">원본은 노트북 12대가 나눠 맡은 작업이라, 한 대에서는 장면을 하나씩 순서대로 시킵니다.</p></div>
+</section>
+<section id="r2">
+<h2>2. 코드로만 22초 홍보 영상 만들기</h2>
+<p class="outcome">편집 프로그램 없이 코드로 도는 22초 루프 영상</p>
+<div class="credit-line">이 결과물은 <b>@twoclipping</b>님이 X에 올린 것입니다. 정리본은 그 글을 보고 저희가 따로 정리했습니다.<br><a href="https://x.com/twoclipping/status/2104674464868762046" target="_blank" rel="noopener">원본 보러 가기 →</a></div>
+<h3 class="sub">준비물</h3><ul class="needs"><li>Claude Opus (유료 구독)</li><li>앨범 커버로 쓸 이미지 2장</li><li>Mixkit 무료 음악 1곡</li><li>크롬 브라우저 (무료)</li></ul>
+<h3 class="sub">순서</h3><div class="step">
+<div class="no">1</div>
+<h3>Mixkit에서 음악 한 곡을 내려받습니다</h3>
+<p>조용하게 시작해서 중간에 세게 터지는 110 BPM 곡을 고릅니다. 상업적으로 써도 됩니다.</p>
+<p class="check">✓ mp3 파일이 내려와 있다</p>
+</div>
+<div class="step">
+<div class="no">2</div>
+<h3>Claude에 아래 글을 그대로 붙여넣습니다</h3>
+<p>새 대화를 열고 모델을 Opus로 고른 뒤, 아래 글 전체를 한 번에 붙여넣습니다.</p>
+<pre class="copy">&lt;inputs&gt;
+Ask me for: the one question a user asks my product and its one-line answer, two album covers, a royalty-free song around 110 BPM with a quiet intro and a hard drop (Mixkit, free for commercial use), and my logo for the ending. If I skip any, use the defaults: &quot;is this all code?&quot; / &quot;yes. every frame.&quot;, two atmospheric photos, Mixkit &quot;Head Bang&quot;.
+&lt;/inputs&gt;
+
+&lt;direction&gt;
+A 22 second square loop, 1440x1440 at 60fps, 2D only, one continuous take. Nothing ever cuts: every scene grows out of the last, and every gesture physically carries the camera into the next world. Every morph glides for 0.8s on cubic-bezier(.45,0,.15,1) and the camera zoom rides the same curve, so shapes change so smoothly you barely notice. Content dissolves in the back half of each glide. One gesture per scene.
+Look: a warm light stage (#f3f3f0 to #e3e3de), black UI, the app world dark (#121212) tinted from the current album cover, one green accent (#1ed760). Geist for UI, the real macOS pointer, soft layered shadows that grow with the shape's height.
+Banned: hard cuts, bouncy springs, particles, glows, zooming in and straight back out, holds longer than 1s, anything that looks like a template.
+&lt;/direction&gt;
+
+&lt;structure&gt;
+Beats are the song's, and the press lands on its drop.
+Generate: the cursor clicks, the pill glides into a spinner, then a check.
+Chat: the check splits into three typing dots (goo). The left dot flies up into the question bubble and types it, the right one flies down into the reply. Both contract back into dots while gliding in and pour into the middle one.
+Play: the middle dot bends into a play triangle, point by point. The cursor presses it on the drop: a white button pops in under the click and the dark app floods out around it, so the leftover white becomes the play button. The camera pulls back to reveal the full now-playing screen: big cover, title, heart (liked, fills green), progress, controls, volume.
+Swipe: the cursor drags the cover sideways, the next track slides in, and the whole app retints from the new cover.
+Drag: the camera glides to the volume. The cursor drags it to max and keeps pulling: the bar rubber-bands and drags the camera sideways out of the app, tracking the knob across a dark dotted canvas.
+Chart: the line lands and bends up into a green chart while the number counts up. The volume knob becomes its last point.
+Dive: the cursor clicks that point and the camera dives into it until the light stage fills the frame.
+Ending: an &quot;Ask [my product]&quot; button grows out of the light, thins into a line, and the line fans out into my logo (default: the Claude spark, six copies rotating into twelve rays in Claude orange). It folds back into the line, which thickens into Generate. Last frame = first frame.
+&lt;/structure&gt;
+
+&lt;build&gt;
+1. One HTML canvas. Everything is a pure function of time inside seek(t): no timers, no state between frames.
+2. A camera with position and log-space zoom. Scenes live side by side in one world, so a pan really travels.
+3. Goo: blur + alpha threshold on an offscreen layer for the split and the merges.
+4. Floods are circles that grow from whatever caused them to the farthest corner in about 0.4s, and the colour switch happens underneath them.
+5. Sound: before the press the song plays through a low-pass filter, like it's in the next room, and opens up to full on the drop. A downloaded Mixkit SFX for every event, each placed by its measured peak. Loudnorm to -14 LUFS.
+6. Render with Playwright at 60fps with 4 motion-blur subframes, 12 on the fast pan. Then scan every frame for single-frame jumps and fix each one.
+&lt;/build&gt;
+
+&lt;gotchas&gt;
+A handoff between two drawings only works once the first one has fully landed, or it pops. The cursor must stay on whatever it drags, even while it stretches. A counter or tooltip that changes every frame smears under motion blur, so swap whole values.
+&lt;/gotchas&gt;
+
+&lt;start&gt;
+Ask me for the inputs, then show me the beat map and 6 stills (chat, play, app, drag, chart, logo) before you render.
+&lt;/start&gt;</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ Claude가 입력값을 물어본다</p>
+</div>
+<div class="step">
+<div class="no">3</div>
+<h3>물어본 것에 답하고 파일을 올립니다</h3>
+<p>질문 한 줄과 답 한 줄을 쓰고, 커버 이미지 2장과 음악 파일, 로고를 대화창에 올립니다.</p>
+<pre class="copy">질문: 이거 전부 코드로 만든 거예요?
+답: 네. 모든 프레임이요.
+
+커버 이미지 2장과 음악 파일은 같이 올렸습니다.
+로고는 없으니 기본값으로 가주세요.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 비트 맵과 스틸 6장이 온다</p>
+</div>
+<div class="step">
+<div class="no">4</div>
+<h3>받은 HTML 파일을 브라우저로 엽니다</h3>
+<p>HTML 파일을 음악·이미지와 같은 폴더에 두고 두 번 눌러 엽니다. 파일 이름은 그대로 둡니다.</p>
+<p class="check">✓ 정사각 영상이 처음부터 돈다</p>
+</div>
+<h3 class="sub">여기서 막힙니다</h3><div class="pit"><p class="sym">장면이 넘어갈 때 그림이 툭 튑니다</p><p class="fix">앞 동작이 완전히 끝난 뒤에 다음 장면으로 넘기라고 다시 요청합니다.</p></div><div class="pit"><p class="sym">영상은 도는데 음악이 안 들립니다</p><p class="fix">브라우저 화면을 한 번 누릅니다. 클릭 전에는 소리를 막아둡니다.</p></div>
+</section>
+<section id="r3">
+<h2>3. Claude로 짧은 영상 만들기</h2>
+<p class="outcome">요청문 하나로 받아보는 짧은 영상 한 편</p>
+<div class="credit-line">이 결과물은 <b>@emollick</b>님이 X에 올린 것입니다. 정리본은 그 글을 보고 저희가 따로 정리했습니다.<br><a href="https://x.com/emollick/status/2104787162210435095" target="_blank" rel="noopener">원본 보러 가기 →</a></div>
+<h3 class="sub">준비물</h3><ul class="needs"><li>Claude 계정 (무료로 시작 가능)</li><li>예전에 받았던 결과물 하나</li><li>영상을 볼 브라우저</li></ul>
+<h3 class="sub">순서</h3><div class="step">
+<div class="no">1</div>
+<h3>Claude에서 새 대화를 연다</h3>
+<p>claude.ai에 로그인하고 새 대화 버튼을 누릅니다.</p>
+<p class="check">✓ 빈 입력창이 보인다</p>
+</div>
+<div class="step">
+<div class="no">2</div>
+<h3>예전 결과물을 먼저 붙여넣는다</h3>
+<p>전에 Claude와 했던 대화나 그때 받은 결과물을 입력창에 붙여넣습니다.</p>
+<p class="check">✓ 입력창에 예전 내용이 들어간다</p>
+</div>
+<div class="step">
+<div class="no">3</div>
+<h3>아래 요청문을 이어서 붙여넣는다</h3>
+<p>예전 결과물 아래에 이 문장을 붙이고 보냅니다.</p>
+<pre class="copy">예전에 당신에게 이런 부탁을 한 적이 있어요. 위에 붙여넣은 게 그때 받은 결과물입니다.
+
+지금은 영상까지 만들 수 있다고 들었어요. 그때보다 얼마나 좋아졌는지 짧은 영상 한 편으로 보여 주세요. 유머를 넣어도 좋습니다.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ Claude가 작업을 시작한다</p>
+</div>
+<div class="step">
+<div class="no">4</div>
+<h3>만들어진 영상을 재생한다</h3>
+<p>답변에 딸려 오는 미리보기 창에서 재생 버튼을 누릅니다.</p>
+<p class="check">✓ 화면에서 영상이 움직인다</p>
+</div>
+<h3 class="sub">여기서 막힙니다</h3><div class="pit"><p class="sym">영상은 없고 설명 글만 돌아옵니다.</p><p class="fix">&quot;글 말고 실제로 재생되는 영상으로 만들어 주세요&quot;를 한 줄 더 보냅니다.</p></div><div class="pit"><p class="sym">결과가 밋밋하고 예전 것과 뭐가 다른지 모르겠습니다.</p><p class="fix">&quot;예전 결과물과 나란히 비교되게 만들어 주세요&quot;라고 다시 요청합니다.</p></div>
+</section>
+<section id="r4">
+<h2>4. Claude Code로 설명 영상 만들기</h2>
+<p class="outcome">목소리와 자막이 붙은 4분짜리 설명 영상 한 편</p>
+<div class="credit-line">이 결과물은 <b>@deedydas</b>님이 X에 올린 것입니다. 정리본은 그 글을 보고 저희가 따로 정리했습니다.<br><a href="https://x.com/deedydas/status/2104957026199900220" target="_blank" rel="noopener">원본 보러 가기 →</a></div>
+<h3 class="sub">준비물</h3><ul class="needs"><li>Claude Code (유료 구독)</li><li>OpenRouter 키 (쓴 만큼 결제)</li><li>ffmpeg (무료)</li><li>참고 이미지 2~3장 (없어도 됨)</li></ul>
+<h3 class="sub">순서</h3><div class="step">
+<div class="no">1</div>
+<h3>앱이 아니라 Claude Code에서 시작합니다</h3>
+<p>빈 폴더를 하나 만들고, 그 폴더 안에서 claude 를 실행합니다.</p>
+<pre class="copy">mkdir video-demo
+cd video-demo
+claude</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 터미널에 Claude Code 입력창이 뜬다</p>
+</div>
+<div class="step">
+<div class="no">2</div>
+<h3>OpenRouter 키 하나를 등록합니다</h3>
+<p>openrouter.ai에서 키를 만들어 터미널에 붙여넣습니다. 이 키 하나로 그림·영상·목소리 모델을 다 부릅니다.</p>
+<pre class="copy"># Windows PowerShell
+$env:OPENROUTER_API_KEY=&quot;sk-or-내키를여기에&quot;
+echo $env:OPENROUTER_API_KEY
+
+# macOS / Linux
+export OPENROUTER_API_KEY=&quot;sk-or-내키를여기에&quot;
+echo $OPENROUTER_API_KEY</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ echo 뒤에 내 키가 그대로 찍힌다</p>
+</div>
+<div class="step">
+<div class="no">3</div>
+<h3>아래 주문서를 붙여넣습니다</h3>
+<p>Claude Code 입력창에 그대로 붙여넣고 주제 한 줄만 내 것으로 바꿉니다.</p>
+<pre class="copy">이 폴더에서 설명 영상 한 편을 만들어 주세요.
+
+- 주제: (여기에 설명할 주제를 한 줄로 쓰세요)
+- 화면비: 16:9
+- 길이: 4분
+- 스타일: 실제 장면과 도표를 섞은 차분한 다큐멘터리
+
+진행 방식
+1. 먼저 대본을 써서 저에게 보여주고, 제가 좋다고 하면 다음으로 갑니다.
+2. 그림·영상·목소리는 OpenRouter 키 하나로 부릅니다. 장면의 첫 그림은 GPT 2.5 Image Sunburst, 영상은 Veo 3.1을 쓰고 움직임이 큰 장면만 Seedance 2.5로 바꿉니다.
+3. 장면마다 인물과 배경이 달라 보이지 않게, 참고 그림을 먼저 정하고 끝까지 같은 것을 씁니다.
+4. 목소리는 Gemini 3.8 TTS로 입힙니다.
+5. 전체를 뽑기 전에, 움직임만 확인하는 초벌 영상을 먼저 만들어 보여주세요.
+6. 자르고 붙이는 작업은 ffmpeg로 합니다.
+
+나레이션 규칙
+- 짧게 툭툭 끊는 문장과 숫자 나열을 쓰지 마세요.
+- 대학 교수가 강의하듯 이어서 설명하세요.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 대본 초안이 화면에 나온다</p>
+</div>
+<div class="step">
+<div class="no">4</div>
+<h3>초벌 영상을 먼저 봅니다</h3>
+<p>폴더에 생긴 초벌 영상을 재생해 장면 순서와 길이만 확인합니다. 어색하면 그 장면만 다시 시킵니다.</p>
+<p class="check">✓ 초벌 영상 파일이 폴더에 생긴다</p>
+</div>
+<div class="step">
+<div class="no">5</div>
+<h3>최종 영상으로 뽑습니다</h3>
+<p>초벌이 괜찮으면 아래 한 줄을 붙여넣습니다.</p>
+<pre class="copy">초벌 순서 그대로 최종 영상을 뽑아 주세요. 목소리를 입히고, 말한 단어에 맞춰 자막을 넣고, ffmpeg로 하나의 mp4로 붙여 주세요.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 완성된 mp4가 폴더에 생긴다</p>
+</div>
+<h3 class="sub">여기서 막힙니다</h3><div class="pit"><p class="sym">나레이션이 짧게 툭툭 끊기고 숫자만 늘어놓습니다.</p><p class="fix">주문서의 나레이션 규칙을 다시 짚어주고 &quot;대학 교수가 강의하듯 서술하세요&quot;라고 못 박습니다.</p></div><div class="pit"><p class="sym">장면이 바뀔 때마다 인물과 배경이 다른 사람처럼 보입니다.</p><p class="fix">참고 그림을 먼저 정해 폴더에 넣고, 모든 장면이 그 그림을 쓰도록 시킵니다.</p></div>
+</section>
+<section id="r5">
+<h2>5. 문장 하나로 모션그래픽 만들기</h2>
+<p class="outcome">브라우저에서 바로 돌아가는 8초 모션그래픽 한 편</p>
+<div class="credit-line">이 결과물은 <b>@tibo_maker</b>님이 X에 올린 것입니다. 정리본은 그 글을 보고 저희가 따로 정리했습니다.<br><a href="https://x.com/tibo_maker/status/2104502669893132563" target="_blank" rel="noopener">원본 보러 가기 →</a></div>
+<h3 class="sub">준비물</h3><ul class="needs"><li>Claude 계정 (무료로 가능)</li><li>웹 브라우저</li><li>X 계정 (게시물 보기용, 무료)</li></ul>
+<h3 class="sub">순서</h3><div class="step">
+<div class="no">1</div>
+<h3>모아 둔 영상 게시물을 엽니다</h3>
+<p>아래 주소를 브라우저에 붙여넣고 게시물에 걸린 모음 링크로 들어갑니다.</p>
+<pre class="copy">https://x.com/tibo_maker/status/2104502669893132563</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 영상 목록이 화면에 보입니다</p>
+</div>
+<div class="step">
+<div class="no">2</div>
+<h3>따라 만들 영상 한 편을 고릅니다</h3>
+<p>50여 편 중 움직임이 단순한 것 하나를 고르고, 무엇이 어떤 순서로 움직이는지 메모합니다.</p>
+<p class="check">✓ 참고 영상 한 편이 정해집니다</p>
+</div>
+<div class="step">
+<div class="no">3</div>
+<h3>Claude에서 새 대화를 엽니다</h3>
+<p>claude.ai에 들어가 입력창 아래 모델 이름을 Opus로 바꿉니다.</p>
+<p class="check">✓ 모델 이름에 Opus가 보입니다</p>
+</div>
+<div class="step">
+<div class="no">4</div>
+<h3>아래 문장을 붙여넣습니다</h3>
+<p>괄호 안은 2번에서 메모한 움직임으로 바꿔 씁니다. 나머지는 그대로 둡니다.</p>
+<pre class="copy">모션그래픽 애니메이션을 하나 만들어 주세요.
+
+- 화면 비율: 1080x1080 정사각형
+- 길이: 8초, 끝나면 처음부터 다시 반복
+- 움직임: (검은 배경에서 흰 동그라미 여러 개가 가운데로 모이고, 그다음 글자가 아래에서 위로 올라옵니다 — 이 자리를 참고 영상에서 본 움직임으로 바꿔 쓰세요)
+- 배경색과 글자색, 움직이는 속도까지 직접 정해 주세요.
+- HTML 파일 하나로 끝내고, 브라우저에서 바로 재생되게 해 주세요. 외부 라이브러리는 쓰지 않습니다.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 오른쪽 화면에서 영상이 돌아갑니다</p>
+</div>
+<div class="step">
+<div class="no">5</div>
+<h3>고칠 곳을 한 문장으로 말합니다</h3>
+<p>다시 만들라고 하지 않고, 바꿀 것만 짧게 적습니다. 같은 화면이 그 자리에서 고쳐집니다.</p>
+<pre class="copy">글자가 올라오는 속도를 두 배 느리게 하고, 배경을 진한 남색으로 바꿔 주세요.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 고친 영상이 다시 재생됩니다</p>
+</div>
+<h3 class="sub">여기서 막힙니다</h3><div class="pit"><p class="sym">화면이 하얗게만 뜨고 아무것도 움직이지 않습니다.</p><p class="fix">&quot;움직임이 시작되지 않습니다. 다시 만들어 주세요&quot;라고 그 대화에 그대로 적습니다.</p></div><div class="pit"><p class="sym">참고한 영상과 전혀 다른 게 나옵니다.</p><p class="fix">움직임 칸에 등장 순서와 색, 몇 초에 무엇이 나오는지까지 적어 다시 넣습니다.</p></div>
+</section>
+<p class="disclaimer"><b>원본 미확인</b> 표시가 붙은 항목은 원본 글에 적혀 있지 않아 화면이 조금 다르면 가장 비슷한 메뉴를 찾아 진행해 주세요.</p>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 매일 새 결과물을 정리해 올립니다.</p></div>
+</div>
+<script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script>
+</body>
+</html>
