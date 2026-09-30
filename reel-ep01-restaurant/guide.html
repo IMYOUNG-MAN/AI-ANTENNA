@@ -325,7 +325,9 @@ h2 {
 
 .toc{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 28px}
 .toc a{padding:6px 12px;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:inherit;font-size:14px}
-.analogy{display:inline-block;margin:2px 0 14px;padding:6px 12px;border-radius:10px;background:#FFF1C9;font-weight:700;font-size:15px}
+.analogy{display:inline-block;margin:2px 0 14px;padding:6px 12px;border-radius:10px;background:#FFF1C9;color:#1d1d1f;font-weight:700;font-size:15px}
+/* 폰 다크 모드에서 글자만 밝아지고 배경은 밝은 노랑으로 남아 안 보였다 (2026-10-01) */
+@media (prefers-color-scheme: dark){.analogy{background:rgba(252,192,36,.16);color:#FCD34D}}
 .flow{list-style:none;padding:0;margin:10px 0 16px}
 .flow li{position:relative;padding:10px 14px;margin:0 0 22px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
 .flow li:not(:last-child)::after{content:"↓";position:absolute;left:50%;bottom:-21px;transform:translateX(-50%);color:var(--muted)}
