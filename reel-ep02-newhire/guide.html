@@ -1,0 +1,378 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>엔터 누른 다음, ChatGPT 안에서 | AI ANTENNA</title>
+<meta property="og:title" content="엔터 누른 다음, ChatGPT 안에서"><meta property="og:description" content="내가 친 문장이 답으로 바뀌기까지, 안에서 무슨 일이 일어나는지 순서대로 설명할 수 있게 돼요.">
+<meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 28px}
+.toc a{padding:6px 12px;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:inherit;font-size:14px}
+.analogy{display:inline-block;margin:2px 0 14px;padding:6px 12px;border-radius:10px;background:#FFF1C9;color:#1d1d1f;font-weight:700;font-size:15px}
+/* 폰 다크 모드에서 글자만 밝아지고 배경은 밝은 노랑으로 남아 안 보였다 (2026-10-01) */
+@media (prefers-color-scheme: dark){.analogy{background:rgba(252,192,36,.16);color:#FCD34D}}
+.flow{list-style:none;padding:0;margin:10px 0 16px}
+.flow li{position:relative;padding:10px 14px;margin:0 0 22px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.flow li:not(:last-child)::after{content:"↓";position:absolute;left:50%;bottom:-21px;transform:translateX(-50%);color:var(--muted)}
+.lab{font-size:13px;font-weight:700;color:var(--muted);margin:18px 0 6px}
+table.sum{width:100%;border-collapse:collapse;font-size:14px}
+table.sum td{border-top:1px solid var(--line);padding:9px 6px;vertical-align:top}
+table.sum td:first-child{font-weight:700;white-space:nowrap}</style></head><body>
+<div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div>
+<h1>엔터 누른 다음, ChatGPT 안에서</h1><p class="outcome">내가 친 문장이 답으로 바뀌기까지, 안에서 무슨 일이 일어나는지 순서대로 설명할 수 있게 돼요.</p></div>
+<section><h2>전체 흐름</h2><ol class="flow"><li>프롬프트 — 내가 친 문장이 통째로 넘어가요.</li><li>토큰 — 그 문장이 잘게 쪼개져요. 조각 하나가 토큰이에요.</li><li>컨텍스트 창 — 앞서 나눈 대화도 같이 들어가요. 한 번에 담기는 분량에 한계가 있어요.</li><li>모델 — 조각들을 받아 읽는 쪽이에요. 어마어마한 글로 미리 배워 둔 덩어리죠.</li><li>에이전트 — 혼자 안 되는 건 검색이나 계산기를 직접 불러 써요.</li><li>생성 — 답이 통째로 튀어나오는 게 아니라, 다음 조각을 확률로 하나씩 골라요.</li><li>환각 — 모르는 자리도 그럴듯한 조각으로 메워요. 그래서 틀린 말이 섞여요.</li></ol></section>
+<nav class="toc"><a href="#t1">프롬프트</a><a href="#t2">토큰</a><a href="#t3">컨텍스트 창</a><a href="#t4">모델</a><a href="#t5">에이전트</a><a href="#t6">환각</a></nav>
+<section id="t1"><h2>1. 프롬프트</h2><div class="analogy">한 줄로 · 내가 친 문장이 통째로 넘어간다 — 그게 프롬프트</div><div class="lab">실제로는</div><p>AI한테 보내는 입력 전체를 프롬프트라고 불러요. 내가 입력창에 친 문장만이 아니라, 붙여 넣은 자료나 서비스가 뒤에 몰래 붙여 주는 안내문까지 다 포함이거든요. AI는 이 묶음만 보고 답을 만들어요.</p><div class="lab">이렇게 작동해요</div><ol class="flow"><li>입력창에 문장을 치고 엔터를 누른다</li><li>서비스가 내 문장 앞뒤에 기본 지시문을 붙인다</li><li>붙인 자료와 앞 대화까지 한 덩어리로 묶인다</li><li>이 덩어리가 통째로 모델에 넘어간다</li></ol><div class="lab">AI 쓸 때 여기서 만나요</div><p>챗GPT나 클로드에 '보고서 요약해 줘'라고 치는 순간 그게 프롬프트예요. Cursor나 Claude Code에서는 내가 친 말에 더해 열어 둔 파일 내용까지 같이 넘어가고요.</p><div class="lab">예를 들면</div><p>'이거 요약해 줘'만 보내면 몇 줄짜리 뭉뚱그린 답이 와요. 그런데 '아래 회의록을 3줄로, 결정된 것만 뽑아 줘'라고 하고 회의록을 붙이면 결과가 확 달라져요. 똑같은 AI인데 넘어간 내용이 달라서예요.</p><div class="lab">써먹는 요령</div><p>부탁 하나에 조건을 세 가지만 얹어 보세요. 누가 읽을지, 몇 줄로, 어떤 형식으로. 이것만 해도 다시 묻는 횟수가 확 줄어요.</p><div class="step"><div class="no">✓</div><h3>해보기 · 같은 질문을 두 번, 조건만 바꿔서</h3><p>평소처럼 한 번 묻고, 아래 문장으로 한 번 더 물어보세요. 답이 얼마나 달라지는지 눈으로 확인하는 게 핵심이에요.</p><pre class="copy">아래 글을 3줄로 요약해 줘. 읽는 사람은 이 일을 모르는 팀장이고, 결정된 것과 다음에 할 일만 뽑아 줘.</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section id="t2"><h2>2. 토큰</h2><div class="analogy">한 줄로 · 문장을 잘게 쪼갠 조각 하나</div><div class="lab">실제로는</div><p>AI는 글을 글자나 단어가 아니라 토큰이라는 조각 단위로 처리해요. 영어는 보통 단어 하나가 한두 조각이고, 한국어는 더 잘게 쪼개져서 같은 길이라도 조각 수가 많은 편이에요. 분량 제한도, 요금도 글자 수가 아니라 이 조각 수로 셉니다.</p><div class="lab">이렇게 작동해요</div><ol class="flow"><li>내 문장이 들어온다</li><li>정해진 규칙대로 조각으로 나뉜다</li><li>조각마다 번호가 매겨져 모델에 들어간다</li><li>답도 조각 단위로 하나씩 나온다</li><li>들어간 조각과 나온 조각을 더해 분량과 요금을 센다</li></ol><div class="lab">AI 쓸 때 여기서 만나요</div><p>API 요금표나 '토큰 1M당 얼마' 같은 말에서 바로 마주쳐요. 긴 문서를 붙였을 때 '너무 길다'고 거절당하는 것도 글자 수가 아니라 조각 수가 넘쳐서예요.</p><div class="lab">예를 들면</div><p>'안녕하세요' 한 마디도 모델에 따라 두세 조각으로 쪼개져요. A4 한 장짜리 글이면 대충 천 조각 안팎이라고 보면 감이 와요. 그래서 PDF 50장을 통째로 붙이면 한 번에 안 들어가는 거예요.</p><div class="lab">써먹는 요령</div><p>긴 자료는 통째로 넣지 말고 필요한 부분만 잘라 넣으세요. 필요 없는 머리말·목차만 지워도 들어가는 양이 꽤 줄어요.</p><div class="step"><div class="no">✓</div><h3>해보기 · 긴 문서, 반으로 잘라 넣기</h3><p>보고서 전체 대신 핵심 장만 붙여 보세요. 답이 더 정확해지고 속도도 빨라지는 걸 느낄 수 있어요.</p><pre class="copy">이 글에서 '예산' 관련 내용만 그대로 뽑아 줘. 다른 부분은 빼고.</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section id="t3"><h2>3. 컨텍스트 창</h2><div class="analogy">한 줄로 · 한 번에 담기는 분량의 한계</div><div class="lab">실제로는</div><p>모델이 한 번에 읽을 수 있는 조각의 최대 분량이에요. 내 질문, 붙인 자료, 앞서 나눈 대화, 그리고 만들어 낼 답까지 전부 이 안에 들어가야 해요. 꽉 차면 앞쪽 대화가 밀려 나가서 모델이 못 보게 됩니다.</p><div class="lab">이렇게 작동해요</div><ol class="flow"><li>새 대화를 시작하면 창이 비어 있다</li><li>주고받을 때마다 앞 대화가 차곡차곡 쌓인다</li><li>질문·자료·답이 모두 이 창 안에서 처리된다</li><li>창이 꽉 차면 오래된 앞부분부터 밀려 나간다</li><li>밀려 나간 내용은 모델이 더는 보지 못한다</li></ol><div class="lab">AI 쓸 때 여기서 만나요</div><p>한 대화에서 오래 붙잡고 있다 보면 어느 순간 AI가 처음에 정해 둔 규칙을 어겨요. Claude Code를 오래 쓰면 '컨텍스트가 얼마 안 남았다'는 안내가 뜨기도 하고요.</p><div class="lab">예를 들면</div><p>처음에 '모든 답은 존댓말로'라고 해 뒀는데, 스무 번쯤 주고받은 뒤에 갑자기 반말이 섞여 나와요. AI가 까먹은 게 아니라 그 말이 창 밖으로 밀려 나간 거예요. 앞부분을 다시 붙여 주면 바로 돌아옵니다.</p><div class="lab">써먹는 요령</div><p>주제가 바뀌면 새 대화를 여세요. 이어가야 할 때는 지금까지 정한 것만 열 줄로 요약해서 새 대화 첫 줄에 붙이면 깔끔해요.</p><div class="step"><div class="no">✓</div><h3>해보기 · 대화 넘기기 전에 요약 받아 두기</h3><p>길어진 대화를 새 창으로 옮길 때, 아래 문장으로 요약을 먼저 받으세요. 그 요약을 새 대화 첫 줄에 붙이면 돼요.</p><pre class="copy">지금까지 우리가 정한 내용과 지켜야 할 규칙만 10줄로 정리해 줘. 새 대화에 그대로 붙여 쓸 거야.</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section id="t4"><h2>4. 모델</h2><div class="analogy">한 줄로 · 조각들을 받아 읽는 쪽, 미리 배워 둔 덩어리</div><div class="lab">실제로는</div><p>엄청난 양의 글로 미리 학습해 둔 프로그램이에요. 앞에 나온 조각들을 보고 다음에 올 조각을 예측하는 일을 합니다. 챗GPT나 클로드 같은 서비스는 껍데기고, 안에서 실제로 답을 만드는 건 모델이에요.</p><div class="lab">이렇게 작동해요</div><ol class="flow"><li>먼저 방대한 글로 미리 학습해 둔다</li><li>학습이 끝나면 그 상태 그대로 굳는다</li><li>내 조각들을 받아 다음 조각을 예측한다</li><li>서비스가 그 결과를 화면에 띄워 준다</li></ol><div class="lab">AI 쓸 때 여기서 만나요</div><p>챗GPT 입력창 위쪽에 모델 이름을 고르는 칸이 있어요. 빠른 모델과 깊게 생각하는 모델이 나뉘어 있고, 고르는 것에 따라 속도도 답의 질도 달라져요.</p><div class="lab">예를 들면</div><p>간단한 맞춤법 고치기는 빠른 모델로 충분해요. 반대로 긴 기획안을 뜯어보게 하려면 생각을 더 오래 하는 모델로 바꾸는 게 나아요. 같은 질문인데 모델만 바꿔도 답 길이와 꼼꼼함이 눈에 띄게 달라집니다.</p><div class="lab">써먹는 요령</div><p>대화 중에 답이 영 얕다 싶으면 모델을 한 단계 위로 바꾸고 같은 질문을 다시 던져 보세요. 모델은 학습을 마친 뒤로 굳어 있어서, 내가 안 알려 준 최신 소식은 모른다는 점도 기억해 두면 좋아요.</p><div class="step"><div class="no">✓</div><h3>해보기 · 같은 질문, 모델만 바꿔 보기</h3><p>빠른 모델로 한 번, 깊게 생각하는 모델로 한 번 똑같이 물어보세요. 어떤 일에 어떤 모델이 맞는지 감이 잡혀요.</p><pre class="copy">이 기획안에서 빠진 관점이 뭔지 세 가지만 짚어 줘. 왜 그게 문제인지도 한 줄씩.</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section id="t5"><h2>5. 에이전트</h2><div class="analogy">한 줄로 · 혼자 안 되는 건 검색이나 계산기를 직접 불러 쓴다</div><div class="lab">실제로는</div><p>모델이 답만 내놓는 게 아니라, 필요한 도구를 스스로 골라 쓰고 그 결과를 보고 다음 행동을 정하는 방식이에요. 검색, 계산, 파일 읽기, 코드 실행 같은 게 도구예요. 한 번에 끝내지 않고 도구를 쓰고 결과를 확인하는 과정을 여러 번 반복한다는 게 핵심입니다.</p><div class="lab">이렇게 작동해요</div><ol class="flow"><li>내 부탁을 받고 혼자 풀 수 있는지 따져 본다</li><li>모자라면 어떤 도구를 쓸지 고른다</li><li>그 도구를 불러 결과를 받아 온다</li><li>결과를 보고 더 할지, 끝낼지 정한다</li><li>충분하다 싶으면 최종 답을 내놓는다</li></ol><div class="lab">AI 쓸 때 여기서 만나요</div><p>챗GPT가 답하기 전에 '검색 중'이라고 뜨면 그게 에이전트처럼 움직이는 중이에요. Claude Code나 Cursor는 파일을 직접 열어 보고 고치기까지 하니까 더 뚜렷하죠.</p><div class="lab">예를 들면</div><p>'작년 대비 매출이 몇 퍼센트 늘었냐'고 물으면, 먼저 파일을 열어 숫자를 찾고 계산한 뒤에 답해요. 중간 과정이 화면에 한 줄씩 뜨는 걸 볼 수 있고요. 검색 없이 혼자 답했다면 그 숫자는 믿으면 안 됩니다.</p><div class="lab">써먹는 요령</div><p>무엇을 쓸지 내가 정해 주면 훨씬 정확해져요. '꼭 검색해서 출처랑 같이 알려 줘'처럼 도구를 콕 집어 말하는 게 요령이에요.</p><div class="step"><div class="no">✓</div><h3>해보기 · 검색을 꼭 쓰게 시키기</h3><p>최신 정보를 물을 때 아래 문장을 붙여 보세요. 출처 링크가 같이 오면 제대로 찾아본 거예요.</p><pre class="copy">이건 꼭 검색해서 확인한 다음 답해 줘. 근거가 된 출처 링크도 같이 알려 주고, 못 찾았으면 못 찾았다고 말해 줘.</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section id="t6"><h2>6. 환각</h2><div class="analogy">한 줄로 · 모르는 자리도 그럴듯한 조각으로 메운다</div><div class="lab">실제로는</div><p>AI가 사실이 아닌 내용을 사실처럼 자신 있게 말하는 걸 환각이라고 해요. 거짓말을 하려는 게 아니라, 다음에 올 법한 조각을 고르는 방식이다 보니 모르는 자리도 그럴듯하게 채워 버리는 거예요. 그래서 틀린 답일수록 오히려 더 매끄럽게 들립니다.</p><div class="lab">이렇게 작동해요</div><ol class="flow"><li>모르는 내용을 물어본다</li><li>모델은 '모른다'는 신호 없이 다음 조각을 고른다</li><li>가장 그럴듯한 조각이 줄줄이 이어진다</li><li>없는 책 이름이나 숫자가 완성된 문장으로 나온다</li><li>말투가 자연스러워서 읽는 사람은 눈치채기 어렵다</li></ol><div class="lab">AI 쓸 때 여기서 만나요</div><p>보고서에 넣을 통계나 논문을 물었을 때 특히 잘 나와요. 실제로는 없는 책 제목, 틀린 날짜, 깨진 링크가 아주 자연스러운 문장으로 섞여 나옵니다.</p><div class="lab">예를 들면</div><p>'이 주제 다룬 책 세 권 추천해 줘'라고 하면 제목과 저자가 또박또박 나와요. 그런데 검색해 보면 그런 책이 없을 때가 있어요. 저자는 실존 인물인데 책 제목만 지어낸 경우도 흔하고요.</p><div class="lab">써먹는 요령</div><p>숫자, 사람 이름, 인용문은 그대로 믿지 말고 꼭 따로 확인하세요. 물을 때 '확실하지 않으면 모른다고 해 줘'를 붙이면 지어내는 일이 눈에 띄게 줄어요.</p><div class="step"><div class="no">✓</div><h3>해보기 · '모르면 모른다고' 한 줄 붙이기</h3><p>사실을 묻는 질문 끝에 아래 문장을 붙여 보세요. 지어낸 답과 진짜 모르는 걸 구분하기 쉬워져요.</p><pre class="copy">확실하지 않은 건 지어내지 말고 '모른다'고 말해 줘. 확실한 것과 추측인 것을 나눠서 알려 주고.</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>한눈에 보기</h2><table class="sum"><tr><td>프롬프트</td><td>내가 친 문장이 통째로 넘어간다 — 그게 프롬프트</td></tr><tr><td>토큰</td><td>문장을 잘게 쪼갠 조각 하나</td></tr><tr><td>컨텍스트 창</td><td>한 번에 담기는 분량의 한계</td></tr><tr><td>모델</td><td>조각들을 받아 읽는 쪽, 미리 배워 둔 덩어리</td></tr><tr><td>에이전트</td><td>혼자 안 되는 건 검색이나 계산기를 직접 불러 쓴다</td></tr><tr><td>환각</td><td>모르는 자리도 그럴듯한 조각으로 메운다</td></tr></table></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 개발 용어 시리즈를 이어서 올립니다.</p></div>
+</div>
+<script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
