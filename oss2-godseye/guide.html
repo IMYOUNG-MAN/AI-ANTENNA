@@ -1,0 +1,369 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>God's Eye View 설치법 + 꼭 봐야 할 장면 | AI ANTENNA</title><meta property="og:title" content="God's Eye View 설치법 + 꼭 봐야 할 장면"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>God's Eye View 설치법 + 꼭 봐야 할 장면</h1><p class="outcome">지금 하늘에 떠 있는 비행기, 인공위성, 지진, 산불 같은 공개 데이터를 3D 지구본 하나에서 봐요. 저희가 켜 보니 전 세계 항공편 1만 3천여 대가 실시간으로 잡혔어요. API 키 없이 시작돼요.</p></div>
+<section><h2>준비물</h2><ul class="needs"><li>윈도우·맥·리눅스 컴퓨터 (폰은 안 돼요)</li><li>무료 · MIT 오픈소스. 음성 대화와 실사 3D 건물만 유료 키가 필요해요</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>쉬운 방법: Pinokio로 설치 (공식 안내)</h3><p>Pinokio(desktop.pinokio.co)를 8.2 이상으로 설치 → 앱 목록에서 God's Eye View → Install → Start. 공식 안내 방법이고, 저희는 아래 터미널 방법으로 확인했어요.</p></div><div class="step"><div class="no">2</div><h3>터미널 방법 (저희가 해 본 방법)</h3><p>Node.js 24를 설치한 뒤 터미널에서 git clone https://github.com/bilawalsidhu/gods-eye-view.git → cd gods-eye-view → npm ci → npm run dev. 브라우저에서 http://localhost:4173 을 열면 돼요.</p></div><div class="step"><div class="no">3</div><h3>첫 화면에서 'Explore Manually'</h3><p>처음 뜨는 'Choose your first view'에서 Explore Manually를 고르면 깨끗한 지구본에서 시작해요. 기본 위치는 미국 오스틴이에요.</p></div><div class="step"><div class="no">4</div><h3>왼쪽 DATA LAYERS에서 보고 싶은 것만 켜기</h3><p>DATA LAYERS의 + 를 누르고 Live Flights(항공편), Satellites(인공위성), Earthquakes(지진), Active Fires(산불) 옆 OFF를 눌러 켜세요. 켜면 옆에 개수가 떠요(항공편은 저희 때 13.5K).</p></div><div class="step"><div class="no">5</div><h3>아래 VISUAL PRESETS로 화면 바꾸기</h3><p>NVG(야간투시), FLIR(열화상), CRT(옛날 모니터), Noir(흑백), Snow 중 고르면 바로 바뀌어요. Normal을 누르면 원래대로예요.</p></div><div class="step"><div class="no">6</div><h3>마우스 휠로 지구 전체 ↔ 도시</h3><p>휠을 내리면 지구 전체로 빠지고, 올리면 다시 내려가요. 아래 LOCATION에서 뉴욕·도쿄·런던 같은 도시로 바로 이동할 수 있어요.</p></div></section>
+<section><h2>꼭 봐야 할 장면</h2><div class="item"><h3>전 세계 항공편</h3><p>Live Flights만 켜고 휠로 지구 전체까지 빠져 보세요</p><pre class="copy">DATA LAYERS → Live Flights ON → 휠 아래로</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>영화 속 정찰위성 화면</h3><p>도시 위에서 야간투시·열화상으로 바꿔 보세요</p><pre class="copy">VISUAL PRESETS → NVG / FLIR</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>지구를 감싼 인공위성</h3><p>Satellites를 켜고 지구 전체로</p><pre class="copy">DATA LAYERS → Satellites ON</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>조종석 시점</h3><p>추적 중인 비행기가 있을 때 오른쪽 CONTEXT 패널의 COCKPIT</p><pre class="copy">CONTEXT → COCKPIT</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>도시 화면에서 비행기가 잘 안 보여요</strong><br>도시를 낮게 보고 있으면 비행기가 화면 위쪽 하늘에만 표시돼요. 휠로 위로 조금 빠지면 잘 보여요.</li><li><strong>밤인 도시는 어둡거나 초록색으로만 나와요</strong><br>지금 밤인 곳은 어둡게 보일 수 있어요(저희가 밤 시간 도쿄를 열었을 때 그랬어요). 낮인 도시로 옮겨 보세요.</li><li><strong>실사 3D 건물이 안 나와요</strong><br>실사 3D는 오른쪽 아래 POWER UP에서 Cesium 토큰(개인 비상업 무료)이나 구글 지도 키(사용량 과금)를 넣어야 나와요. 키가 없어도 위성 사진 지구본은 그대로 돼요.</li><li><strong>음성으로 말 걸기가 안 돼요</strong><br>음성 대화는 OpenAI 키가 필요한 유료 기능이에요.</li></ul></section>
+<section><h2>더 잘 나오게</h2><ul class="plain"><li>누구나 볼 수 있는 공개 데이터(항공기 신호, 위성 궤도, 미국 지질조사국 지진 정보 등)를 모아 보여 주는 시각화예요. 감시 도구가 아니에요.</li><li>군용기·군사시설 레이어도 있지만, 한국에서는 군사시설 위치를 찍어 공유하면 법에 걸릴 수 있으니 켜지 않는 걸 권해요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
