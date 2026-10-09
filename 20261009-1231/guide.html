@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>프롬프트 한 줄로 애니메이션 만들기 | AI ANTENNA</title>
+<meta property="og:title" content="프롬프트 한 줄로 애니메이션 만들기">
+<meta property="og:description" content="아이디어 한 줄이 짧은 애니메이션 영상으로 남습니다">
+<meta property="og:type" content="article">
+<meta name="robots" content="noindex">
+<style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+<div class="wordmark">AI <span class="hi">ANT</span>ENNA</div>
+<div class="kicker">정리본</div>
+<h1>프롬프트 한 줄로 애니메이션 만들기</h1>
+<p class="outcome">아이디어 한 줄이 짧은 애니메이션 영상으로 남습니다</p>
+<div class="credit-line">이 결과물은 <b>@claudeai</b>님이 X에 올린 것입니다. 정리본은 그 글을 보고 저희가 따로 정리했습니다.<br><a href="https://x.com/claudeai/status/2108271552991252810" target="_blank" rel="noopener">원본 보러 가기 →</a></div>
+</div>
+<section>
+<h2>준비물</h2>
+<ul class="needs">
+<li>클로드 계정 (가입 무료)</li>
+<li>크롬 같은 브라우저</li>
+<li>만들 영상 아이디어 한 줄</li>
+</ul>
+</section>
+<section>
+<h2>순서</h2>
+<div class="step">
+<div class="no">1</div>
+<h3>claude.ai를 열고 로그인합니다</h3>
+<p>브라우저 주소창에 claude.ai를 넣고 로그인합니다.</p>
+<p class="check">✓ 새 대화 입력창이 보인다</p>
+</div>
+<div class="step">
+<div class="no">2</div>
+<h3>만들 애니메이션을 한 문장으로 적습니다</h3>
+<p>입력창에 아래 글을 붙여넣고 보냅니다. 내용은 내 서비스로 바꿉니다.</p>
+<pre class="copy">짧은 애니메이션을 만들어 주세요.
+
+- 주제: 우리 서비스 소개
+- 길이: 10초
+- 화면 비율: 가로 16:9
+- 1장면: 서비스 이름이 위에서 떨어진다
+- 2장면: 기능 세 개가 하나씩 나타난다
+- 3장면: 다시 서비스 이름만 남는다
+- 배경은 어두운 남색, 글자는 흰색</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 클로드가 작업을 시작한다</p>
+</div>
+<div class="step">
+<div class="no">3</div>
+<h3>다 만들어지면 재생해 봅니다</h3>
+<p>대화 안에 생긴 화면에서 재생을 눌러 끝까지 봅니다.</p>
+<p class="check">✓ 화면에서 움직임이 재생된다</p>
+</div>
+<div class="step">
+<div class="no">4</div>
+<h3>고칠 곳을 말로 고칩니다</h3>
+<p>같은 대화창에 고칠 곳만 적어 보냅니다. 한 번에 한두 가지만 말합니다.</p>
+<pre class="copy">두 번째 장면이 너무 빨라요. 2초로 늘리고 글자 크기를 한 단계 키워 주세요. 나머지는 그대로 둡니다.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 고친 영상이 다시 재생된다</p>
+</div>
+<div class="step">
+<div class="no">5</div>
+<h3>영상 파일로 받습니다</h3>
+<p>화면에서 내보내기나 다운로드를 찾아 누릅니다. 안 보이면 아래 글을 보냅니다.</p>
+<pre class="copy">이 애니메이션을 MP4 파일로 내보내 주세요.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 내 컴퓨터에 영상 파일이 생긴다</p>
+</div>
+</section>
+<section>
+<h2>여기서 막힙니다</h2>
+<div class="pit"><p class="sym">애니메이션을 만들어 달라고 했는데 글이나 그림으로만 답한다</p><p class="fix">베타로 열린 기능이라 계정에 아직 안 들어왔을 수 있으니, 며칠 뒤 다시 같은 요청을 보냅니다</p></div>
+<div class="pit"><p class="sym">장면이 너무 빨라 글자를 읽을 수 없다</p><p class="fix">새로 만들지 말고 같은 대화에서 몇 번 장면을 몇 초로 늘려 달라고만 말합니다</p></div>
+</section>
+<section>
+<h2>링크</h2>
+<ul class="links">
+<li><a href="https://x.com/claudeai/status/2108271552991252810" target="_blank" rel="noopener">원본 글 — @claudeai</a></li>
+<li><a href="https://claude.ai" target="_blank" rel="noopener">클로드</a></li>
+<li><a href="https://x.com/claudeai/status/2108271552991252810" target="_blank" rel="noopener">Claude Motion 베타 발표 글</a></li>
+</ul>
+</section>
+<p class="disclaimer">일부 단계는 원본 글에 나오지 않아 일반적인 방법으로 채웠습니다. 화면이 조금 다르면 가장 비슷한 메뉴를 찾아 진행해 주세요.</p>
+<div class="end">
+<p>도움이 되셨다면</p>
+<p class="handle">@ai.antenna.kr</p>
+<p>에서 매일 새 결과물을 정리해 올립니다.</p>
+</div>
+</div>
+<script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script>
+</body>
+</html>
