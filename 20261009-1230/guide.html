@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>챗GPT Intelligent UI 써보기 — 답을 버튼·차트·계산기로 받는 법 | AI ANTENNA</title>
+<meta property="og:title" content="챗GPT Intelligent UI 써보기 — 답을 버튼·차트·계산기로 받는 법">
+<meta property="og:description" content="GPT-6이 내 계정에 들어왔는지 확인하고, 숫자를 바꾸면 결과가 바로 바뀌는 계산기와 비교표를 대화창 안에서 직접 만들어 봅니다.">
+<meta property="og:type" content="article">
+<meta name="robots" content="noindex">
+<style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top">
+<div class="wordmark">AI <span class="hi">ANT</span>ENNA</div>
+<div class="kicker">정리본</div>
+<h1>챗GPT Intelligent UI 써보기 — 답을 버튼·차트·계산기로 받는 법</h1>
+<p class="outcome">GPT-6이 내 계정에 들어왔는지 확인하고, 숫자를 바꾸면 결과가 바로 바뀌는 계산기와 비교표를 대화창 안에서 직접 만들어 봅니다.</p>
+</div>
+<section>
+<h2>준비물</h2>
+<ul class="needs">
+<li>챗GPT 계정 (무료도 됩니다)</li>
+<li>웹 브라우저(chatgpt.com) 또는 최신 버전 앱. 오래된 PC용 앱은 지원하지 않아요</li>
+<li>5분</li>
+</ul>
+</section>
+<section>
+<h2>순서</h2>
+<div class="step">
+<div class="no">1</div>
+<h3>내 계정에 GPT-6이 들어왔는지 확인</h3>
+<p>10월 7일 Plus·Pro·Business·Enterprise부터, 10월 8일부터 무료·Go 요금제로 순차 배포되고 있어요. 유료 요금제는 GPT-6 Sol, 무료·Go는 GPT-6 Luna가 들어가고, 두 쪽 모두 Intelligent UI를 쓸 수 있어요. 따로 켜는 스위치는 없고, 순서가 돌아오면 Chat 탭에서 바로 동작합니다.</p>
+<p class="check">✓ Chat 탭 모델 메뉴에 GPT-6이 보인다.</p>
+</div>
+<div class="step">
+<div class="no">2</div>
+<h3>그냥 물어보기 — 화면으로 답할지는 챗GPT가 정해요</h3>
+<p>평소처럼 질문하면 챗GPT가 필요할 때 다이어그램·차트·지도·버튼을 섞어 답해요. 모든 답이 화면으로 나오지는 않고, 글로만 답하는 경우도 많아요. 생각 수준은 Instant부터 Extra High까지 다 되지만, Pro 수준(GPT-6 Astra)에서는 Intelligent UI가 나오지 않아요.</p>
+<pre class="copy">제주도 2박 3일 동선을 지도로 보여줘</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 답 안에 지도나 카드처럼 누를 수 있는 화면이 섞여 나온다.</p>
+</div>
+<div class="step">
+<div class="no">3</div>
+<h3>원하는 형태를 직접 말하기 — 계산기 만들기</h3>
+<p>'옆으로 비교해 줘', '계산기를 만들어 줘'처럼 형태를 직접 말하면 더 잘 나와요. 공식 소개에도 더치페이 계산기, 저축 계산기, 대화 안에서 하는 간단한 게임이 예로 나와요. 숫자 칸을 바꿨을 때 결과가 같이 바뀌는지 꼭 눌러 보세요.</p>
+<pre class="copy">이 대화 안에서 더치페이 계산기를 만들어 줘. 총액, 인원수, 팁 % 칸을 고칠 수 있게 하고, 숫자를 바꾸면 1인당 금액이 바로 바뀌게 해 줘. 계산식도 보이게 해 줘.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 인원수를 바꾸면 1인당 금액이 바로 다시 계산된다.</p>
+</div>
+<div class="step">
+<div class="no">4</div>
+<h3>비교표 받기</h3>
+<p>물건이나 요금제를 고를 때 나란히 놓고 보는 화면으로 받을 수 있어요. 다만 챗GPT가 모르는 사양을 채워 주지는 않으니, 가격·사양처럼 중요한 숫자는 공식 페이지에서 한 번 더 확인하세요.</p>
+<pre class="copy">아이폰 17, 갤럭시 S26, 픽셀 10을 옆으로 나란히 비교해 줘. 가격, 무게, 배터리, 카메라 항목으로.</pre><button class="copy-btn" type="button">복사하기</button>
+<p class="check">✓ 세 제품이 열로 나란히 놓인 비교 화면이 나온다.</p>
+</div>
+<div class="step">
+<div class="no">5</div>
+<h3>화면이 너무 많으면 줄이기</h3>
+<p>그림이 많은 답이 불편하면 웹 설정에서 'Layout and visuals'를 끄면 돼요. 끈 뒤에도 일부 그림은 나올 수 있어요.</p>
+<p class="check">✓ 설정을 끈 뒤 같은 질문에 글 위주로 답이 온다.</p>
+</div>
+</section>
+<section>
+<h2>여기서 막힙니다</h2>
+<div class="pit"><p class="sym">화면 없이 글로만 답해요</p><p class="fix">아직 내 계정 순서가 안 왔을 수 있어요. 모델 메뉴에서 GPT-6인지, 생각 수준이 Pro가 아닌지 확인하고, '계산기로 만들어 줘'처럼 형태를 직접 말해 보세요.</p></div>
+<div class="pit"><p class="sym">PC 앱에서는 안 나와요</p><p class="fix">오래된 윈도우·맥 앱은 지원하지 않아요. 앱을 최신으로 업데이트하거나 웹(chatgpt.com)에서 써 보세요.</p></div>
+<div class="pit"><p class="sym">Work·Codex 탭에서는 안 돼요</p><p class="fix">GPT-6은 Chat 탭에만 들어갔어요. Work와 Codex 모델은 그대로예요.</p></div>
+<div class="pit"><p class="sym">계산기 결과가 이상해요</p><p class="fix">'계산식도 보이게 해 줘'를 붙여 식을 직접 확인하세요. 실제 결제·예약 금액은 따로 계산해 보는 게 안전해요.</p></div>
+</section>
+<section>
+<h2>바꿔볼 것</h2>
+<ul class="plain">
+<li>'레시피를 4인분으로 바꾸는 화면 만들어 줘' — 인원수에 따라 재료 양이 바뀌는 레시피</li>
+<li>'월 30만 원씩 모으면 5년 뒤 얼마인지 계산기로' — 금리·기간을 바꿔 보는 저축 계산기</li>
+</ul>
+</section>
+<section>
+<h2>링크</h2>
+<ul class="links">
+<li><a href="https://openai.com/index/gpt-6-for-everyone" target="_blank" rel="noopener">오픈AI 공식 발표 (GPT-6 and Intelligent UI for everyone)</a></li>
+<li><a href="https://chatgpt.com" target="_blank" rel="noopener">챗GPT 바로 가기</a></li>
+</ul>
+</section>
+<p class="disclaimer">일부 단계는 원본 글에 나오지 않아 일반적인 방법으로 채웠습니다. 화면이 조금 다르면 가장 비슷한 메뉴를 찾아 진행해 주세요.</p>
+<div class="end">
+<p>도움이 되셨다면</p>
+<p class="handle">@ai.antenna.kr</p>
+<p>에서 매일 새 결과물을 정리해 올립니다.</p>
+</div>
+</div>
+<script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script>
+</body>
+</html>
