@@ -1,0 +1,373 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>캡컷 대신 쓰는 무료 영상 도구 7개 설치법 | AI ANTENNA</title><meta property="og:title" content="캡컷 대신 쓰는 무료 영상 도구 7개 설치법"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>캡컷 대신 쓰는 무료 영상 도구 7개 설치법</h1><p class="outcome">편집, AI 쇼츠 만들기, 자막, 배경 지우기, 화질 올리기, 무음 자르기, 보컬 분리를 무료 오픈소스로 해요. 도구마다 받는 곳과 처음 쓰는 순서를 정리했어요.</p></div>
+<section><h2>준비물</h2><ul class="needs"><li>윈도우 또는 맥 PC (OpenCut은 브라우저만 있으면 돼요)</li><li>Video2X·UVR은 그래픽카드가 있으면 훨씬 빨라요</li><li>3·4·6번은 Python이 필요해요 (python.org에서 설치)</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>OpenCut — 캡컷 같은 편집기</h3><p>opencut.app/projects에 들어가 New project를 누르면 로그인 없이 편집 화면이 열려요. 영상을 끌어다 놓고 타임라인에서 자르고, 오른쪽 위 Export로 내보내요. 파일은 내 PC 브라우저 안에서만 처리돼요.</p></div><div class="step"><div class="no">2</div><h3>MoneyPrinterTurbo — 주제 한 줄로 쇼츠</h3><p>깃허브 저장소의 Releases에서 윈도우용 압축 파일을 받아 풀고 start.bat을 실행하면 웹 화면이 열려요. 설정에 AI 키(OpenAI·DeepSeek·Gemini 등 중 하나)와 무료 Pexels 키를 넣고, '영상 주제'에 한 줄 쓰고 생성 버튼을 누르세요.</p></div><div class="step"><div class="no">3</div><h3>Buzz — 인터넷 없이 자막</h3><p>buzzcaptions.com 또는 깃허브 Releases에서 설치 파일을 받아요. 파일 → 영상 선택 → 모델 Whisper(Medium 추천), 언어 Korean → 끝나면 Export에서 SRT를 고르세요. 처음 한 번 모델을 받고 나면 인터넷 없이 돼요.</p></div><div class="step"><div class="no">4</div><h3>BackgroundRemover — 배경 지우기</h3><p>아래 '설치' 줄을 명령 프롬프트에 넣고, '영상 배경 지우기' 줄로 돌리면 배경이 투명한 .mov가 나와요. ffmpeg이 필요해요. CPU로는 4초 영상에 몇 분 걸리니 짧은 영상부터 해 보세요.</p></div><div class="step"><div class="no">5</div><h3>Video2X — 화질 올리기</h3><p>깃허브 k4yt3x/video2x의 Releases에서 윈도우 설치 파일을 받아요. 영상을 넣고 Real-ESRGAN(실사) 또는 Real-CUGAN(애니)을 고른 뒤 배율(2배·4배)을 정해 시작하세요.</p></div><div class="step"><div class="no">6</div><h3>auto-editor — 말 없는 구간 자르기</h3><p>아래 '설치' 줄을 넣고 영상 파일 이름으로 돌리면 '_ALTERED'가 붙은 영상이 나와요. 프리미어·다빈치에서 다시 손보고 싶으면 타임라인 파일로 내보내는 줄을 쓰세요.</p></div><div class="step"><div class="no">7</div><h3>Ultimate Vocal Remover — 보컬 분리</h3><p>ultimatevocalremover.com에서 윈도우 설치 파일을 받아요. Select Input에 노래·영상, Select Output에 저장 폴더를 고르고 MDX-Net 모델로 Start Processing을 누르면 목소리와 반주가 따로 나와요.</p></div></section>
+<section><h2>링크 · 복사해서 쓰기</h2><div class="item"><h3>1. OpenCut</h3><p>브라우저에서 바로 · MIT</p><pre class="copy">https://opencut.app
+https://github.com/OpenCut-app/OpenCut</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>2. MoneyPrinterTurbo</h3><p>윈도우 압축 파일 · MIT</p><pre class="copy">https://github.com/harry0703/MoneyPrinterTurbo/releases</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>3. Buzz</h3><p>윈도우·맥 설치 파일 · MIT</p><pre class="copy">https://buzzcaptions.com
+https://github.com/chidiwilliams/buzz/releases</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>4. BackgroundRemover 설치</h3><p>명령 프롬프트에 한 줄 · MIT</p><pre class="copy">pip install backgroundremover</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>4. 영상 배경 지우기</h3><p>입력 영상 이름만 바꿔서</p><pre class="copy">backgroundremover -i 내영상.mp4 -tv -o 결과.mov</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>5. Video2X</h3><p>윈도우 설치 파일 · AGPL-3.0</p><pre class="copy">https://github.com/k4yt3x/video2x/releases</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>6. auto-editor 설치</h3><p>명령 프롬프트에 한 줄 · 퍼블릭 도메인</p><pre class="copy">pip install auto-editor</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>6. 말 없는 구간 자르기</h3><p>영상에서 쓴 설정</p><pre class="copy">auto-editor 내영상.mp4 --edit audio:threshold=0.04 --margin 0.2s</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>6. 프리미어·다빈치로 보내기</h3><p>자른 결과를 타임라인으로</p><pre class="copy">auto-editor 내영상.mp4 --export premiere
+auto-editor 내영상.mp4 --export resolve</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>7. Ultimate Vocal Remover</h3><p>윈도우·맥 설치 파일 · MIT</p><pre class="copy">https://ultimatevocalremover.com
+https://github.com/Anjok07/ultimatevocalremovergui/releases</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>pip을 못 찾는대요</strong><br>Python을 설치할 때 'Add Python to PATH'에 체크하지 않으면 그래요. 다시 설치하면서 체크하거나, pip 대신 'python -m pip'으로 써 보세요.</li><li><strong>BackgroundRemover가 ffmpeg 오류를 내요</strong><br>ffmpeg.org에서 받거나 명령 프롬프트에 'winget install ffmpeg'을 넣어 설치한 뒤 창을 새로 여세요.</li><li><strong>OpenCut이 로딩에서 멈춰요</strong><br>크롬·엣지 최신 버전으로 열어 보세요. 아직 베타라 긴 영상은 버벅일 수 있어요.</li><li><strong>MoneyPrinterTurbo 영상 소스가 영어 장면만 나와요</strong><br>무료 Pexels 영상에서 장면을 찾아서 그래요. '영상 키워드'에 영어 단어를 직접 넣으면 원하는 장면이 더 잘 나와요.</li></ul></section>
+<section><h2>더 잘 나오게</h2><ul class="plain"><li>남의 노래·영상에서 뽑은 반주나 목소리는 저작권이 그대로 있어요. 내 영상이나 사용 허락받은 소스에만 쓰세요.</li><li>OpenCut·Video2X는 아직 개발 중이라 버전마다 화면이 조금씩 달라질 수 있어요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
