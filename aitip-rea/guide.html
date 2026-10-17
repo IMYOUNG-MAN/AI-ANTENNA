@@ -1,0 +1,377 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>REA로 앱이 어떻게 돌아가는지 알아내는 법 | AI ANTENNA</title><meta property="og:title" content="REA로 앱이 어떻게 돌아가는지 알아내는 법"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>REA로 앱이 어떻게 돌아가는지 알아내는 법</h1><p class="outcome">REA를 Claude Code에 붙이면, 소스 코드가 없는 앱 파일만 줘도 &quot;이 기능이 어떻게 돌아가는지&quot;를 숫자와 근거로 알아내고 내 프로젝트에 새로 만들어 줘요. 크롬 공룡 게임과 텔레그램 스포일러 효과로 직접 해 봤어요.</p><figure class="media"><video src="media/dino-sbs.mp4" poster="media/dino-sbs.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>위: 원본 크롬 공룡 · 아래: 압축 파일에서 규칙만 뽑아 새로 만든 것 (직접 실행)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>Claude Code (Claude Pro 이상) — 코덱스·커서·제미나이 CLI도 돼요</li><li>Node.js 18 이상 (nodejs.org LTS)</li><li>분석할 앱 파일 (웹사이트 배포 파일, 일렉트론 앱 등)</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>REA 설치</h3><p>명령 프롬프트에 아래 '설치'를 넣으면 쓸 AI(Claude Code 등)를 고르라고 나와요. 고르고 승인하면 REA가 MCP로 연결되고 사용 설명(스킬)도 깔려요. 끝나면 Claude Code를 껐다 켜세요.</p></div><div class="step"><div class="no">2</div><h3>분석할 파일 준비</h3><p>웹 게임·웹사이트는 배포된 파일을 폴더에 받아 두고, PC 앱은 설치 폴더를 그대로 쓰면 돼요. 그 폴더에서 claude를 실행하세요.</p></div><div class="step"><div class="no">3</div><h3>알아내고 만들게 시키기</h3><p>아래 '분석 요청'처럼 '어떤 기능을, 무슨 숫자까지' 알아낼지 구체적으로 적고, 새로 만들 파일 이름을 정해 주세요. 큰 앱은 10~30분 걸려요.</p><figure class="media"><img src="media/mg-numbers.png" loading="lazy" alt=""><figcaption>압축된 파일에서 찾아낸 공룡 게임 숫자</figcaption></figure></div><div class="step"><div class="no">4</div><h3>결과 확인</h3><p>만들어진 html을 더블클릭해 원본과 나란히 띄워 보세요. 클로드가 근거를 .md 파일로 정리해 줘요.</p><figure class="media"><video src="media/tg-clip.mp4" poster="media/tg-clip.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>텔레그램 스포일러 원리로 새로 만든 채팅 화면 — 누르면 먼지가 흩어지며 보여요 (직접 실행)</figcaption></figure></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>설치</h3><p>명령 프롬프트에 한 줄</p><pre class="copy">npx rea-agents@latest setup</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>분석 요청 (공룡 게임에 쓴 문장)</h3><p>폴더 이름·기능만 바꿔서</p><pre class="copy">dino 폴더는 크롬 공룡 게임을 압축한 배포 파일이야. 소스 코드 없이 REA로 분석해서 숨은 규칙(중력, 점프 힘, 처음 속도와 빨라지는 정도, 최고 속도, 장애물 종류와 간격, 점수 계산)을 정확한 숫자로 찾아내고, 그 규칙대로 똑같이 움직이는 새 게임을 공룡게임.html 하나로 만들어 줘. 원본 그림은 쓰지 말고 도형으로 직접 그려. 찾은 숫자는 규칙.md로 정리해 줘</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>효과 원리만 가져오기 (텔레그램에 쓴 문장)</h3><p>남의 코드는 복사하지 않게</p><pre class="copy">이 폴더는 ○○ 웹의 배포 파일이야. ○○ 효과가 어떻게 만들어졌는지 REA로 찾아내고, 그 원리대로 내 페이지를 새로 만들어 줘. 원본 코드는 복사하지 말고 찾아낸 원리만 써서 직접 짜. 근거는 .md로 정리해 줘</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>REA 연결이 시간 초과로 실패해요</strong><br>앱이 크면 MCP가 시간 초과될 수 있어요. 클로드가 알아서 'npx rea-agents' 명령으로 바꿔 분석해요. 그래도 안 되면 분석할 폴더를 기능이 있는 부분만 남기고 줄여 보세요.</li><li><strong>PC 프로그램(.exe) 깊은 분석이 안 돼요</strong><br>기계어 분석은 Ghidra 같은 분석 프로그램이 필요해요. 'npx rea-agents doctor'를 치면 무엇을 깔아야 하는지 알려 줘요.</li></ul></section>
+<section><h2>꼭 지켜 주세요</h2><ul class="plain"><li>원리를 배우고 내 것으로 새로 만드는 데만 쓰세요. 남의 앱 코드를 그대로 가져다 쓰거나 배포하면 저작권 위반이에요.</li><li>많은 앱·서비스가 약관으로 역분석을 금지해요. 오픈소스나 내가 권리가 있는 파일로 연습하세요.</li><li>금융·보안·메신저 앱의 보안 장치를 뜯는 건 법 문제로 번질 수 있어요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
