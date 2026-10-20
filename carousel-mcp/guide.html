@@ -1,0 +1,381 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>공식 클로드 비서 연결하는 법 + 물어볼 말 | AI ANTENNA</title><meta property="og:title" content="공식 클로드 비서 연결하는 법 + 물어볼 말"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>공식 클로드 비서 연결하는 법 + 물어볼 말</h1><p class="outcome">회사가 직접 만든 MCP(클로드에 붙이는 연결 도구) 중 생활에 바로 쓸 것만 골라, 연결 순서와 그대로 복사해 쓰는 질문을 정리했어요. 카드뉴스 속 장면은 전부 저희가 직접 연결해서 돌린 결과예요.</p><figure class="media"><video src="media/travel.mp4" poster="media/travel.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>트리바고 공식 MCP — 조건만 말하면 숙소 가격·평점 비교 (직접 실행)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>Claude 계정 — 무료 요금제도 커넥터를 쓸 수 있어요(직접 추가하는 사용자 지정 커넥터는 1개까지)</li><li>연결할 서비스 계정 — 구글 캘린더·Figma처럼 로그인이 필요한 곳은 처음 한 번 '허용'을 눌러요</li><li>Claude Code로 쓰려면 Claude 유료 요금제와 Node.js</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>Claude 앱·웹에서 연결하기</h3><p>claude.ai(또는 Claude 앱) 왼쪽 아래 이름 → 설정 → 커넥터 → '커넥터 둘러보기'에서 구글 캘린더·Figma·트리바고처럼 쓰고 싶은 서비스를 찾아 '연결'을 누르세요. 로그인 창이 뜨면 로그인하고 '허용'을 누르면 끝이에요. 대화창 아래 도구 버튼에서 켜고 끌 수 있어요.</p></div><div class="step"><div class="no">2</div><h3>목록에 없으면 주소로 추가하기</h3><p>공식 목록(github.com/VoltAgent/official-mcp-servers)에서 서비스 이름 옆 링크를 열면 MCP 주소가 있어요. 설정 → 커넥터 → '사용자 지정 커넥터 추가'에 이름과 주소를 넣으세요. 예: 트리바고는 https://mcp.trivago.com/mcp (로그인 없이 바로 돼요).</p></div><div class="step"><div class="no">3</div><h3>Claude Code에서 연결하기</h3><p>터미널에서 아래처럼 한 줄씩 넣으면 돼요. 주소가 있는 서버는 --transport http 뒤에 주소를, 설치형 서버는 -- 뒤에 실행 명령을 넣어요. 그다음 claude를 실행하면 새 서버를 쓸지 물어보는데 '허용'을 고르세요.</p><figure class="media"><img src="media/g-terminal.png" loading="lazy" alt=""><figcaption>트리바고·AntV 차트 서버 추가 (직접 실행)</figcaption></figure></div><div class="step"><div class="no">4</div><h3>일정 비서 — 구글 캘린더</h3><p>커넥터에서 구글 캘린더를 연결하고, 아래 '일정' 질문을 그대로 붙여 넣으세요. 일정을 넣거나 지우기 전에는 Claude가 무엇을 할지 먼저 보여 줘요.</p><figure class="media"><video src="media/cal.mp4" poster="media/cal.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>비는 저녁 찾아서 약속 넣기 (직접 실행 · 다른 일정 제목은 가림)</figcaption></figure></div><div class="step"><div class="no">5</div><h3>그림 비서 — AntV 차트</h3><p>Claude Code에 chart 서버를 추가하고(3번), 숫자를 붙여 넣은 뒤 '차트' 질문을 쓰세요. 원형·막대·꺾은선·마인드맵 등 25가지를 그려요. 차트 이미지는 AntV 서버에서 만들어져 링크로 와요.</p><figure class="media"><video src="media/chart.mp4" poster="media/chart.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>9월 생활비 → 원형 차트 (직접 실행 · 숫자는 시연용)</figcaption></figure></div><div class="step"><div class="no">6</div><h3>디자인 비서 — Figma</h3><p>커넥터에서 Figma를 연결하고 '디자인' 질문을 쓰세요. Claude가 Figma에 새 파일을 만들어 직접 디자인하고, 스크린샷으로 확인해 겹친 글자를 고쳐요. 만든 파일은 Figma에서 바로 고쳐 쓸 수 있어요.</p><figure class="media"><video src="media/figma.mp4" poster="media/figma.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>말 한 줄로 플리마켓 포스터 (직접 실행)</figcaption></figure></div><div class="step"><div class="no">7</div><h3>생활에 쓸 만한 공식 비서 더 보기</h3><p>일정·업무: Todoist, Asana, Calendly, Dropbox, Evernote, Zapier · 그림·영상: ElevenLabs(목소리), DeepL(번역), Descript(영상 편집), Unsplash(사진) · 여행·생활: Booking.com, Expedia, Tripadvisor, Spotify, AllTrails · 디자인: Canva, Notion, Miro, Gamma(발표 자료). 전부 공식 목록에 링크가 있어요.</p></div></section>
+<section><h2>복사해서 쓰는 질문 8개</h2><div class="item"><h3>일정 — 빈 시간 찾기</h3><p>구글 캘린더 연결 후</p><pre class="copy">다음 주 평일 저녁 7시 이후에 비어 있는 날을 내 캘린더에서 찾아서, 가장 빠른 날 저녁 7시에 '(약속 이름)' 일정을 2시간짜리로 넣어 줘. 넣기 전에 날짜를 먼저 보여 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>일정 — 한 주 정리</h3><p>구글 캘린더 연결 후</p><pre class="copy">이번 주 내 일정을 요일별로 한 줄씩 정리하고, 일정이 겹치거나 이동 시간이 빠듯한 곳을 짚어 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>숙소 비교</h3><p>트리바고 연결 후</p><pre class="copy">(날짜) (몇 박), 어른 (몇) 명. (도시) (역·동네 이름) 걸어서 10분 안에서 1박 (예산) 원 아래 숙소를 찾아서 숙소 이름·1박 가격(원)·평점·역까지 거리를 표로 5개만 정리해 줘. 가격이 1박 기준인지 꼭 확인해.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>가격 흐름</h3><p>트리바고 연결 후</p><pre class="copy">(도시)의 다음 두 달 숙박 가격 흐름을 알려 주고, 가장 싼 주와 비싼 주를 짚어 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>차트</h3><p>AntV 차트 연결 후</p><pre class="copy">아래 숫자로 항목별 비율을 원형 차트로 그리고, 가장 큰 항목 두 개를 한 줄씩 짚어 줘.
+
+(여기에 항목과 숫자)</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>마인드맵</h3><p>AntV 차트 연결 후</p><pre class="copy">아래 내용을 한눈에 보이는 마인드맵으로 그려 줘. 가운데는 '(주제)', 가지는 5개 안쪽으로.
+
+(여기에 메모)</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>디자인 — 포스터</h3><p>Figma 연결 후</p><pre class="copy">Figma에 새 디자인 파일을 만들고 1080x1350 인스타 포스터를 디자인해 줘. 내용: '(제목) / (날짜·시간) / (장소) / (한 줄 설명)'. (원하는 분위기) 색, 큰 제목, 깔끔하게. 다 만들면 스크린샷으로 확인하고 파일 링크를 알려 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>디자인 — 고치기</h3><p>Figma 연결 후</p><pre class="copy">이 Figma 파일(링크)의 첫 화면을 보고, 글자 크기·여백·색이 어색한 곳을 세 군데 고쳐 줘. 고치기 전과 후를 한 줄씩 설명해 줘.</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>연결했는데 Claude가 그 도구를 안 써요</strong><br>대화창 아래 도구 버튼에서 그 커넥터가 켜져 있는지 보세요. 질문에 '구글 캘린더에서', 'Figma에'처럼 서비스 이름을 넣으면 더 잘 써요.</li><li><strong>사용자 지정 커넥터를 더 추가할 수 없대요</strong><br>무료 요금제는 직접 추가하는 커넥터가 1개까지예요. 쓰지 않는 것을 지우거나 유료 요금제를 쓰세요.</li><li><strong>Claude Code에서 'Pending approval'이라고 나와요</strong><br>claude를 한 번 실행하면 새 서버를 쓸지 물어봐요. 그때 허용을 고르면 돼요.</li></ul></section>
+<section><h2>주의할 점</h2><ul class="plain"><li>연결 도구는 내 계정으로 데이터를 읽고 대신 움직여요. 공식 목록도 '검토(감사)한 목록은 아니다'라고 적혀 있으니, 연결할 때 요청하는 권한을 꼭 읽어 보세요.</li><li>결제·메일 보내기·일정 삭제처럼 되돌리기 어려운 일은 '항상 허용'으로 두지 마세요.</li><li>숙소 가격은 조회한 순간의 값이에요. 예약은 예약 사이트에서 최종 금액을 확인하고 직접 하세요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
