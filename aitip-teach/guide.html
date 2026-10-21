@@ -1,0 +1,377 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>클로드를 개인 과외 선생님으로 — teach 스킬 쓰는 법 | AI ANTENNA</title><meta property="og:title" content="클로드를 개인 과외 선생님으로 — teach 스킬 쓰는 법"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>클로드를 개인 과외 선생님으로 — teach 스킬 쓰는 법</h1><p class="outcome">Claude Code에 teach 스킬을 깔고 시험 범위와 목표만 말하면, 클로드가 믿을 만한 교재부터 찾아서 퀴즈·계산 연습이 들어간 수업 페이지를 만들어 줘요. 공부한 기록을 폴더에 남겨서, 다음 날 다시 부르면 틀린 부분부터 이어서 가르쳐요.</p><figure class="media"><video src="media/g-slider.mp4" poster="media/g-slider.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>시험 범위만 말했더니 나온 수업 1 — 가격을 움직이면 그래프와 숫자가 같이 바뀌어요 (직접 실행)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>Claude 유료 요금제(Pro 이상) + Claude Code</li><li>공부할 과목 하나당 빈 폴더 하나</li><li>있으면 좋은 것: 교재 이름, 기출·연습 문제</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>teach 스킬 설치</h3><p>터미널(명령 프롬프트)에 아래 '설치' 두 줄을 차례로 넣으세요. Claude Code 안에서 하려면 앞에 claude를 빼고 /plugin marketplace add …, /plugin install … 로 쳐도 돼요. teach는 Matt Pocock이 공개한 스킬 모음(MIT)에 들어 있어요.</p></div><div class="step"><div class="no">2</div><h3>과목 폴더에서 Claude Code 켜기</h3><p>바탕화면 같은 곳에 '경제학원론'처럼 과목 이름으로 빈 폴더를 만들고, 그 폴더에서 Claude Code를 실행하세요. 수업 파일과 공부 기록이 전부 이 폴더에 쌓여요. 다른 작업 폴더에서 하지 마세요.</p></div><div class="step"><div class="no">3</div><h3>첫 요청 — 범위·수준·목표를 한 번에</h3><p>아래 '첫 수업 요청' 문장에서 과목·범위·수준·목표만 바꿔 넣으세요. 목표를 말하지 않으면 클로드가 왜 배우는지부터 질문해요(그것도 괜찮아요). 첫 수업은 자료를 찾느라 몇 분 걸려요. 저희는 6분 36초 걸렸어요.</p><figure class="media"><img src="media/g-term.jpg" loading="lazy" alt=""><figcaption>요청하자마자 공개 교재(OpenStax)·칸아카데미·KOCW부터 찾아요 (직접 실행)</figcaption></figure></div><div class="step"><div class="no">4</div><h3>수업 풀기</h3><p>폴더의 lessons 안 HTML 파일을 더블클릭하면 브라우저로 열려요. 슬라이더를 움직이는 그래프, 바로 채점되는 퀴즈, 무작위로 바뀌는 계산 연습이 들어 있어요. 용어집·공식 시트는 reference 폴더에 따로 생겨요.</p><figure class="media"><video src="media/g-quiz.mp4" poster="media/g-quiz.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>확인 문제 — 고르면 바로 정답·오답과 해설 (직접 실행)</figcaption></figure><figure class="media"><video src="media/g-drill.mp4" poster="media/g-drill.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>계산 연습 — 답을 넣고 채점하면 풀이가 펼쳐져요 (직접 실행)</figcaption></figure></div><div class="step"><div class="no">5</div><h3>다음 날 — 결과만 말하고 다음 수업</h3><p>같은 폴더에서 Claude Code를 다시 켜고, 몇 개 맞혔는지와 헷갈린 곳을 말한 뒤 '다음 수업'을 요청하세요. 클로드가 학습 기록을 남기고, 다음 수업을 그 약점부터 시작해요. 대화가 끊겨도 폴더의 기록을 읽어서 이어 가요.</p><figure class="media"><video src="media/g-warmup.mp4" poster="media/g-warmup.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>새 세션인데 '지난 수업에서 흔들렸던 두 가지'부터 다시 꺼내요 (직접 실행)</figcaption></figure></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>설치 1</h3><p>터미널에 — 스킬 모음 등록</p><pre class="copy">claude plugin marketplace add mattpocock/skills</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>설치 2</h3><p>터미널에 — 스킬 설치</p><pre class="copy">claude plugin install mattpocock-skills@mattpocock</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>첫 수업 요청</h3><p>과목 폴더에서 Claude Code를 켜고 (괄호 안만 바꾸기)</p><pre class="copy">/teach 다음 주가 (경제학원론) 중간고사예요. 범위는 (수요와 공급, 탄력성)이에요. (경제는 처음)이고, 목표는 (계산 문제까지 다 맞히는 거)예요. 한국어로 첫 수업을 만들어 주세요.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>다음 수업 요청</h3><p>수업을 풀고 나서</p><pre class="copy">/teach 수업 (1) 풀었어요. 확인 문제는 (4)개 중 (3)개 맞았고, (4번)이 헷갈렸어요. 다음 수업 만들어 주세요.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>교재·기출 맞추기</h3><p>시험 스타일에 맞추고 싶을 때</p><pre class="copy">/teach 교재는 (맨큐 경제학원론)이고, 이 폴더에 넣은 기출문제 스타일에 맞춰서 다음 수업이랑 연습 문제를 만들어 주세요.</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>/teach를 쳐도 안 떠요</strong><br>설치 뒤 Claude Code를 껐다 켜세요. 그래도 안 되면 /mattpocock-skills:teach 로 전체 이름을 치면 돼요.</li><li><strong>중간에 '진행할까요?' 창이 계속 떠요</strong><br>파일을 읽고 쓸 때 허락을 묻는 거예요. 과목 폴더에서만 쓰는 거라면 'Yes, … during this session'을 고르면 그 세션 동안은 다시 안 물어요.</li><li><strong>수업이 영어로 나와요</strong><br>요청 끝에 '한국어로'를 붙이세요. 한 번 말하면 NOTES.md에 적어 두고 다음 수업도 한국어로 만들어요.</li></ul></section>
+<section><h2>알아 두면 좋은 것</h2><ul class="plain"><li>자료를 찾고 수업을 만드느라 사용량을 꽤 써요. 한 번에 수업 하나씩 받으세요.</li><li>클로드도 틀릴 수 있어요. 수업마다 출처가 달려 있으니 헷갈리는 건 교재와 대조하세요.</li><li>수업 페이지 맨 아래 '복습 일정'대로 다음 날·3일 뒤에 다시 풀면 오래 기억돼요.</li><li>시험 공부 말고도 돼요. 엑셀 함수, 영어 회화, 요가처럼 배우고 싶은 걸 폴더 하나에 하나씩 만드세요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
