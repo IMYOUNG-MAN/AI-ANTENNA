@@ -1,0 +1,377 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>파일 끌다가 키 하나로 변환하는 법 — DragShift · Filee | AI ANTENNA</title><meta property="og:title" content="파일 끌다가 키 하나로 변환하는 법 — DragShift · Filee"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>파일 끌다가 키 하나로 변환하는 법 — DragShift · Filee</h1><p class="outcome">무료 오픈소스 두 개를 깔면, 파일을 사이트에 올리지 않고 끌다가 키 하나만 눌러서 바꿀 수 있어요. DragShift는 Shift, Filee는 Ctrl이라 둘 다 깔아도 안 부딪혀요. 결과는 원본 옆에 새 파일로 생기고 원본은 그대로예요.</p><figure class="media"><video src="media/g-compress.mp4" poster="media/g-compress.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>DragShift — 사진을 끌다가 Shift → 압축 → 3.8MB가 1.0MB로 (직접 실행)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>윈도우 10·11 (DragShift는 맥·리눅스도 돼요. Filee 맥·리눅스판은 미리보기)</li><li>관리자 권한 필요 없어요</li><li>무료 · 오픈소스(MIT) · 인터넷에 올리지 않고 내 컴퓨터에서 처리</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>DragShift 설치</h3><p>아래 'DragShift 받기' 주소에서 DragShift-Setup.exe를 받아 실행하세요(내 계정에만 설치, 관리자 권한 없이 돼요). 설치 없이 쓰려면 DragShift.exe만 받아 실행해도 돼요. 실행하면 작업 표시줄 오른쪽 아이콘 칸에 들어가 있어요. 맥은 아래 '맥 설치' 한 줄을 터미널에 붙여 넣으세요.</p></div><div class="step"><div class="no">2</div><h3>DragShift — 끌다가 Shift</h3><p>탐색기나 바탕화면에서 파일을 끌기 시작한 다음 Shift를 한 번 누르세요. 커서 아래에 원형 메뉴가 떠요. 원하는 형식(PNG·PDF·HEIC 등) 위에 놓으면 끝이에요. Shift를 한 번 더 누르면 압축·크기 바꾸기·자르기·합치기 같은 '도구' 쪽으로 바뀌어요.</p><figure class="media"><video src="media/g-compress.mp4" poster="media/g-compress.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>Shift 한 번 → 변환, 한 번 더 → 도구 → 압축 (직접 실행)</figcaption></figure></div><div class="step"><div class="no">3</div><h3>PDF 여러 개 합치기</h3><p>합칠 PDF를 모두 고른 다음(첫 파일 클릭 → Shift 누른 채 마지막 파일 클릭) 그중 하나를 끌다가 Shift 두 번 → MERGE에 놓으세요. 끝나면 오른쪽 아래 알림에 쪽수와 용량이 나오고, 잘못했으면 'Undo'로 되돌릴 수 있어요.</p><figure class="media"><video src="media/g-merge.mp4" poster="media/g-merge.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>영수증 PDF 3개 → 3쪽짜리 1개 (직접 실행)</figcaption></figure></div><div class="step"><div class="no">4</div><h3>Filee 설치</h3><p>아래 'Filee 받기' 주소에서 Filee-버전-win-Setup.exe를 받아 실행하세요. 설치 없이 쓰려면 win-Portable.zip을 풀고 Filee.exe를 실행하면 돼요. 처음에 '변환 엔진 선택' 창이 뜨는데, 문서·사진·HWP는 엔진 없이 되니 그냥 넘어가도 돼요.</p></div><div class="step"><div class="no">5</div><h3>Filee — Ctrl 누르고 끌기</h3><p>Ctrl을 먼저 누른 채로 파일을 끌기 시작하세요(맥은 Option). 그 자리에 형식 도넛이 열리고, 끌고 있는 파일에 맞는 형식만 보여요. PDF 위에 놓으면 진행률이 돌고 원본 옆에 PDF가 생겨요. 도넛이 열린 상태에서 Tab이나 마우스 휠을 돌리면 덜 쓰는 형식이 나와요.</p><figure class="media"><video src="media/g-filee.mp4" poster="media/g-filee.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>가정통신문.hwp → PDF, 한컴오피스 없이 (직접 실행)</figcaption></figure><figure class="media"><img src="media/g-pdf.jpg" loading="lazy" alt=""><figcaption>바뀐 PDF를 열어 보면 서식 그대로예요</figcaption></figure></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>DragShift 받기</h3><p>윈도우 — Setup.exe 또는 DragShift.exe</p><pre class="copy">https://github.com/llamaboi55/DragShift/releases/latest</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>DragShift 맥 설치</h3><p>맥 터미널에 한 줄 (보안 경고 없이 응용 프로그램에 설치)</p><pre class="copy">curl -fsSL https://raw.githubusercontent.com/llamaboi55/DragShift/main/install-mac.sh | bash</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>Filee 받기</h3><p>윈도우 — win-Setup.exe 또는 win-Portable.zip</p><pre class="copy">https://github.com/KnifeLemon/Filee/releases/latest</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>처음 실행할 때 'Windows의 PC 보호' 창이 떠요</strong><br>두 앱 모두 아직 코드 서명 전이라 그래요. '추가 정보' → '실행'을 누르면 돼요. 코드는 깃허브에 다 공개돼 있어요.</li><li><strong>Shift(또는 Ctrl)를 눌러도 메뉴가 안 떠요</strong><br>앱이 켜져 있는지 작업 표시줄 오른쪽 아이콘 칸에서 확인하세요. 파일을 '끌고 있는 중'에 눌러야 해요. Filee는 Ctrl을 먼저 누른 채로 끌기 시작해야 해요.</li><li><strong>DragShift에서 도구(압축·합치기)가 안 보여요</strong><br>메뉴가 뜬 상태에서 마우스를 살짝 움직인 뒤 Shift를 한 번 더 누르세요. 변환 ↔ 도구가 바뀌어요.</li><li><strong>Filee에서 동영상·음악 변환이 안 보여요</strong><br>동영상·오디오는 FFmpeg 엔진이 있어야 해요. Filee 설정 → 변환 엔진에서 FFmpeg를 받으세요(필요할 때만).</li></ul></section>
+<section><h2>알아 두면 좋은 것</h2><ul class="plain"><li>둘 다 결과를 원본 옆에 새 파일로 만들어요. 원본은 바뀌지 않아요.</li><li>DragShift는 사진 크기 바꾸기·자르기·모자이크(Redact)·위치 정보 지우기(Metadata)도 돼요. 사진 올리기 전에 위치 정보 지울 때 좋아요.</li><li>Filee는 브라우저에서 사진을 끌어 와도 바로 변환돼요. 폴더를 지정해 두면 들어오는 파일을 자동으로 바꾸는 '자동 변환 폴더'도 있어요.</li><li>DragShift 설정에서 누르는 키를 Shift·Ctrl·Alt 중에 바꿀 수 있어요. 두 앱을 같이 쓸 땐 기본값(Shift·Ctrl) 그대로 두세요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
