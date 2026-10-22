@@ -1,0 +1,377 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>채용공고 넣으면 점수부터 — career-ops로 4점 넘는 곳만 지원하기 | AI ANTENNA</title><meta property="og:title" content="채용공고 넣으면 점수부터 — career-ops로 4점 넘는 곳만 지원하기"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>채용공고 넣으면 점수부터 — career-ops로 4점 넘는 곳만 지원하기</h1><p class="outcome">무료 오픈소스 career-ops를 Claude Code에 붙이면, 채용공고를 내 이력서와 한 줄씩 대조해 5점 만점으로 점수를 매기고 4점이 안 되면 건너뛰라고 알려 줘요. 4점이 넘는 공고는 그 공고에 맞춘 이력서 PDF까지 만들어 줘요. 지원 버튼은 언제나 내가 눌러요.</p><figure class="media"><img src="media/g-cv.jpg" loading="lazy" alt=""><figcaption>공고 A(4.3점)에 맞춰 만든 이력서 PDF — 수치는 원래 이력서 그대로 (직접 실행, 시연용 가상 이력서)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>Claude 유료 요금제(Pro 이상) + Claude Code (코덱스 등 다른 AI 도구도 됨)</li><li>Node.js (npx)</li><li>내 이력서(아무 형식 텍스트면 돼요)</li><li>무료 · 오픈소스(MIT) · 내 컴퓨터에 저장</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>설치</h3><p>명령 프롬프트에 아래 '설치' 한 줄을 넣으면 career-ops 폴더가 생겨요. PDF를 만들려면 'PDF 준비' 한 줄도 넣으세요. 그다음 cd career-ops 로 들어가서 claude 를 실행하세요.</p></div><div class="step"><div class="no">2</div><h3>처음 설정은 대화로</h3><p>이력서 파일을 career-ops 폴더 안에 넣고 아래 '처음 설정' 문장을 보내세요. 이력서와 프로필 파일을 알아서 만들어요. 이력서에 없는 건 비워 두고 지어내지 않아요.</p></div><div class="step"><div class="no">3</div><h3>공고 넣고 점수 받기</h3><p>한국 채용 사이트는 자동 검색이 안 돼서, 공고 글을 복사해 파일(예: 공고A.txt)로 넣거나 대화창에 붙여 넣으세요. '공고 평가' 문장을 보내면 요건마다 내 이력서와 대조해서 5점 만점 점수와 지원 추천 여부를 알려 줘요.</p><figure class="media"><img src="media/g-term.jpg" loading="lazy" alt=""><figcaption>4점 미만 공고는 왜 비추천인지 이유까지 (직접 실행)</figcaption></figure></div><div class="step"><div class="no">4</div><h3>4점 넘으면 맞춤 이력서 PDF</h3><p>4점 이상 공고는 공고에 나온 표현으로 자기소개와 핵심 역량을 다시 써서 PDF로 만들어요. 결과는 output 폴더, 평가 보고서는 reports 폴더에 쌓여요. 이력서에 없는 경험은 해 봤는지 먼저 물어봐요.</p></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>설치</h3><p>명령 프롬프트에</p><pre class="copy">npx @santifer/career-ops init</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>PDF 준비</h3><p>설치 뒤 career-ops 폴더 안에서</p><pre class="copy">npx playwright install chromium</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>처음 설정</h3><p>이력서 파일을 폴더에 넣고 (괄호만 바꾸기)</p><pre class="copy">처음 설정이에요. (이력서.txt)를 읽고 이 사람으로 career-ops 설정을 해 주세요. 언어는 한국어, 시장은 한국(modes/ko). 목표 직무는 (직무), 지역 (지역), 희망 연봉 (금액). 이력서에 있는 사실만으로 채우고, 없는 건 비워 두세요.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>공고 평가</h3><p>공고 글을 파일로 넣은 뒤</p><pre class="copy">/career-ops (공고A.txt)와 (공고B.txt)를 평가해 주세요. 공고마다 5점 만점 점수와 지원 추천 여부를 알려 주고, 4점 이상인 공고는 그 공고에 맞춘 이력서 PDF까지 만들어 주세요. 한국어로요.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>자기소개서</h3><p>점수 높은 공고에</p><pre class="copy">/career-ops (회사 이름) 공고에 맞춘 자기소개서 초안을 써 주세요. 이력서에 있는 사실만 쓰고, 초안은 제가 고칠게요.</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>한국 공고 링크를 넣었는데 못 읽어요</strong><br>잡코리아·사람인 같은 한국 사이트는 자동 검색 대상이 아니에요. 공고 본문을 복사해서 붙여 넣으세요.</li><li><strong>점수가 너무 낮게 나와요</strong><br>처음엔 나를 잘 몰라서 그래요. 하고 싶은 일, 피하고 싶은 일, 숨은 경험을 대화로 알려 주면 다음 평가부터 반영돼요.</li><li><strong>이력서에 없는 경험을 넣고 싶어요</strong><br>실제로 해 본 일이면 알려 주세요. 그래야 넣어요. 지어낸 숫자나 사실이 들어간 PDF는 코드에서 막아요.</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>지원은 절대 대신 하지 않아요. 초안까지만 만들고, 제출 버튼은 내가 눌러요.</li><li>이력서는 내 컴퓨터와 내가 고른 AI 서비스(클로드)에만 가요. 개인정보는 필요한 만큼만 넣으세요.</li><li>AI가 쓴 이력서도 꼭 직접 읽고 고치세요. 점수는 참고용이고, 최종 판단은 내가 해요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
