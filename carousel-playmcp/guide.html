@@ -1,0 +1,396 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>카톡에 붙이는 AI 비서, 설치부터 사용 방법까지 | AI ANTENNA</title><meta property="og:title" content="카톡에 붙이는 AI 비서, 설치부터 사용 방법까지"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>카톡에 붙이는 AI 비서, 설치부터 사용 방법까지</h1><p class="outcome">카카오가 만든 PlayMCP를 클로드에 한 번 연결하면, 말 한마디로 톡캘린더에 일정·할 일이 들어가고, 선물하기·카카오맵에서 찾은 결과를 카톡 '나와의 채팅'으로 받아요. 저희가 클로드 무료 계정으로 직접 돌려 본 순서와 요청 문장을 정리했어요.</p><figure class="media"><video src="media/07.mp4" poster="media/07.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>한 문장으로 톡캘린더 일정 + 카톡 정리까지 (직접 실행 · 폰 화면은 개인정보 때문에 실제 내용으로 다시 그림)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>카카오 계정 (카카오톡 쓰는 계정)</li><li>클로드 계정 — 무료 요금제도 돼요 (웹 claude.ai 또는 데스크톱 앱)</li><li>챗GPT로 쓰려면 웹에서 '개발자 모드'를 켤 수 있는 계정 (아래 부록)</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① PlayMCP 도구함에 도구 4개 담기</h3><p>playmcp.kakao.com에 카카오 계정으로 로그인하고, '톡캘린더', '카카오톡 나챗방', '카카오맵', '카카오톡 선물하기'를 하나씩 열어 [도구함에 추가]를 누르세요. 위 메뉴 [도구함]에 들어가면 담은 4개가 보여요. 카카오 로그인 한 번으로 도구함에 담긴 도구가 전부 AI에게 열리니, 쓸 것만 담으세요.</p><figure class="media"><img src="media/g-toolbox4.png" loading="lazy" alt=""><figcaption>도구함에 담은 4개 (직접 실행)</figcaption></figure></div><div class="step"><div class="no">2</div><h3>② 클로드에 PlayMCP 연결하기</h3><p>claude.ai 왼쪽 아래 이름 → 설정 → 커넥터(맞춤 설정) → [탐색]에서 'PlayMCP'를 검색해 [연결]을 누르고, 카카오 로그인·동의를 하면 끝이에요. 연결되면 '내 커넥터'의 PlayMCP 안에 담은 도구 이름이 나와요(아래 그림은 카카오맵·선물하기 부분). 도구함에 나중에 더 담았는데 안 보이면, 여기서 [연결 해제] 후 다시 [연결]하세요(저희도 이렇게 해서 카카오맵·선물하기가 보였어요).</p><figure class="media"><img src="media/g-claude-tools.png" loading="lazy" alt=""><figcaption>연결된 PlayMCP의 카카오맵·선물하기 도구 (직접 실행)</figcaption></figure></div><div class="step"><div class="no">3</div><h3>③ 처음 쓸 때 '한 번만 허용' 누르기</h3><p>대화창에 '카카오맵으로 …', '톡캘린더에 …'처럼 서비스 이름을 넣어 말하면 클로드가 도구를 써도 되는지 물어요. [한 번만 허용]을 누르세요. [항상 허용]은 누르지 않는 게 안전해요. 서비스 이름을 빼면 클로드가 다른 검색(웹 검색 등)을 쓰기도 해요.</p><figure class="media"><img src="media/g-allow.png" loading="lazy" alt=""><figcaption>도구 사용 허락 창 (직접 실행)</figcaption></figure><figure class="media"><img src="media/g-answer.png" loading="lazy" alt=""><figcaption>허락하면 카카오맵 결과가 바로 와요</figcaption></figure></div><div class="step"><div class="no">4</div><h3>④ 청첩장·안내문 사진으로 일정 넣기</h3><p>사진을 대화창에 올리고 아래 '일정 넣기' 문장을 쓰세요. 클로드가 날짜·시간·장소를 읽어 '이렇게 넣을까요?'라고 먼저 보여 줘요. 맞으면 '응, 등록해 줘'라고 답하세요. 끝나는 시간이 사진에 없으면 임의로 잡으니(저희 예시는 1시간), 그 부분을 확인하세요.</p><figure class="media"><video src="media/02.mp4" poster="media/02.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>가상 청첩장 → 일정 + 전날 할 일 (직접 실행)</figcaption></figure></div><div class="step"><div class="no">5</div><h3>⑤ 친구 생일·선물 고르기</h3><p>'생일' 문장으로 톡캘린더 친구 생일을 보고, '선물' 문장으로 선물하기 인기 순위에서 가격대에 맞는 상품을 받아요. 상품 링크가 같이 와요. 결제·보내기는 링크를 눌러 직접 해요.</p><figure class="media"><video src="media/03.mp4" poster="media/03.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>친구 이름은 가상, 상품은 10월 26일 실제 결과</figcaption></figure></div><div class="step"><div class="no">6</div><h3>⑥ 아직 안 쓴 선물 찾기</h3><p>'선물함' 문장을 쓰면 선물함을 조회해서 아직 안 쓴 선물을 알려 줘요. 언제까지 쓸 수 있는지는 카카오톡 선물함에서 직접 확인하세요.</p><figure class="media"><video src="media/04.mp4" poster="media/04.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>화면 속 선물은 가상이에요</figcaption></figure></div><div class="step"><div class="no">7</div><h3>⑦ 약속 장소·걷는 시간·길 비교</h3><p>'카카오맵으로'를 꼭 넣어 말하세요. 장소를 찾고 도보 길찾기로 역에서 몇 분인지 재 줘요. 대중교통·자전거·걷기 길찾기가 되고, 자동차 길찾기는 없어요.</p><figure class="media"><video src="media/05.mp4" poster="media/05.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>홍대입구역 브런치 3곳 + 도보 시간 (직접 실행)</figcaption></figure><figure class="media"><video src="media/06.mp4" poster="media/06.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>판교→뚝섬 대중교통 43분 vs 자전거 1시간 51분</figcaption></figure></div><div class="step"><div class="no">8</div><h3>⑧ 정리해서 카톡으로 받기</h3><p>문장 끝에 '카톡 나와의 채팅으로 보내 줘'를 붙이면 정리한 내용이 내 카톡으로 와요(최대 200자). 남에게 보내는 기능은 없고 나와의 채팅으로만 가요.</p><figure class="media"><img src="media/01.png" loading="lazy" alt=""><figcaption>클로드가 보낸 '브런치 약속' 메시지 내용 그대로 (개인정보 때문에 화면은 다시 그림)</figcaption></figure></div></section>
+
+<section><h2>결과 읽는 법</h2>
+<div class="step"><div class="no">1</div><h3>쓴 도구 확인</h3><p>답 위에 '로드된 도구, playMCP 통합 사용함'이 보이고, 펼치면 '카카오맵: …'처럼 쓴 도구가 나와요. 이 줄이 없으면 카카오 도구가 아니라 클로드가 다른 검색을 쓴 거예요. 서비스 이름을 넣어 다시 물어보세요.</p><figure class="media"><img src="media/g-answer.png" loading="lazy" alt=""><figcaption>답 위 '로드된 도구, playMCP 통합 사용함' (실제 claude.ai 화면)</figcaption></figure></div>
+<div class="step"><div class="no">2</div><h3>숫자는 그 도구가 준 값</h3><p>걷는 시간·거리(예: 7분, 443m)와 대중교통 시간(예: 43분)은 카카오맵 길찾기 결과예요. 출발 시각과 실제 길에 따라 조금 달라질 수 있어요.</p></div>
+<div class="step"><div class="no">3</div><h3>'이대로 넣을까요?'는 아직 안 들어간 상태</h3><p>일정·할 일은 확인 질문에 '응'이라고 답해야 들어가요. '등록했어요'라는 답이 나와야 실제로 들어간 거예요.</p></div>
+<div class="step"><div class="no">4</div><h3>링크</h3><p>가게·길찾기·선물 결과에는 카카오맵·선물하기 링크가 같이 와요. 영업시간·예약·결제는 링크를 열어 직접 확인하세요.</p></div>
+</section>
+<section><h2>쓰기 좋은 상황 · 안 맞는 상황</h2>
+<div class="step"><div class="no">1</div><h3>쓰기 좋은 상황</h3><p>청첩장·안내문처럼 날짜가 적힌 사진을 일정으로 옮길 때, 친구 생일이 다가올 때, 약속 장소를 역에서 가까운 순으로 고를 때, 정리한 내용을 내 카톡에 남겨 둘 때.</p></div>
+<div class="step"><div class="no">2</div><h3>안 맞는 상황</h3><p>자동차 길찾기(지원 안 함), 친구에게 카톡 보내기(나와의 채팅으로만 감), 선물 결제·보내기(고르기까지만), 가게 영업시간·예약 확인(검색 결과에 없음).</p></div>
+</section>
+<section><h2>처음부터 끝까지 실제 예시 — 토요일 브런치 약속</h2>
+<div class="step"><div class="no">1</div><h3>연결</h3><p>도구함에 4개를 담고(①), 클로드 커넥터에서 PlayMCP를 연결해요(②). 도구함 화면 오른쪽 '연결하기'에 연결 주소가 있어요.</p><figure class="media"><img src="media/ex-1-url.png" loading="lazy" alt=""><figcaption>PlayMCP 도구함 오른쪽 '연결하기' — 도구함 주소 (직접 실행)</figcaption></figure></div>
+<div class="step"><div class="no">2</div><h3>요청</h3><p>"카카오맵으로 홍대입구역 근처 브런치 카페 3곳 찾아 줘. 이번 주 토요일에 친구 넷이랑 갈 거야. 카카오맵 도보 길찾기로 홍대입구역에서 각각 몇 분 걸리는지도 알려 줘."</p><figure class="media"><img src="media/ex-2-ask.png" loading="lazy" alt=""><figcaption>카카오맵으로 찾아 달라는 요청 (실제 기록 내용, 화면은 다시 그림)</figcaption></figure></div>
+<div class="step"><div class="no">3</div><h3>허용</h3><p>카카오맵 장소 검색과 도보 길찾기마다 허락 창이 떠요. [한 번만 허용]을 눌러요.</p><figure class="media"><img src="media/ex-3-allow.png" loading="lazy" alt=""><figcaption>도구를 쓰기 전 허락 창 — [한 번만 허용]</figcaption></figure></div>
+<div class="step"><div class="no">4</div><h3>결과</h3><p>카카오맵이 찾은 3곳과 역에서 걷는 시간이 와요: 라헬의부엌 홍대점 약 7분(443m), 아날로그가든 약 10분(634m), 베어스덴브런치 약 13분(783m).</p><figure class="media"><img src="media/ex-4-walk.png" loading="lazy" alt=""><figcaption>결과: 라헬의부엌 7분(443m) · 아날로그가든 10분(634m) · 베어스덴브런치 13분(783m) (실제 기록 내용, 화면은 다시 그림)</figcaption></figure></div>
+<div class="step"><div class="no">5</div><h3>일정 + 카톡 요청</h3><p>"첫 번째 카페로 이번 주 토요일 오전 11시부터 12시 30분까지 '브런치 약속' 일정 넣고, 가게 이름·주소·역에서 걷는 시간을 정리해서 카톡 나와의 채팅으로 보내 줘." 날짜·시간·제목을 다 말해서 확인 질문 없이 바로 넣었어요.</p><figure class="media"><img src="media/ex-5-done.png" loading="lazy" alt=""><figcaption>일정 만들기 + 나챗방 보내기를 차례로 처리 (실제 기록 내용, 화면은 다시 그림 — '무료 플랜' 칩·도구 줄 모양은 실제 claude.ai 화면과 달라요)</figcaption></figure></div>
+<div class="step"><div class="no">6</div><h3>카톡 도착</h3><p>나와의 채팅에 '[브런치 약속] 10/31(토) 11:00~12:30 / 라헬의부엌 홍대점 / 서울 마포구 와우산로29길 47 / 홍대입구역(2호선)에서 도보 약 7분 (443m)'이 와요. 톡캘린더 10월 31일에도 일정이 생겨요.</p><figure class="media"><img src="media/ex-6-kakao.png" loading="lazy" alt=""><figcaption>카톡 나와의 채팅에 도착한 정리 (내용은 실제, 화면은 다시 그림)</figcaption></figure></div>
+</section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>일정 넣기</h3><p>사진 올린 뒤</p><pre class="copy">이 사진 보고 톡캘린더에 일정 넣어 줘. 전날 저녁 8시에 '(준비할 일)' 할 일도 같이 만들어 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>생일</h3><p>톡캘린더</p><pre class="copy">톡캘린더로 다음 달 생일인 친구 알려 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>선물</h3><p>카카오톡 선물하기</p><pre class="copy">카카오톡 선물하기에서 친구 생일 선물로 (3만 원대) 선물 3개 골라 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>선물함</h3><p>카카오톡 선물하기</p><pre class="copy">카카오톡 선물하기 선물함에서 내가 아직 안 쓴 선물 알려 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>장소 + 걷는 시간</h3><p>카카오맵</p><pre class="copy">카카오맵으로 (역 이름) 근처 (브런치 카페) 3곳 찾아 줘. 카카오맵 도보 길찾기로 (역 이름)에서 각각 몇 분 걸리는지도 알려 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>길 비교</h3><p>카카오맵</p><pre class="copy">(출발지)에서 (도착지)까지 대중교통이랑 자전거로 가면 각각 얼마나 걸려?</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>한 번에 일정 + 카톡</h3><p>카카오맵 결과 다음에</p><pre class="copy">첫 번째 카페로 (이번 주 토요일) (오전 11시부터 12시 30분)까지 '(일정 이름)' 일정 넣고, 가게 이름·주소·역에서 걷는 시간을 정리해서 카톡 나와의 채팅으로 보내 줘.</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>도구함에 담았는데 클로드가 그 도구를 모른대요</strong><br>설정 → 커넥터 → PlayMCP에서 [연결 해제] 후 다시 [연결]하세요. 도구 목록이 새로 들어와요.</li><li><strong>카카오맵이라고 안 했더니 다른 지도 결과가 나와요</strong><br>요청에 '카카오맵으로', '톡캘린더에'처럼 서비스 이름을 넣으세요. 이름이 없으면 클로드가 웹 검색을 쓰기도 해요(저희 첫 시도도 그랬어요).</li><li><strong>일정이 바로 안 들어가요</strong><br>톡캘린더는 넣기 전에 내용을 보여 주고 확인을 받아요. '응, 등록해 줘'라고 답하면 들어가요. 날짜·시간·제목을 처음부터 다 말하면 바로 넣기도 해요.</li></ul></section>
+<section><h2>꼭 알고 쓰기 + 챗GPT 부록</h2><ul class="plain"><li>카카오 로그인 한 번으로 도구함의 도구가 전부 AI에게 열려요. 쓸 도구만 담고, 연결은 PlayMCP 설정 &gt; 연결된 서비스에서 언제든 끊을 수 있어요.</li><li>도구 허락은 [한 번만 허용]으로. 생일·선물함·일정은 개인정보라, 화면을 공유하거나 캡처할 땐 가리세요.</li><li>선물은 고르기까지만 해요. 결제·보내기는 직접 하고, 카톡은 나와의 채팅으로만 가요.</li><li>챗GPT에서도 돼요(부록, 카카오 공식 안내 순서): 챗GPT 웹 설정에서 '개발자 모드'를 켜고 → PlayMCP 도구함에서 [도구함 URL 복사하기] → 챗GPT 플러그인 화면 [+] → 이름 PlayMCP, MCP server URL에 붙여 넣기, 인증은 OAuth(Client ID·Secret은 비움) → [Create] 후 카카오 로그인·동의. 채팅에서 [+] &gt; PlayMCP를 고른 채로 쓰고, 도구함을 바꾸면 플러그인에서 [Refresh]를 누르세요. 데스크톱 앱은 지금 연결이 안 되고, 회사용(Business·Enterprise) 계정은 관리자가 켜 줘야 해요. 어느 요금제부터 되는지는 오픈AI 안내를 확인하세요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
