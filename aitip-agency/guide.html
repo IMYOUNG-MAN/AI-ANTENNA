@@ -1,0 +1,383 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>agency-agents — 설치부터 사용 방법까지 | AI ANTENNA</title><meta property="og:title" content="agency-agents — 설치부터 사용 방법까지"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>agency-agents — 설치부터 사용 방법까지</h1><p class="outcome">agency-agents는 AI한테 붙이는 '직원 파일' 묶음이에요. 무료 오픈소스(MIT)이고, 부서 18곳에 직원 283명이 들어 있어요. 직원 한 명이 글 파일(.md) 하나예요. 파일 안에 맡는 일, 꼭 지킬 규칙, 답을 어떤 모양으로 낼지가 적혀 있어요. Claude Code의 agents 폴더에 넣고 '이 직원한테 맡겨 줘'라고 하면, 그 파일을 따르는 일꾼이 따로 떠서 일해요. 아래는 저희가 같은 짧은 요청을 직원 없이, 그리고 직원을 붙여서 각각 돌려 본 결과예요.</p><figure class="media"><img src="media/ev-ad15.png" loading="lazy" alt=""><figcaption>유료 광고팀 광고 문구 직원 — 구글 제목 15칸을 종류별로, 글자 수까지 (직접 실행)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>Claude 유료 요금제(Pro 이상) + Claude Code</li><li>Git (저장소를 받을 때) — 없으면 깃허브에서 파일 하나만 받아도 돼요</li><li>무료 · 오픈소스(MIT) · 가입·API 키 없음. 직원이 따로 떠서 일하는 만큼 사용량은 조금 더 들어요</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>설치 — 필요한 직원 파일만 agents 폴더에</h3><p>전부 깔 필요 없어요. 쓸 직원 파일만 내 컴퓨터의 Claude Code 직원 폴더(사용자 폴더 아래 .claude\agents)에 복사하면 돼요. 아래 '설치(윈도우)' 세 줄을 명령 프롬프트에 넣으면 유료 광고팀 광고 문구 직원 하나가 들어가요. 다른 직원은 마지막 줄의 폴더·파일 이름만 바꾸세요(부서 폴더: 아래 '부서 이름표'). 한 프로젝트에서만 쓰려면 그 프로젝트 폴더의 .claude\agents에 넣어도 돼요. 넣은 뒤엔 Claude Code를 새로 여세요. 맥·리눅스는 README의 install.sh, 클릭으로 까는 데스크톱 앱(agencyagents.app)도 있어요(저희는 윈도우 파일 복사로 확인했어요).</p><figure class="media"><img src="media/g-repo.png" loading="lazy" alt=""><figcaption>저장소 첫 화면 — 부서마다 폴더가 하나씩</figcaption></figure></div><div class="step"><div class="no">2</div><h3>쓰는 법 — 부서와 직원 이름을 불러서 맡기기</h3><p>Claude Code에서 '(직원 영어 이름) 직원한테 맡겨 줘. (할 일)'이라고 적으면 돼요. 이름은 파일 맨 위 name: 줄에 있어요(예: Ad Creative Strategist). 요청 끝에 '직원 결과를 고치지 말고 그대로 보여 줘'를 붙이면, 직원이 낸 결과를 Claude가 줄이지 않고 그대로 보여 줘요. 내 파일을 봐야 하는 일이면 그 파일이 있는 폴더에서 Claude Code를 여세요. 빈칸 틀은 아래 '복사해서 쓰기'에 있어요.</p><figure class="media"><img src="media/g-term.png" loading="lazy" alt=""><figcaption>요청을 넣자 Ad Creative Strategist 직원이 따로 떠서 일을 시작 (직접 실행)</figcaption></figure></div><div class="step"><div class="no">3</div><h3>결과 읽는 법</h3><p>직원마다 답 모양이 정해져 있어요. 광고 문구 직원은 '제목 15개(종류·글자 수) → 설명 → 운영 방법 → 네이버용 → 확인할 것' 순서예요. 손님 시점 직원은 '가상 손님 프로필 → 첫 화면 5초 테스트 → 화면 칸마다 손님 속마음 + 분석가 평가 → 판정(어디서 나가려 했나) → 고칠 것(바로·며칠·계획) → 확인할 가설'이에요. 첫 미팅 코치는 '먼저 정할 것 → 성공 기준 → 사전 조사 → 30분 순서·첫마디 대본 → 질문 목록 → 예상 반대 의견과 대답 → 시범 운영안 → 마무리 대본'이에요. [확인 필요]·[가정] 표시는 직원이 모르는 걸 지어내지 않고 남긴 자리예요 — 채워서 다시 맡기세요.</p></div><div class="step"><div class="no">4</div><h3>다시 돌리기</h3><p>[확인 필요] 자리에 실제 값을 채워(예: 배송비 3,000원, 카페 공급가 8,000원) '이 정보로 같은 직원한테 다시 맡겨 줘'라고 하면 돼요. 손님 시점 직원은 손님을 바꿔(예: 50대, 선물용으로 검색) 다시 돌리면 다른 손님이 어디서 막히는지 볼 수 있어요. 고친 페이지를 넣고 다시 돌려 전후를 비교해도 돼요(이 부분은 저희가 다시 돌려 보지 않았어요).</p></div><div class="step"><div class="no">5</div><h3>이럴 때 쓰세요 / 안 맞는 때</h3><p>쓰기 좋은 때: 늘 같은 양식으로 받고 싶은 일(광고 문구, 판매 페이지 점검, 미팅 준비, 보고 요약), 내가 그 분야 절차를 잘 몰라서 순서·체크리스트가 필요한 일, 매번 길게 역할 설명을 쓰던 일. 안 맞는 때: 짧은 질문 하나(직원이 길게 답해요), 전문가 판단이 꼭 필요한 일(법·세금·의료 — 참고용), 중국 플랫폼 전용 직원(샤오훙수·위챗 등)처럼 한국에서 안 쓰는 곳. 저희가 해 보니 계약서 검토·회의록 정리는 직원 없이 물어도 답 모양이 거의 같았어요 — 차이가 큰 건 '정해진 양식이 있는 일'이었어요.</p></div><div class="step"><div class="no">6</div><h3>실제 예시 ① 유료 광고팀 · 광고 문구 직원</h3><p>같은 요청 '한빛 수제 그래놀라 300g 12,900원 검색 광고 문구 써 줘.'를 두 번 넣었어요. 직원 없이: 제목 4개·설명 3개(네이버 기준). 직원 붙임: 구글 제목 15개를 브랜드·제품·가격·혜택·질문형·먹는 방법·행동 유도로 나눠 글자 수와 함께, 설명 4개, 운영 방법, 콜아웃, 네이버 제목 6개·설명 4개, 소재 테스트 방법까지 나왔어요. 알려 주지 않은 성분·할인·후기는 넣지 않았어요.</p><figure class="media"><img src="media/ev-ad-plain.png" loading="lazy" alt=""><figcaption>직원 없이 — 제목 4개 (직접 실행)</figcaption></figure><figure class="media"><img src="media/ev-ad15.png" loading="lazy" alt=""><figcaption>직원 붙임 — 제목 15개, 종류·글자 수 (직접 실행)</figcaption></figure></div><div class="step"><div class="no">7</div><h3>실제 예시 ② 디자인팀 · 손님 시점 직원</h3><p>시연용 판매 페이지(shop.html)로 '판매 페이지 검토해 줘.' 직원 없이: 고칠 점 16개를 급한 순서로(버튼 링크, 배송비, 사진 등). 직원 붙임: 가상 손님 김지은(36세 맞벌이, 초1 아이 아침용, 걱정은 당·땅콩·배송비)을 세우고, 첫 화면 5초 테스트(뭔지·나한테 맞는지·뭘 누를지 → 3개 중 2개 실패), 화면 4칸마다 손님 속마음과 분석가 평가를 따로 쓴 뒤 '실제로 나간 곳: 원재료 칸(땅콩 여부·당류 없음)'을 짚고 고칠 것을 바로·며칠·계획으로 나눴어요. 통계가 아니라 가설이라고 스스로 밝혀요.</p><figure class="media"><img src="media/ev-persona-plain.png" loading="lazy" alt=""><figcaption>직원 없이 — 고칠 점 목록 (직접 실행)</figcaption></figure><figure class="media"><img src="media/ev-persona5s.png" loading="lazy" alt=""><figcaption>직원 붙임 — 첫 화면 5초 테스트와 손님 속마음 (직접 실행)</figcaption></figure><figure class="media"><img src="media/ev-persona-fold3.png" loading="lazy" alt=""><figcaption>직원 붙임 — 손님이 나간 칸 (직접 실행)</figcaption></figure></div><div class="step"><div class="no">8</div><h3>실제 예시 ③ 영업팀 · 첫 미팅 코치</h3><p>'다음 주에 동네 카페 사장님을 만나서 우리 그래놀라를 카페에 납품하자고 제안할 거야. 미팅 준비해 줘.' 직원 없이: 먼저 정할 것 3가지, 제안 순서, 예상 질문 6개, 챙길 것. 직원 붙임: 미팅 전에 꼭 정할 10가지([확인 필요]), 성공 기준 5단계(최상 → 나쁜 결과), 30분 순서와 말하는 비율, 첫마디 대본, 질문 목록, 예상 반대 의견 7가지와 대답(인정 → 공감 → 확인 → 바꿔 말하기), 시범 운영안, 마무리 대본까지 나왔어요.</p><figure class="media"><img src="media/ev-sales-plain.png" loading="lazy" alt=""><figcaption>직원 없이 — 예상 질문 표 (직접 실행)</figcaption></figure><figure class="media"><img src="media/ev-sales-open.png" loading="lazy" alt=""><figcaption>직원 붙임 — 첫마디 대본 (직접 실행)</figcaption></figure><figure class="media"><img src="media/ev-sales-obj.png" loading="lazy" alt=""><figcaption>직원 붙임 — 예상 반대 의견과 대답 (직접 실행)</figcaption></figure></div><div class="step"><div class="no">9</div><h3>챗GPT에서 쓰기</h3><p>직원 파일 내용을 그대로 복사해 챗GPT 프로젝트 지침(또는 GPT 만들기의 지침 칸)에 붙여 넣고, 그 프로젝트 안에서 요청하면 돼요. 지침 칸 글자 수가 모자라면 대화 첫 메시지에 붙여 넣으세요. 다만 저희가 광고 문구 직원으로 해 보니 챗GPT에선 제목 3개 → 5개 정도로 차이가 Claude Code만큼 크지 않았어요(API로 확인).</p></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>설치(윈도우)</h3><p>명령 프롬프트에 한 줄씩</p><pre class="copy">git clone --depth 1 https://github.com/msitarzewski/agency-agents.git
+mkdir &quot;%USERPROFILE%\.claude\agents&quot;
+copy agency-agents\paid-media\paid-media-creative-strategist.md &quot;%USERPROFILE%\.claude\agents\&quot;</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>부서 이름표</h3><p>설치 마지막 줄의 폴더 이름</p><pre class="copy">개발 engineering · 디자인 design · 마케팅 marketing · 영업 sales · 보안 security · 유료 광고 paid-media · 제품 product · 프로젝트 관리 project-management · 테스트 testing · 지원 support · 재무 finance · 전문 분야 specialized · 게임 개발 game-development · 지도 gis · 공간 컴퓨팅 spatial-computing · 학술 academic · 의료 healthcare · 리서치 research</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>처음 붙일 직원 5명</h3><p>설치 마지막 줄에 이 경로를 넣기</p><pre class="copy">유료 광고팀 광고 문구: paid-media\paid-media-creative-strategist.md
+디자인팀 손님 시점: design\design-persona-walkthrough.md
+영업팀 첫 미팅 코치: sales\sales-discovery-coach.md
+지원팀 보고 요약: support\support-executive-summary-generator.md
+테스트팀 공개 전 판정: testing\testing-reality-checker.md</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>광고 문구</h3><p>Claude Code에 (괄호만 바꾸기)</p><pre class="copy">Ad Creative Strategist 직원한테 맡겨 줘. (상품 이름·용량·가격·혜택) 검색 광고 문구 써 줘. 직원 결과를 고치지 말고 그대로 보여 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>판매 페이지 손님 시점</h3><p>페이지 파일이 있는 폴더에서</p><pre class="copy">Persona Walkthrough Specialist 직원한테 (파일 이름.html) 판매 페이지 검토 맡겨 줘. 손님은 (나이·상황·어디서 무엇을 검색해 들어왔는지·걱정거리)로 해 줘. 직원 결과를 고치지 말고 그대로 보여 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>첫 미팅 준비</h3><p></p><pre class="copy">Discovery Coach 직원한테 맡겨 줘. 다음 주에 (누구)를 만나서 (무엇)을 제안할 거야. 우리 쪽 자료는 (파일 이름). 미팅 준비해 줘. 직원 결과를 고치지 말고 그대로 보여 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>보고 요약</h3><p>회의록·자료가 있는 폴더에서</p><pre class="copy">Executive Summary Generator 직원한테 맡겨 줘. (파일 이름) 내용을 (대표님)께 올릴 보고용으로 요약해 줘. 직원 결과를 고치지 말고 그대로 보여 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>공개 전 판정</h3><p></p><pre class="copy">Reality Checker 직원한테 맡겨 줘. (파일 이름), 이대로 공개해도 되는지 판정해 줘. 직원 결과를 고치지 말고 그대로 보여 줘.</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>직원을 못 찾는다고 해요</strong><br>파일이 사용자 폴더 아래 .claude\agents(또는 프로젝트 폴더의 .claude\agents)에 있는지 보고, Claude Code를 새로 여세요. 부를 땐 파일 맨 위 name: 줄의 이름을 그대로 쓰세요.</li><li><strong>직원 결과를 Claude가 줄여서 보여 줘요</strong><br>요청 끝에 '직원 결과를 고치지 말고 그대로 보여 줘'를 붙이세요.</li><li><strong>답이 너무 길어요</strong><br>직원 파일이 정한 양식이라 길어요. '제목 표만', '고칠 것만'처럼 필요한 칸만 달라고 하면 돼요.</li><li><strong>한국에 안 맞는 말이 나와요</strong><br>직원 파일이 영어·해외 기준으로 쓰여 있어요(예: 구글 광고 기준). '네이버 기준으로', '한국 법 기준으로'를 요청에 붙이고, 법·세금은 전문가에게 한 번 더 확인하세요.</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>직원 파일은 '이렇게 일해라'라는 지시문이에요. 실제 사람 전문가가 아니고, 결과는 내 상황에 맞는지 직접 확인하고 쓰세요.</li><li>직원이 모르는 값([확인 필요])을 채워 줘야 결과가 정확해져요. 지어내지 않고 비워 두는 게 정상이에요.</li><li>Anthropic이 만든 게 아니에요. 원본: github.com/msitarzewski/agency-agents (MIT).</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
