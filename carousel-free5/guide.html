@@ -1,0 +1,380 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>결제 버튼 누르기 전에, 무료 5개 — 받는 곳과 설치 순서 | AI ANTENNA</title><meta property="og:title" content="결제 버튼 누르기 전에, 무료 5개 — 받는 곳과 설치 순서"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">AI 안테나 정리본</div><h1>결제 버튼 누르기 전에, 무료 5개 — 받는 곳과 설치 순서</h1><p class="outcome">돈 내기 전에 먼저 써 볼 무료 오픈소스 5개예요. 영어 PDF를 배치 그대로 한국어로(PDFMathTranslate), 이력서 디자인·PDF 받기(Reactive Resume), 사진 속 지울 곳 채우기(Compositor·맥), 여행 경비 정산(TREK), 자주 여는 웹사이트를 가벼운 앱으로(Pake). 도구마다 받는 곳 → 설치 → 처음 쓰는 순서로 적었어요.</p><figure class="media"><img src="media/pdf-4-result.png" loading="lazy" alt=""><figcaption>PDFMathTranslate로 영어 논문 쪽을 한국어로 바꾼 실제 화면 (11월 1일)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>윈도우 PC: PDFMathTranslate · Pake / 맥(애플 실리콘·macOS 26 이상): Compositor</li><li>인터넷 브라우저: Reactive Resume(rxresu.me, 무료 가입)</li><li>TREK은 내 컴퓨터나 서버에 '도커(Docker)'로 설치해요 — 조금 어려운 편이에요</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① PDFMathTranslate — 받기</h3><p>깃허브 PDFMathTranslate 배포 페이지(Releases)에서 윈도우용 zip을 받아요. 'with-assets'가 붙은 쪽(약 520MB)은 글꼴·모델이 같이 들어 있어 처음 실행이 덜 막혀요. 압축을 풀고 pdf2zh 폴더 안 build의 pdf2zh.exe를 두 번 눌러요. 안 열리면 같은 폴더의 vc_redist 설치 파일을 먼저 깔아요.</p><figure class="media"><img src="media/pdf-0-release.png" loading="lazy" alt=""><figcaption>배포 페이지의 윈도우 zip (공식 페이지)</figcaption></figure></div><div class="step"><div class="no">2</div><h3>① PDFMathTranslate — 번역하기</h3><p>브라우저에 번역 화면이 열려요. PDF를 끌어다 놓고 Service는 'Bing', Translate to는 'Korean'으로 고른 뒤 Translate를 눌러요. 끝나면 번역본(Mono)과 원문·번역을 한 쪽씩 엮은 판(Dual) 두 파일을 받을 수 있어요. 저희는 KAN 논문 2쪽에 1분 안쪽이 걸렸어요.</p><figure class="media"><img src="media/pdf-3-options.png" loading="lazy" alt=""><figcaption>Bing · Korean 고르기 (실제 화면)</figcaption></figure><figure class="media"><img src="media/pdf-4-result.png" loading="lazy" alt=""><figcaption>번역 결과와 내려받기 (실제 화면)</figcaption></figure></div><div class="step"><div class="no">3</div><h3>② Reactive Resume — 이력서 만들기</h3><p>rxresu.me에서 무료로 가입하고 New → Start blank(빈 이력서) 또는 Import a resume(JSON·PDF 가져오기)를 골라요. 왼쪽 Write 칸에 이름·경력을 적으면 오른쪽 종이에 바로 보여요.</p><figure class="media"><img src="media/rr-1-new.png" loading="lazy" alt=""><figcaption>New 화면 (실제 화면 · 시연 계정)</figcaption></figure></div><div class="step"><div class="no">4</div><h3>② Reactive Resume — 한국어로 맞추기</h3><p>Design → Page → Language에서 Korean을 고르면 '요약·학력·경력' 같은 칸 제목과 날짜가 한국어로 바뀌어요. Type → Font family에서 'Noto Sans KR'을 고르면 한글이 깔끔해져요.</p><figure class="media"><img src="media/rr-3-lang.png" loading="lazy" alt=""><figcaption>Language에서 Korean (실제 화면)</figcaption></figure></div><div class="step"><div class="no">5</div><h3>② Reactive Resume — 템플릿 고르고 PDF 받기</h3><p>Design → Template에서 템플릿을 누를 때마다 같은 내용이 통째로 갈아입어요(18개). 오른쪽 위 Download PDF를 누르면 바로 저장돼요. 결제 화면은 없어요.</p><figure class="media"><video src="media/tpl.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>템플릿 바꾸기 → PDF 받기 (실제 화면 · 가상 인물)</figcaption></figure><figure class="media"><img src="media/rr-5-pdf.png" loading="lazy" alt=""><figcaption>받은 PDF</figcaption></figure></div><div class="step"><div class="no">6</div><h3>③ Compositor — 받기 (맥 전용)</h3><p>robbietilton.com/compositor에서 'Download for Mac'을 누르거나, 터미널에 아래 '복사해서 쓰기'의 brew 명령을 넣어요. 애플 실리콘 맥 + macOS 26 이상이어야 해요. 윈도우는 개발자가 확인하지 않은 다른 사람의 이식판만 있어요.</p><figure class="media"><img src="media/comp-1-site.png" loading="lazy" alt=""><figcaption>공식 사이트 (11월 1일)</figcaption></figure></div><div class="step"><div class="no">7</div><h3>③ Compositor — 지우고 채우기</h3><p>올가미(Lasso)로 지울 곳을 두르고 '주변으로 채우기(Content-Aware Fill)'를 실행하면 주변 무늬로 메워요. 작은 얼룩은 Spot Healing 붓으로 문질러도 돼요. 단축키는 포토샵과 비슷해요.</p><figure class="media"><img src="media/step-31.62.png" loading="lazy" alt=""><figcaption>지울 곳 두르기 (개발자 공식 영상 장면)</figcaption></figure><figure class="media"><img src="media/step-31.80.png" loading="lazy" alt=""><figcaption>채운 결과 (개발자 공식 영상 장면)</figcaption></figure></div><div class="step"><div class="no">8</div><h3>④ TREK — 설치 (공식 안내)</h3><p>TREK은 웹 서비스가 아니라 내 컴퓨터·서버에 까는 프로그램이에요. 도커 데스크톱을 깔고 아래 '복사해서 쓰기'의 명령을 넣은 뒤 브라우저에서 localhost:3000을 열어요. 처음 관리자 계정은 도커 기록(docker logs trek)에 나와요. 저희 PC는 도커가 없어 직접 깔지는 못했고, 아래 그림은 공식 도움말 화면이에요.</p><figure class="media"><img src="media/trek-0-repo.png" loading="lazy" alt=""><figcaption>공식 설치 안내 (깃허브)</figcaption></figure></div><div class="step"><div class="no">9</div><h3>④ TREK — 경비 나누고 정산</h3><p>여행을 만든 뒤 Costs(경비) → Add expense로 금액·낸 사람·나눌 사람을 적어요. 다 적으면 오른쪽 Settle up 칸에 '누가 누구에게 얼마' 보낼지만 남아요. 화면 언어는 한국어도 있어요.</p><figure class="media"><img src="media/add-expense-result.png" loading="lazy" alt=""><figcaption>경비 적기 (TREK 공식 도움말 그림)</figcaption></figure><figure class="media"><img src="media/settle-up-result.png" loading="lazy" alt=""><figcaption>정산 칸 (TREK 공식 도움말 그림)</figcaption></figure></div><div class="step"><div class="no">10</div><h3>⑤ Pake — 만들어 둔 앱 받기</h3><p>깃허브 tw93/Pake의 Popular Packages에서 Gemini·ChatGPT·YouTube·Notion 같은 앱의 Windows 링크를 눌러 받아 설치해요. 저희는 제미나이 앱(설치 파일 3.6MB)을 받아 바로 열어 봤어요. 구글이 만든 공식 앱은 아니고, 웹사이트를 창 하나로 띄워 주는 앱이에요.</p><figure class="media"><img src="media/pake-1-release.png" loading="lazy" alt=""><figcaption>Popular Packages (공식 페이지)</figcaption></figure><figure class="media"><video src="media/gem.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>제미나이 앱을 열고 바로 묻기 (실제 화면 · 로그인 안 함)</figcaption></figure></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>PDFMathTranslate 받는 곳</h3><p>윈도우용 zip</p><pre class="copy">https://github.com/PDFMathTranslate/PDFMathTranslate/releases/latest</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>Reactive Resume</h3><p>브라우저에서 바로</p><pre class="copy">https://rxresu.me</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>Compositor 설치 (맥 터미널)</h3><p>Homebrew가 있을 때</p><pre class="copy">brew install --cask robbietilton-compositor</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>TREK 설치 (공식 명령)</h3><p>도커를 깐 뒤 터미널에서</p><pre class="copy">ENCRYPTION_KEY=$(openssl rand -hex 32) docker run -d --name trek -p 3000:3000 \
+  -e ENCRYPTION_KEY=$ENCRYPTION_KEY \
+  -e COOKIE_SECURE=false \
+  -v ./data:/app/data -v ./uploads:/app/uploads mauriceboe/trek</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>Pake 만들어 둔 앱</h3><p>Popular Packages에서 Windows 링크</p><pre class="copy">https://github.com/tw93/Pake#popular-packages</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>PDFMathTranslate가 번역 중에 멈춰요</strong><br>Service가 Google이면 접속 제한에 걸려 멈출 수 있어요(저희도 그랬어요). Bing으로 바꿔서 다시 눌러 보세요. 파일이 크면 Pages에서 일부 쪽만 골라 먼저 해 보세요.</li><li><strong>Reactive Resume에 한글 이력서 PDF를 넣었더니 칸이 비어요</strong><br>저희가 한글 PDF로 해 봤을 땐 칸을 거의 못 찾았어요. 빈 이력서로 시작해 붙여 넣거나, LinkedIn 내보내기·JSON 파일로 가져오면 잘 들어가요.</li><li><strong>Compositor를 윈도우에서 쓰고 싶어요</strong><br>본판은 맥 전용이에요. 깃허브 안내에 다른 사람이 만든 윈도우 이식판이 있지만 개발자가 확인하지 않은 것이라 저희는 권하지 않아요.</li><li><strong>TREK이 어려워요</strong><br>도커 설치가 처음이면 시간이 걸려요. 같이 쓰는 사람이 있으면 한 명이 집 PC·서버에 깔고 링크로 초대하는 방식이 편해요.</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>다섯 개 모두 무료 오픈소스예요: Compositor·Reactive Resume는 MIT, Pake는 GPL-3.0, PDFMathTranslate·TREK은 AGPL-3.0 (11월 1일 깃허브 기준).</li><li>PDFMathTranslate는 번역을 외부 번역 서비스(빙·구글 등)에 맡겨요. 회사 기밀 문서는 넣지 마세요. 번역문이 군데군데 어색할 수 있어요.</li><li>Reactive Resume는 '유료 요금제가 없다'고 공식 안내해요. AI 기능은 내 API 키를 따로 넣어야 쓰고, 그 비용은 별도예요.</li><li>Compositor는 개발자 한 명이 만드는 프로그램이에요. 인쇄용 CMYK는 아직 없어요.</li><li>Pake의 만들어 둔 앱은 그 회사 공식 앱이 아니에요. 로그인은 평소처럼 그 사이트에 하는 거예요. 다른 사이트를 앱으로 만들려면 개발 도구(Rust·Node)가 필요해요(공식 안내).</li><li>TREK 화면 그림과 Compositor 장면은 공식 자료이고, 나머지는 저희가 직접 실행한 화면이에요. 이력서 속 인물은 가상 인물이에요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script><p style="text-align:center;font-size:13px;color:#888;margin:8px 16px 32px">논문: Liu et al., "KAN: Kolmogorov-Arnold Networks", arXiv 2404.19756 (CC BY 4.0) · Compositor 장면: 개발자 Robbie Tilton 공식 출시 영상 · TREK 그림: TREK 저장소 공식 도움말(AGPL-3.0)</p></body></html>
