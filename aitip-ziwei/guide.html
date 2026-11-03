@@ -1,0 +1,379 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>자미두수 운세판 ziwei-doushu — 설치부터 사용 방법까지 | AI ANTENNA</title><meta property="og:title" content="자미두수 운세판 ziwei-doushu — 설치부터 사용 방법까지"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>자미두수 운세판 ziwei-doushu — 설치부터 사용 방법까지</h1><p class="outcome">※ 저희가 가상 생일(1995-03-15 오전 10시, 여)로 직접 돌려 본 화면이에요.
+
+ziwei-doushu는 생년월일시를 넣으면 자미두수 명반(별 수십 개가 12칸에 놓인 운세판)을 계산해 주는 무료 오픈소스예요(코드 MIT). 계산은 정해진 공식대로 해서, 같은 입력이면 늘 같은 판이 나와요. 다만 공개판엔 AI 풀이 기능이 빠져 있어요. 그래서 폴더째 Claude Code에 열고 풀어 달라고 시키면, 클로드가 이 프로그램으로 계산하고 별 조합(격국)과 저장소에 든 옛 책 구절을 근거로 붙여 한국어 풀이 문서를 만들어요. 화면은 중국어이고, 풀이는 전통 해석이니 재미로 보세요.</p><figure class="media"><img src="media/chart-ming.png" loading="lazy" alt=""><figcaption>명반 화면 — 명궁 칸을 누르면 함께 보는 네 칸(삼방사정)이 선으로 이어져요 · 직접 실행</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>Node.js(저희는 v24로 확인) · Git</li><li>Claude Code — 클로드 유료 요금제(Pro·Max 등) 또는 API. 계산 프로그램은 무료지만 풀이를 시키는 만큼 사용량이 들어요</li><li>API 키는 필요 없어요(명반 계산·화면은 키 없이 돌아가요)</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① 내려받고 설치</h3><p>터미널에서 '복사해서 쓰기'의 복제 → 설치 명령을 차례로 실행해요. npm install은 저희 PC에서 1분 반쯤 걸렸어요.</p></div><div class="step"><div class="no">2</div><h3>② 화면으로 명반 보기(선택)</h3><p>npm run dev 를 실행하고 브라우저에서 http://localhost:3000/chart 를 열어요. 입력 칸은 중국어예요: 姓名(이름, 비워도 됨) · 出生日期(생년월일, 양력) 연·월·일 · 出生地点(출생지, 중국 도시 목록 — 비워 두면 보정 없이 넣은 시각 그대로) · 出生时间(태어난 시·분) · 性别(男 남 / 女 여) → 맨 아래 금색 버튼(立即起盘)을 눌러요.</p><figure class="media"><img src="media/form-filled.png" loading="lazy" alt=""><figcaption>입력 화면 — 1995년 3월 15일 10시, 女(여) · 직접 실행</figcaption></figure><figure class="media"><img src="media/chart.png" loading="lazy" alt=""><figcaption>버튼을 누르면 바로 12칸 명반이 나와요. 오른쪽 풀이 칸엔 '공개판엔 AI 풀이 없음' 안내가 떠요(정상) · 직접 실행</figcaption></figure></div><div class="step"><div class="no">3</div><h3>③ 12칸 이름 읽는 법</h3><p>命宫 명궁(나 자신) · 兄弟 형제 · 夫妻 배우자 · 子女 자녀 · 财帛 돈 · 疾厄 건강 · 迁移 바깥 활동·이동 · 仆役 친구·동료 · 官禄 일·직업 · 田宅 집·재산 · 福德 마음·즐거움 · 父母 부모. 칸 안 금색 큰 글자가 주성(14개 중 그 칸에 든 별), 禄·权·科·忌 동그라미가 사화예요. 저장소의 《骨髓赋》 정리본 기준으로 禄은 돈·인연, 权은 힘·결단, 科는 이름·귀인, 忌는 막힘·깊은 숙제를 뜻해요.</p></div><div class="step"><div class="no">4</div><h3>④ Claude Code에 열고 풀이 시키기</h3><p>내려받은 폴더(ziwei-doushu) 안에서 claude 를 실행하고 '복사해서 쓰기'의 요청 문장을 붙여 넣어요. 생년월일시·성별만 내 것으로 바꾸면 돼요. 클로드가 폴더를 훑어본 뒤 계산 스크립트를 직접 만들어 돌리고(코드는 안 고침), 격국 판정과 옛 책 구절을 찾아 reading.md 로 저장해요. 저희가 돌렸을 땐 요청 한 번, 고쳐 시킨 것 없이 3분 38초가 걸렸고, 같은 요청을 다시 돌렸을 땐 7분 3초가 걸렸어요.</p><figure class="media"><img src="media/term-request.png" loading="lazy" alt=""><figcaption>Claude Code에 요청을 넣은 화면 · 직접 실행</figcaption></figure></div><div class="step"><div class="no">5</div><h3>⑤ 결과(reading.md) 읽는 법</h3><p>순서대로 ① 계산 조건(음력 날짜·사주 여덟 글자·명궁 자리) ② 12궁 배치표 ③ 엔진이 찾은 격국과 성립 조건 ④ 칸별 풀이 — 인용 줄마다 어느 파일·어느 단락(예: gsf-4-1)에서 왔는지 적혀 있어요 ⑤ 10년 단위 흐름(대한) ⑥ 총평. 인용이 정말 데이터에 있는지도 클로드가 스스로 대조했어요.</p><figure class="media"><img src="media/reading-table.png" loading="lazy" alt=""><figcaption>reading.md 앞부분 — 계산 조건과 12궁 표 · 직접 실행</figcaption></figure><figure class="media"><img src="media/reading-quote.png" loading="lazy" alt=""><figcaption>풀이 부분 — 옛 책 구절과 출처(파일·단락)가 붙어요 · 직접 실행</figcaption></figure></div><div class="step"><div class="no">6</div><h3>⑥ 다시 돌리기</h3><p>요청 문장의 날짜·시각·성별만 바꿔 다시 보내면 돼요. 결과 파일 이름도 바꾸면(예: reading-엄마.md) 앞 결과가 남아요.</p></div><div class="step"><div class="no">7</div><h3>이럴 때 쓰세요 / 안 맞는 때</h3><p>쓰기 좋은 때: 자미두수가 궁금한데 명반부터 정확히 뽑아 보고 싶을 때, 풀이에 어느 책 어느 구절이 근거인지 같이 보고 싶을 때. 안 맞는 때: 중요한 결정을 맡기고 싶을 때(전통 해석일 뿐이에요), 태어난 시각을 모를 때(시각이 2시간 단위로 판을 바꿔요), 터미널이 낯설고 Claude Code가 없을 때.</p></div><div class="step"><div class="no">8</div><h3>처음부터 끝까지 예시 (저희가 직접 돌린 것)</h3><p>가상 인물 1995년 3월 15일 오전 10시생 여자 → 10시는 巳시(9~11시) → 엔진 계산: 음력 1995년 2월 15일(乙亥년), 명궁은 戌 칸의 破军, 별 70개 배치 → 엔진이 찾은 격국 3개: 杀破狼·火贪格·日月同宫(각각 어느 책에 나오는지 표시) → 클로드 풀이: 칸마다 별 설명 + 《骨髓赋》《全集》《全书》 정리본 구절 인용 + 총평 → reading.md 17KB. 12칸 배치는 저희가 엔진으로 따로 계산한 값과 모두 같았어요.</p></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>복제</h3><p>터미널에서</p><pre class="copy">git clone https://github.com/Renhuai123/ziwei-doushu.git</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>설치</h3><p>복제한 폴더에서</p><pre class="copy">cd ziwei-doushu &amp;&amp; npm install</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>화면 켜기(선택)</h3><p>같은 폴더에서 → 브라우저 localhost:3000/chart</p><pre class="copy">npm run dev</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>Claude Code 열기</h3><p>같은 폴더에서</p><pre class="copy">claude</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>풀이 요청</h3><p>Claude Code에 붙여 넣기(날짜·시각·성별만 바꾸기)</p><pre class="copy">이 폴더는 자미두수 명반을 계산하는 오픈소스야. 이 저장소 엔진(lib/ziwei)으로 1995년 3월 15일 오전 10시에 태어난 여자 명반을 계산해서, 12궁에 어떤 별이 들어갔는지 표로 보여 줘. 그다음 엔진의 격국 판정(patterns.ts)과 lib/classics 고전 원문에서 근거 문장을 찾아 붙여서 한국어로 풀이해 줘. 고전 원문은 그대로 인용하고 출처 파일을 적어. 저장소 코드는 고치지 마. 결과는 reading.md로 저장해.</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>화면 오른쪽 풀이 칸에 중국어 안내만 떠요</strong><br>정상이에요. 공개판엔 AI 풀이가 빠져 있어서 '开源版不含 AI 解读接口'라고 떠요. 풀이는 ④처럼 Claude Code에 시켜요.</li><li><strong>클로드가 'server-only' 오류를 만났다고 해요</strong><br>격국 판정 파일(patterns.ts)이 웹 서버 전용 표시를 달고 있어서 그냥 실행하면 나는 오류예요. 저희 실행에선 클로드가 저장소 테스트 파일과 같은 방법으로 스스로 우회했어요. 멈추면 'scripts/regression/patterns-sihua-bonus.test.ts 처럼 우회해 줘'라고 덧붙이세요.</li><li><strong>날짜가 없다고 오류가 나요</strong><br>2월 30일처럼 없는 날짜는 일부러 막아 둬요. 양력 날짜로 넣었는지 확인하세요.</li><li><strong>태어난 시각이 9시·11시 같은 경계예요</strong><br>자미두수는 2시간 단위(시진)로 판이 바뀌어요. 경계 근처면 앞뒤 시각 두 번 돌려 비교해 보세요. 출생지를 넣으면 경도로 보정하는 기능이 있지만 목록은 중국 도시예요.</li><li><strong>npm install 이 실패해요</strong><br>Node.js 버전부터 확인하세요(node -v). 저희는 v24에서 됐어요.</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>풀이는 전통 해석이에요. 미래를 맞혀 주는 게 아니니 재미로 보세요.</li><li>저장소의 옛 책 구절(lib/classics)은 저장소가 정리한 정선본이에요. 현대 문장과 해설이 섞여 있어 옛 판본 원문 그대로는 아니에요(클로드도 풀이에 이렇게 적었어요).</li><li>라이선스: 코드 MIT · 풀이 데이터셋 CC BY 4.0(쓸 땐 출처 표기) · 니하이샤(倪海厦) 강의 원말 폴더(docs/tianji-ziwei)는 CC BY-NC-SA 4.0이라 상업 이용 금지예요.</li><li>화면과 데이터는 전부 중국어(간체)예요. 한국어 풀이는 클로드가 만들어요.</li><li>계산은 공개 라이브러리 iztro를 바탕으로 해요. 별 밝기 기준처럼 유파마다 다른 부분은 설정에 따라 결과가 조금 달라질 수 있어요.</li><li>같은 만든 사람이 운영하는 유료 사이트가 따로 있어요. 이 정리본은 무료 공개 저장소만 다뤄요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
