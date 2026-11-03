@@ -1,0 +1,383 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>shaders — 설치부터 사용 방법까지 | AI ANTENNA</title><meta property="og:title" content="shaders — 설치부터 사용 방법까지"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>shaders — 설치부터 사용 방법까지</h1><p class="outcome">shaders는 유리·금속·물·네온·오로라처럼 움직이는 화면 효과 200개를 웹페이지에 넣게 해 주는 무료 오픈소스(MIT)예요. Claude Code에 스킬을 깔면 &quot;배경에 ○○ 효과 넣어 줘&quot; 한 줄로 AI가 맞는 효과를 찾아 코드까지 넣어 줘요.
+
+※ 스킬 설치와 Claude Code 요청은 저희가 직접 돌려 봤어요. MCP·디자인 에디터·코덱스는 공식 문서 기준이에요.</p><figure class="media"><video src="media/demo-after.mp4" poster="media/demo-after.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>Claude Code가 고친 실제 페이지 — 배경이 흐르는 액체 금속(시연용 가상 페이지)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>Node.js — 설치 명령(npx)을 돌리는 데 필요해요</li><li>Claude Code (클로드 유료 요금제 또는 API). 공식 문서상 Codex·Cursor·Windsurf·Copilot에도 붙어요(공식 문서 기준)</li><li>WebGPU가 되는 브라우저 — 효과가 GPU로 그려져요(공식 스킬 문서 &quot;Shaders needs a browser with WebGPU&quot;). 서버에선 안 그려지고 브라우저에서만 돌아요</li><li>MCP·디자인 에디터를 쓰려면 shaders.com 무료 계정(스킬만 쓸 땐 계정 없이도 돼요)</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① 내 웹페이지 폴더에서 스킬 깔기</h3><p>웹페이지 파일(index.html 등)이 있는 폴더에서 터미널을 열고 '복사해서 쓰기'의 스킬 설치 명령을 실행해요. 폴더 안 .agents/skills/shaders 에 깔리고 Claude Code용 .claude/skills 에도 연결돼요. 스킬은 AI에게 효과 200개 목록과 쌓는 법을 가르쳐 주는 설명서예요.</p></div><div class="step"><div class="no">2</div><h3>② Claude Code에서 한 줄로 시키기</h3><p>같은 폴더에서 claude 를 열고, 앞에 /shaders 를 붙여 원하는 효과를 말해요. 저희가 넣은 문장: &quot;/shaders 내 페이지(index.html) 배경에 흐르는 액체 금속 효과 넣어 줘&quot;
+
+도중에 공식 문서 읽기(웹 조회)·명령 실행 허락을 물으면 허락해야 진행돼요 — 저희 첫 시도는 이 허락을 막아 둬서 아무것도 못 고쳤어요.</p><figure class="media"><img src="media/demo-before.png" loading="lazy" alt=""><figcaption>시키기 전 — 글자만 있는 밋밋한 페이지(시연용 가상 페이지)</figcaption></figure></div><div class="step"><div class="no">3</div><h3>③ 결과</h3><p>저희 실행에선 1분 48초 만에, 다시 시키지 않고 한 번에 끝났어요. AI가 한 일: 공식 문서에서 액체 금속(LiquidMetal) 효과를 찾음 → 빌드 도구 없는 HTML이라 인터넷 주소(CDN)로 불러오게 함 → 화면보다 큰 사각형 모양으로 배경 전체를 덮음 → 글자가 묻히지 않게 반투명 막·그림자 → WebGPU가 안 되는 브라우저엔 비슷한 정지 그라데이션. 클로드는 '브라우저에서 열어 보진 않았다'고 했고, 저희가 크롬으로 열어 움직이는 걸 확인했어요.</p><figure class="media"><img src="media/demo-after.png" loading="lazy" alt=""><figcaption>시킨 뒤 — 같은 페이지 배경이 액체 금속으로(실제 화면)</figcaption></figure></div><div class="step"><div class="no">4</div><h3>④ 마음에 안 들면 다시 시키기</h3><p>같은 대화에서 말로 고쳐요. 예: &quot;금색으로 바꿔 줘&quot;, &quot;더 천천히 흐르게&quot;, &quot;글자가 잘 보이게 배경을 더 어둡게&quot;. 저희 결과엔 속도(speed)·물결 크기(ripple)·색(lightColor·darkColor) 값이 코드 안에 적혀 있어서, 숫자만 바꿔도 돼요.</p></div><div class="step"><div class="no">5</div><h3>⑤ 효과 200개 고르기</h3><p>공식 문서 shaders.com/docs/components 에 효과마다 움직이는 미리보기와 설정값이 있어요. 이름을 골라 &quot;배경에 Aurora(오로라) 넣어 줘&quot;처럼 이름으로 시키면 더 정확해요. 98개는 사진·그라데이션 위에 거는 필터(유리 굴절·아스키·디더·VHS 등)라, '내 사진 위에 유리 효과'처럼 무엇 위에 걸지 같이 말해 주세요.</p><figure class="media"><video src="media/grid-42.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>효과 42개를 한 화면에 직접 띄운 모습(기본값 그대로)</figcaption></figure></div><div class="step"><div class="no">6</div><h3>⑥ 직접 고르고 싶으면 — 디자인 에디터 (공식 문서 기준)</h3><p>shaders.com 디자인 에디터(무료 계정)에서 효과를 층으로 겹치고 값을 조절한 뒤 'Export Code'를 누르면 내 프레임워크(React·Vue·Svelte·Solid·JavaScript) 코드가 나와요. 그대로 붙여 넣으면 돼요. 저장한 디자인은 CLI(npx shaders install)나 MCP로 내 프로젝트에 넣을 수 있어요.</p></div><div class="step"><div class="no">7</div><h3>⑦ MCP 붙이기 (공식 문서 기준 — 저희는 스킬로 확인)</h3><p>'복사해서 쓰기'의 MCP 명령을 실행하면 Claude Code·Cursor·Codex 등 내 컴퓨터의 코딩 AI를 찾아 설정해 줘요. 처음 쓸 때 shaders.com 계정으로 로그인(OAuth)해야 해요 — 저희가 로그인 없이 붙여 보니 'Needs authentication'이 떴어요. 무료 계정도 연결은 되고, 내가 에디터에서 만든 셰이더를 찾아·설치·수정할 수 있어요. 완성품 라이브러리는 Pro만이에요.</p></div><div class="step"><div class="no">8</div><h3>무료 / 유료(Pro) 경계 — 공식 문서 원문 기준</h3><p>무료: 효과 200개 코드(MIT) · 스킬 · 완성품 검색(npx shaders search, 로그인 없이) · 디자인 에디터와 코드 내보내기(계정) · MCP 연결(계정, 내 디자인).
+
+유료 Pro(월 10달러, 연 120달러 결제 / 평생 299달러): 완성품 1,000개 이상(매달 추가) · 웹사이트 섹션 55개 이상 · 워터마크 없는 HD 영상·이미지 내보내기 · Framer 플러그인 · 버전 기록 무제한 · CLI·MCP로 완성품 바로 설치. 무료 계정으로 완성품을 설치하려 하면 '워터마크 붙은 미리보기'만 넣을 수 있어요.</p></div><div class="step"><div class="no">9</div><h3>이럴 때 쓰세요 / 안 맞는 때</h3><p>쓰기 좋은 때: 내 홈페이지·포트폴리오·랜딩 페이지 첫 화면이 밋밋할 때, 버튼·로고에 움직이는 빛이나 유리 효과를 넣고 싶을 때, 사진 위에 레트로(VHS·아스키) 느낌을 줄 때. 안 맞는 때: 오래된 브라우저 사용자가 많은 사이트(WebGPU가 안 되면 대체 화면), 움직임이 방해되는 글 위주 페이지, 웹페이지 없이 영상만 만들 때(워터마크 없는 영상 내보내기는 Pro).</p></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>스킬 설치</h3><p>내 웹페이지 폴더의 터미널에서</p><pre class="copy">npx shaders skill</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>요청 (저희가 넣은 문장)</h3><p>Claude Code에서</p><pre class="copy">/shaders 내 페이지(index.html) 배경에 흐르는 액체 금속 효과 넣어 줘</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>요청 틀</h3><p>Claude Code에서 — 빈칸만 바꿔요</p><pre class="copy">/shaders 내 페이지(○○.html)의 ○○(배경/로고/버튼)에 ○○ 효과 넣어 줘. 글자는 잘 보이게 해 줘</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>MCP 설치</h3><p>터미널에서 (처음 쓸 때 shaders.com 로그인)</p><pre class="copy">npx shaders@latest install-mcp</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>MCP 설치 (Claude Code만)</h3><p>터미널에서</p><pre class="copy">claude mcp add --transport http shaders https://shaders.com/mcp</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>완성품 검색 (무료·로그인 없이)</h3><p>터미널에서 — 설치는 Pro</p><pre class="copy">npx shaders search &quot;liquid chrome background&quot;</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>AI가 허락만 묻고 아무것도 안 고쳐요</strong><br>공식 문서 읽기(웹 조회)·명령 실행을 허락해 주세요. 효과마다 설정값을 문서에서 읽어야 해서, 막아 두면 추측하지 않고 멈춰요.</li><li><strong>페이지를 열었는데 배경이 안 움직여요</strong><br>WebGPU가 되는 최신 브라우저(크롬·엣지 등)로 여세요. 파일을 더블클릭해 열 때 불러오기가 막히면 그 폴더에서 npx serve . 같은 간단한 로컬 서버로 여세요.</li><li><strong>글자가 효과에 묻혀요</strong><br>&quot;글자 뒤를 살짝 어둡게 해 줘&quot; 또는 &quot;효과 투명도를 낮춰 줘&quot;라고 다시 시키세요.</li><li><strong>MCP가 'Needs authentication'이에요</strong><br>shaders.com 계정 로그인이 안 된 상태예요. Claude Code에서 /mcp 를 열어 shaders를 골라 로그인하세요(무료 계정 가능).</li><li><strong>완성품을 넣었더니 워터마크가 있어요</strong><br>라이브러리 완성품은 Pro 전용이라 무료 계정엔 미리보기만 들어가요. 효과 200개로 직접 조합하면 워터마크가 없어요.</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>효과 200개 코드(엔진·컴포넌트·npm 패키지)는 MIT라 회사 사이트에 써도 돼요. 에디터·완성품·섹션은 shaders.com 약관이 따로 있어요.</li><li>약관상 내보낸 디자인을 프리셋·템플릿·컴포넌트 묶음으로 되팔거나 템플릿 장터에 올리는 건 금지예요. 내 프로젝트·고객 프로젝트에 쓰는 건 돼요.</li><li>Pro 완성품은 가입 중에 내보낸 것만 쓸 수 있고, 가입이 끝나도 그때 넣은 프로젝트엔 계속 써도 돼요(약관).</li><li>Claude Code 사용량(유료 요금제 또는 API)은 따로 들어요.</li><li>효과가 GPU를 써서 오래된 폰·노트북에선 무거울 수 있어요. 움직임 줄이기 설정을 켠 사용자에겐 멈춰 보이게 해 달라고 같이 시키면 좋아요(저희 결과엔 AI가 알아서 넣었어요).</li><li>명령·가격은 바뀔 수 있어요. 막히면 shaders.com/docs 를 먼저 보세요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
