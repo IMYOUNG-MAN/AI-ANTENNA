@@ -1,0 +1,386 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>MCP for Blender — 설치부터 사용 방법까지 | AI ANTENNA</title><meta property="og:title" content="MCP for Blender — 설치부터 사용 방법까지"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>MCP for Blender — 설치부터 사용 방법까지</h1><p class="outcome">MCP for Blender는 클로드(Claude Desktop·Claude Code)나 코덱스, 커서 같은 AI 앱에 블렌더를 연결해 주는 무료 오픈소스(MIT)예요. 연결하면 AI가 블렌더 안에서 직접 코드를 돌려 물체·재질·조명·카메라를 만들고, 스스로 화면을 찍어 보며 고쳐요.
+
+※ 블렌더 재단이 만든 공식 도구가 아니에요(커뮤니티 플러그인). 블렌더 재단의 공식 MCP(Blender Lab)는 따로 있어요.
+
+아래 '처음부터 끝까지 예시'는 저희가 직접 돌려 본 결과예요. 사진 한 장으로 장면 짓기는 공식 데모 기준이에요.</p><figure class="media"><video src="media/orbit.mp4" poster="media/hero-tight.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>말 한 줄로 지은 장면 — 직접 실행(Claude Code + MCP for Blender)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>블렌더 3.0 이상 — 무료(blender.org). 저희는 4.5 LTS로 돌렸어요</li><li>AI 앱 하나 — Claude Desktop / Claude Code / 코덱스(Codex) / 커서 등. AI 앱 요금(구독·API)은 따로 들어요</li><li>uv — 설치 한 줄 스크립트가 없으면 알아서 깔아 줘요</li><li>(선택) AI로 3D 모델을 새로 뽑을 때만: Premium(월 10달러부터) 또는 Meshy·Hyper3D 등 각 회사 API 키</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① 설치 한 줄</h3><p>윈도우는 PowerShell, 맥·리눅스는 터미널에서 '복사해서 쓰기'의 설치 명령을 실행해요. PC에 있는 AI 앱(Claude Desktop·Claude Code·Codex·Cursor·VS Code 등)을 찾아서 어디에 연결할지 고르게 하고, 블렌더 애드온까지 깔고 켜 줘요. 기존 설정은 그대로 두고 'blender' 항목만 더하고, 바꾼 파일은 .bak으로 남겨요. 스크립트가 막히면(윈도우 디펜더 등) winget으로 uv를 깔고 uvx mcp-for-blender setup 을 실행해요.</p><figure class="media"><img src="media/addon-instructions.png" loading="lazy" alt=""><figcaption>블렌더 N 사이드바의 MCP for Blender 탭 · 공식 README 그림</figcaption></figure></div><div class="step"><div class="no">2</div><h3>② AI 앱 완전히 껐다 켜기 → 블렌더 열기</h3><p>AI 앱을 완전히 종료했다가 다시 켜요(윈도우는 작업 표시줄 오른쪽 트레이에서 종료). 그다음 블렌더를 열면 애드온이 서버를 스스로 켜요. 확인하려면 3D 화면에서 N 키 → 'MCP for Blender' 탭(안 켜져 있으면 Start MCP Server). 클로드에서는 망치(도구) 아이콘에 blender 도구가 보이면 연결된 거예요.</p></div><div class="step"><div class="no">3</div><h3>③ 손으로 연결하고 싶다면</h3><p>자동 설치가 안 될 때: Claude Code는 claude mcp add blender uvx mcp-for-blender, 코덱스는 codex mcp add blender -- uvx mcp-for-blender, Claude Desktop은 설정 → 개발자 → 설정 편집에 'blender' 항목(복사해서 쓰기)을 넣어요. 애드온은 uvx mcp-for-blender install-addon 뒤 블렌더 편집 → 환경 설정 → 애드온에서 'Interface: MCP for Blender'를 켜요.</p></div><div class="step"><div class="no">4</div><h3>④ 코덱스는 플러그인으로 (실시간 3D 화면)</h3><p>코덱스 플러그인을 쓰면 채팅 옆에 블렌더 화면이 같이 떠요. 물체를 누르면 다음 메시지에 붙고, Poly Haven 같은 무료 자산을 썸네일로 골라요. 아직 코덱스 플러그인 목록엔 없어서 저장소를 받아 marketplace add 로 넣어요(복사해서 쓰기). 그다음 코덱스를 다시 켜고 플러그인 목록에서 MCP for Blender를 설치해요.</p><figure class="media"><img src="media/codex-screenshot.png" loading="lazy" alt=""><figcaption>코덱스 앱 옆 칸의 실시간 3D 화면 · 공식 README 그림</figcaption></figure></div><div class="step"><div class="no">5</div><h3>⑤ 무엇을 적나 — 요청 틀</h3><p>[무엇을] + [어떤 분위기·색] + [필요하면 자산]으로 한 줄. 예: '낮은 해가 비치는 저폴리 해변을 만들어 줘. Poly Haven 하늘이랑 모래 질감을 써 줘.' 크고 복잡한 장면은 한 번에 다 시키기보다 '먼저 섬과 바다만 → 등대 추가 → 조명' 처럼 나눠 시키면 시간 초과가 덜 나요(README 문제 해결).</p></div><div class="step"><div class="no">6</div><h3>⑥ 결과 보는 법</h3><p>AI가 다 지으면 장면이 블렌더에 그대로 남아 있어요. 블렌더에서 F12를 누르면 카메라 시점으로 렌더돼요. 마음에 안 드는 곳은 말로 고쳐요: '등대를 더 크게', '해 질 녘으로 바꿔 줘', '카메라를 위에서 내려다보게'. AI는 고칠 때도 스스로 화면을 찍어 확인해요(look 도구: 카메라 시점·여러 각도·와이어프레임·렌더).</p></div><div class="step"><div class="no">7</div><h3>⑦ 무료 자산 쓰기 (Poly Haven)</h3><p>블렌더 N 사이드바 MCP for Blender 탭에서 Poly Haven에 체크하면 끝 — 키·가입이 없어요. 하늘(HDRI)·질감·모델 약 2,400개가 전부 CC0라 출처 표시 없이 써도 돼요. 예: '흐린 오후 하늘로 비추고 벽에 녹슨 금속 질감을 입혀 줘'. 다운로드 중엔 블렌더가 잠깐 멈출 수 있어서 1k·2k 해상도로 받으라고 해요.</p></div><div class="step"><div class="no">8</div><h3>⑧ 사진 한 장으로 장면 짓기 (공식 데모 기준)</h3><p>클로드 채팅에 참고 사진을 붙이고 '이 사진처럼 저폴리 숲속 오두막을 만들어 줘. 재질이랑 조명도 맞춰 줘'처럼 적어요. 공식 데모에선 오두막·나무·바닥을 짓고, 사람이 '나무를 더 크게' 같은 말로 몇 번 더 고쳐서 마무리했어요. 똑같이 복사되지는 않고 '비슷하게' 지어요.</p><figure class="media"><img src="media/ref-cabin.png" loading="lazy" alt=""><figcaption>공식 데모에 넣은 참고 사진 · 공식 데모 화면</figcaption></figure><figure class="media"><video src="media/cabin-blender.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>그 사진으로 블렌더에 지은 장면 · 공식 데모 화면(블렌더 쪽만)</figcaption></figure></div><div class="step"><div class="no">9</div><h3>⑨ 돈 드는 곳</h3><p>애드온·장면 짓기·Poly Haven(키 없음)·Sketchfab·Poly Pizza(각 사이트 키 필요) 연동은 전부 무료예요. 돈이 드는 건 AI로 3D 모델을 새로 뽑을 때(Meshy·Tripo·Hunyuan3D·Hyper3D Rodin)뿐이에요 — Premium(Hobby 월 10달러에 표준 25회부터, 실패한 생성은 안 셈) 또는 각 회사 API 키를 직접 넣고 그 회사에 내요. 자세한 건 공식 Premium 페이지. AI 앱(클로드·코덱스) 요금은 따로예요.</p></div><div class="step"><div class="no">10</div><h3>이럴 때 쓰세요 / 안 맞는 때</h3><p>쓰기 좋은 때: 블렌더를 몰라도 3D 장면 시안이 필요할 때, 게임·영상용 배경을 빠르게 잡을 때, 블렌더 반복 작업(재질 바꾸기·물체 배치·카메라)을 말로 시킬 때. 안 맞는 때: 캐릭터를 아주 정교하게 깎아야 할 때, 저장 안 한 중요한 작업 파일이 열려 있을 때, AI 앱 사용량을 아끼고 싶을 때.</p></div><div class="step"><div class="no">11</div><h3>처음부터 끝까지 예시 (직접 실행)</h3><p>11/5 저희 PC(그래픽 카드 없음)에서 블렌더 4.5 LTS + Claude Code로 돌렸어요. 요청은 이 한 줄뿐이었어요: '블렌더에 작은 섬 위에 등대가 있고 주변은 바다인 3D 장면을 만들어 줘.' → 클로드가 먼저 장면 상태를 확인하고 → 블렌더 코드를 여섯 번(모두 278줄) 보내 섬(해안선·모래·풀·바위)과 바다 → 줄무늬 등대·관리인 집 → 낮은 해 하늘·햇빛 순서로 지었어요 → 카메라 시점 렌더를 세 번 찍어 보고, 첫 확인 뒤 바다 넓이와 카메라를 스스로 고쳤어요 → 파일로 저장. 3분 27초, 다시 시킨 건 0번. 아래 네 칸은 같은 카메라로 본 단계별 모습이에요.</p><figure class="media"><img src="media/steps-grid.jpg" loading="lazy" alt=""><figcaption>빈 장면 → 섬·바다 → 등대·집 → 하늘·햇빛 (직접 실행)</figcaption></figure><figure class="media"><img src="media/look-before-after.jpg" loading="lazy" alt=""><figcaption>클로드가 스스로 찍어 본 화면: 첫 확인(위) → 고친 뒤(아래)</figcaption></figure><figure class="media"><img src="media/blender-ui.png" loading="lazy" alt=""><figcaption>완성 장면이 실제 블렌더 창에 있는 모습</figcaption></figure></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>설치(윈도우 PowerShell)</h3><p>한 줄 설치</p><pre class="copy">irm https://www.mcp-for-blender.com/install.ps1 | iex</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>설치(맥·리눅스)</h3><p>한 줄 설치</p><pre class="copy">curl -LsSf https://www.mcp-for-blender.com/install.sh | sh</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>uv가 이미 있으면</h3><p>터미널에서</p><pre class="copy">uvx mcp-for-blender setup</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>Claude Code에 연결</h3><p>터미널에서</p><pre class="copy">claude mcp add blender uvx mcp-for-blender</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>코덱스에 연결</h3><p>터미널에서</p><pre class="copy">codex mcp add blender -- uvx mcp-for-blender</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>코덱스 플러그인</h3><p>터미널에서(두 줄)</p><pre class="copy">git clone https://github.com/ahujasid/blender-mcp.git
+codex plugin marketplace add ./blender-mcp/integrations/codex</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>Claude Desktop 설정</h3><p>설정 → 개발자 → 설정 편집</p><pre class="copy">{
+  &quot;mcpServers&quot;: {
+    &quot;blender&quot;: { &quot;command&quot;: &quot;uvx&quot;, &quot;args&quot;: [&quot;mcp-for-blender&quot;] }
+  }
+}</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>첫 요청(저희가 쓴 그대로)</h3><p>AI 앱 채팅에</p><pre class="copy">블렌더에 작은 섬 위에 등대가 있고 주변은 바다인 3D 장면을 만들어 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>무료 자산 요청 예시</h3><p>Poly Haven 체크 후</p><pre class="copy">낮은 해가 비치는 해변을 만들어 줘. Poly Haven에서 하늘, 모래 질감, 바위를 찾아서 써 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>안전 모드 + 사용 기록 끄기</h3><p>설정 JSON의 blender 항목에</p><pre class="copy">&quot;env&quot;: { &quot;BLENDER_MCP_SAFE_MODE&quot;: &quot;1&quot;, &quot;DISABLE_TELEMETRY&quot;: &quot;true&quot; }</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>AI 앱에 blender 도구가 안 보이거나 '연결 실패'</strong><br>AI 앱을 완전히 껐다 켰는지(윈도우는 트레이에서 종료) 먼저 보세요. 처음 한 번은 uvx가 필요한 파일을 받느라 늦어 실패로 뜰 수 있어요 — 저희도 첫 시도에서 이랬고, 터미널에서 uvx mcp-for-blender --help 를 한 번 돌린 뒤 다시 켜니 붙었어요. 'spawn uvx ENOENT'면 uvx 전체 경로를 command에 넣거나, 윈도우는 command를 cmd, args를 [&quot;/c&quot;, &quot;uvx&quot;, &quot;mcp-for-blender&quot;]로.</li><li><strong>블렌더와 연결이 안 돼요</strong><br>블렌더가 켜져 있고 N 사이드바 MCP for Blender 탭에 서버가 켜져 있는지(Running on port 9876) 보세요. MCP 서버는 하나만 — Claude Desktop과 커서를 동시에 켜 두면 안 돼요.</li><li><strong>시간 초과가 나요</strong><br>요청을 작게 나눠요(섬과 바다 → 등대 → 조명). 복잡한 장면을 한 번에 시키면 잘 나요.</li><li><strong>Poly Haven 받는 동안 블렌더가 멈춰요</strong><br>블렌더 본 화면에서 받느라 그래요. 1k·2k 해상도로 받으라고 하세요.</li><li><strong>업데이트하고 싶어요</strong><br>uvx mcp-for-blender@latest update → AI 앱 다시 켜기 → 블렌더 다시 켜기(또는 애드온 껐다 켜고 Start MCP Server).</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>블렌더 재단 공식 도구가 아니에요(커뮤니티 플러그인, MIT). 블렌더 재단 공식 MCP(Blender Lab)는 따로 있어요.</li><li>AI가 블렌더 안에서 아무 파이썬 코드나 돌릴 수 있어요. 쓰기 전에 꼭 작업 파일을 저장하세요(README). 안전 모드(BLENDER_MCP_SAFE_MODE=1)를 켜면 파일 읽기·쓰기, 다른 프로그램 실행, 인터넷 접속 같은 위험한 코드는 막고 평범한 3D 작업은 그대로 돼요.</li><li>애드온 서버엔 비밀번호가 없어요. 내 PC 안(localhost)에서만 쓰세요.</li><li>기본으로 익명 사용 기록(설치 ID·도구 이름·성공 여부·버전·OS)을 보내요. 요청 문장·코드·화면은 동의해야만 보내요. 전부 끄려면 DISABLE_TELEMETRY=true.</li><li>장면 짓기·Poly Haven은 무료, AI 3D 모델 생성만 Premium 또는 내 API 키. AI 앱(클로드·코덱스) 요금은 따로예요.</li><li>Poly Pizza 모델은 약 69%가 CC-BY라 쓸 때 만든 사람 이름을 밝혀야 해요(가져올 때 파일에 출처가 적혀요).</li><li>명령·요금은 업데이트로 바뀔 수 있어요. 막히면 저장소 README를 먼저 보세요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
