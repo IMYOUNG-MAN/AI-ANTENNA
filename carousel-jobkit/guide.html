@@ -1,0 +1,391 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>공고 고르기부터 면접까지 — 취업 준비 AI 7개 설치·쓰는 법 | AI ANTENNA</title><meta property="og:title" content="공고 고르기부터 면접까지 — 취업 준비 AI 7개 설치·쓰는 법"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">AI 안테나 정리본 · 11월 6일</div><h1>공고 고르기부터 면접까지 — 취업 준비 AI 7개 설치·쓰는 법</h1><p class="outcome">취업 순서대로 붙여 쓰는 AI 도구 7개예요. 직무 고르기(jobfit) → 공고 점수(career-ops) → 이력서 읽힘 검사(Reactive Resume) → 공고 맞춤 이력서(Resume-Matcher) → 경력 문장·합격 비교(ResumeSkills) → 자소서 첨삭(jobstack) → 면접관 3명. 도구는 모두 무료(오픈소스 또는 저희가 만든 파일)지만, 클로드 코드로 쓰는 것은 Claude 유료 요금제가 필요해요. 저희 편에서 이미 다룬 4개는 각 편 정리본에 설치부터 예시까지 자세히 있어요. 화면 속 인물·회사는 모두 시연용 가상이에요.</p><figure class="media"><video src="media/03.mp4" poster="media/03.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>가상 공고 두 개를 career-ops로 평가한 결과 — 4.3점 지원 추천 / 1.5점 지원 안 함</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>클로드 코드(Claude Pro 이상 유료 요금제) — jobfit·career-ops·ResumeSkills·jobstack·면접관 3명. career-ops·ResumeSkills는 코덱스 같은 다른 AI 도구에서도 돼요(각 README 기준)</li><li>인터넷 브라우저 — Reactive Resume(rxresu.me)는 설치 없이 바로</li><li>Resume-Matcher만 내 컴퓨터에 설치해요(Python 3.13+·Node.js·uv, 또는 도커) — 조금 어려운 편이에요</li><li>내 이력서·자소서 파일(지원자 이름·연락처는 지우고 넣어도 돼요)</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① jobfit — 어디 지원할지 직무 3개 (저희가 만든 에이전트)</h3><p>내 경험(했던 일·잘했던 순간)을 적어 넣으면 진로 상담가·현직자·채용 담당자 셋이 따져서 맞는 직무 3개와 근거 경험·부족한 것·일주일 안에 해 볼 과제를 줘요. 클로드 코드용 파일과 챗GPT용 지침이 둘 다 있어요. 설치·경험 쓰는 틀·결과 읽는 법은 저희 정리본에 있어요: https://imyoung-man.github.io/AI-ANTENNA/aitip-jobfit/guide.html</p><figure class="media"><video src="media/02.mp4" poster="media/02.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>가상 인물(카페 매니저 3년) 결과를 옮긴 그림</figcaption></figure></div><div class="step"><div class="no">2</div><h3>② career-ops — 공고마다 5점 만점 점수 (★8만 · MIT)</h3><p>설치는 터미널에 'npx @santifer/career-ops init' 한 줄(공식 README). 내 이력서와 공고 글을 넣으면 요건을 한 줄씩 대조해 5점 만점 점수를 주고, 4점이 안 되면 이유를, 4점 넘으면 그 공고 표현에 맞춘 이력서 PDF까지 만들어요. 한국 채용 사이트는 자동 검색이 안 돼서 공고 글을 복사해 붙여 넣어요(저희 확인). 자세한 순서: https://imyoung-man.github.io/AI-ANTENNA/aitip-career/guide.html</p></div><div class="step"><div class="no">3</div><h3>③ Reactive Resume — 이력서 PDF를 채용 프로그램이 어떻게 읽는지 (★4.5만 · MIT)</h3><p>rxresu.me/ats-checker 에서 가입 없이 이력서 PDF를 끌어다 놓으면 0~100점과 고칠 곳이 나와요. 위의 '파서가 읽는 내용'을 누르면 프로그램이 뽑아낸 글자만 보여요 — 줄이 섞이거나 빠진 곳이 있으면 그 부분 레이아웃을 바꾸세요. 섹션 제목은 영어(Experience·Education·Skills)로 찾아서, 한국어 이력서는 '제목을 못 찾았다'는 항목이 많이 떠요(저희 가상 이력서 60점). 외국계에 내는 영문 이력서 점검에 맞아요. 화면 오른쪽 위에서 한국어를 고를 수 있어요.</p><figure class="media"><video src="media/04.mp4" poster="media/04.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>가상 이력서 PDF를 올린 실제 화면 — 사람이 보는 화면 → 파서가 읽는 내용</figcaption></figure></div><div class="step"><div class="no">4</div><h3>③ Reactive Resume — 이력서 새로 만들기</h3><p>rxresu.me에서 무료 가입 → 새 이력서. 왼쪽에 쓰면 오른쪽 종이에 바로 보여요. 디자인의 페이지 언어를 Korean으로 고르면 칸 제목·날짜가 한국어가 되고, 글꼴을 'Noto Sans KR'로 하면 한글이 깔끔해요(11/1 저희 확인). 템플릿을 고르고 PDF로 받아요. AI 기능은 내 AI 키를 연결했을 때만 써요.</p></div><div class="step"><div class="no">5</div><h3>④ Resume-Matcher — 공고에 맞춘 이력서 (★2.9만 · Apache-2.0)</h3><p>공식 설치 문서 기준이에요(저희는 직접 돌리지 않았어요). 깃허브에서 받은 뒤 백엔드(apps/backend: uv sync → uv run app)와 프런트엔드(apps/frontend: npm install → npm run dev)를 각각 켜고 브라우저에서 localhost:3000을 열어요. 도커가 있으면 아래 명령 한 줄. 설정에서 AI를 골라요 — 내 API 키, 내 컴퓨터 모델(Ollama, 무료), 또는 클로드 코드를 '코딩 에이전트'로. 대표 이력서(PDF·DOCX)를 올리고 공고를 붙여 넣으면 맞춘 이력서·커버레터·연락 메일이 나와요. 원래 이력서에 없는 기술·회사·숫자는 넣지 않게 되어 있어요(README). 화면 언어는 한국어 파일이 있어요.</p><figure class="media"><video src="media/05.mp4" poster="media/05.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>Resume-Matcher 공식 데모 화면(영문 이력서)</figcaption></figure></div><div class="step"><div class="no">6</div><h3>⑤ ResumeSkills — 스킬 20개 붙이기 (★3천 · MIT)</h3><p>클로드 코드를 쓸 폴더에서 아래 명령 한 줄이면 그 폴더에만 20개가 들어가요(공식 README의 npx skills 방식). 또는 깃허브에서 받아 skills 폴더 안의 것들을 내 폴더의 .claude/skills 로 복사해도 돼요(저희는 이 방법으로 확인). 스킬은 영어로 쓰여 있지만 한국어로 물으면 한국어로 답해요. 요청 앞에 /스킬이름 을 붙이면 확실히 그 스킬을 써요.</p></div><div class="step"><div class="no">7</div><h3>⑤ ResumeSkills — 숫자 없는 경력 문장 고치기</h3><p>/resume-quantifier 뒤에 경력 문장을 붙여 넣어요(아래 '복사해서 쓰기' ①). 저희가 넣은 '동아리에서 행사 홍보를 맡음'은 '홍보물 [ ]종을 제작·배포해 참가자 [ ]명을 모음(전년 대비 [ ]% 증가)'처럼 빈칸이 있는 문장과, 그 숫자를 어디서 확인할지(신청 폼 응답 수·출석부·단톡방 공지)로 돌아왔어요. 없는 숫자를 지어내지 말라고 요청에 꼭 넣으세요.</p><figure class="media"><video src="media/06.mp4" poster="media/06.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>가상 이력서 문장으로 직접 돌린 결과</figcaption></figure></div><div class="step"><div class="no">8</div><h3>⑤ ResumeSkills — 두 곳 붙었을 때 비교</h3><p>/offer-comparison-analyzer 뒤에 두 회사 조건(연봉·성과급·야근수당·근무 방식·출퇴근 시간 등)을 적어요(아래 ②). 한 표로 비교하고, 모르는 조건은 '회사에 물어볼 것' 목록으로 따로 빼 줘요. 실수령액 추정도 나오지만 AI 계산이니 그대로 믿지 말고 급여 계산기로 다시 확인하세요.</p><figure class="media"><img src="media/09.png" loading="lazy" alt=""><figcaption>가상 회사 두 곳으로 직접 돌린 결과를 옮긴 그림</figcaption></figure></div><div class="step"><div class="no">9</div><h3>⑥ jobstack — 한국 자소서 첨삭·공고·모의면접 (★198 · MIT)</h3><p>한국 취업 순서대로 스킬 16개가 들어 있어요 — 사람인·잡코리아·원티드·점핏 공고 찾기, 회사 분석, 자소서 첨삭(공고 키워드 반영률·자주 걸리는 7가지 진단·고친 문장), 모의면접 7종류. 근거가 없는 곳은 [확인 필요]로 남겨요. 설치부터 예시까지: https://imyoung-man.github.io/AI-ANTENNA/aitip-jobstack/guide.html</p><figure class="media"><video src="media/07.mp4" poster="media/07.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>가상 지원자 자소서 첨삭 결과를 옮긴 그림</figcaption></figure></div><div class="step"><div class="no">10</div><h3>⑦ 면접관 3명 — 내기 전에 자소서 심사 (저희가 만든 에이전트)</h3><p>클로드 코드에 면접관 파일 3개를 넣으면 압박·인사·실무 팀장 면접관이 내 자소서를 각자 다른 기준으로 동시에 심사해요. 면접관별 점수·판정·실제로 나올 질문·고칠 점이 나와요. 여러 클로드가 동시에 일해서 사용량이 평소보다 많아요. 파일 원문과 실행 순서: https://imyoung-man.github.io/AI-ANTENNA/aitip-interview/guide.html</p><figure class="media"><video src="media/08.mp4" poster="media/08.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>가상 자소서 판정 결과를 옮긴 그림</figcaption></figure></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>① ResumeSkills — 경력 문장 고치기 (저희가 넣은 요청)</h3><p>클로드 코드 입력창. 아래 문장들을 내 경력으로 바꿔 쓰세요</p><pre class="copy">/resume-quantifier 아래는 제 이력서 경력 문장이에요. 숫자가 없어서 약한 문장을 성과가 보이는 문장으로 고쳐 주세요. 없는 숫자는 지어내지 말고, 내가 확인해서 채울 칸은 [ ]로 비워 두고 무엇을 확인하면 되는지 적어 주세요. 한국어로, 표(원래 문장 | 고친 문장 | 확인할 것)로.
+- 카페 아르바이트하며 SNS 계정을 운영함
+- 동아리에서 행사 홍보를 맡음</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>② ResumeSkills — 두 곳 비교 (저희가 넣은 요청)</h3><p>클로드 코드 입력창. 회사 조건만 바꿔 쓰세요</p><pre class="copy">/offer-comparison-analyzer 두 곳에 합격했어요. 한국어로, 두 회사를 한 표로 비교하고 실제로 손에 쥐는 돈 기준으로 정리해 주세요. 모르는 항목은 지어내지 말고 '회사에 물어볼 것'으로 따로 적어 주세요.
+A사: 연봉 ___(포괄임금 여부), 성과급 ___, 출근 방식 ___, 편도 출퇴근 ___
+B사: 연봉 ___, 성과급 ___, 출근 방식 ___, 편도 출퇴근 ___</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>ResumeSkills 설치 (내 폴더에만)</h3><p>클로드 코드를 쓸 폴더에서 터미널</p><pre class="copy">npx skills add Paramchoudhary/ResumeSkills -y</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>career-ops 설치</h3><p>터미널 (Node.js 필요)</p><pre class="copy">npx @santifer/career-ops init</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>Reactive Resume 이력서 검사 (가입 없이)</h3><p>브라우저</p><pre class="copy">https://rxresu.me/ats-checker</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>Resume-Matcher (도커가 있을 때, 공식 명령)</h3><p>터미널 → 브라우저에서 localhost:3000</p><pre class="copy">docker run --name resume-matcher -p 3000:3000 -v resume-data:/app/backend/data ghcr.io/srbhr/resume-matcher:latest</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>저희 편 정리본 4개</h3><p>설치·예시가 자세히 있어요</p><pre class="copy">jobfit https://imyoung-man.github.io/AI-ANTENNA/aitip-jobfit/guide.html
+career-ops https://imyoung-man.github.io/AI-ANTENNA/aitip-career/guide.html
+jobstack https://imyoung-man.github.io/AI-ANTENNA/aitip-jobstack/guide.html
+면접관 3명 https://imyoung-man.github.io/AI-ANTENNA/aitip-interview/guide.html</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>Reactive Resume 검사 점수가 낮아요(한국어 이력서)</strong><br>섹션 제목을 영어로 찾는 검사라 한국어 제목은 '못 찾았다'로 나와요. 점수보다 '파서가 읽는 내용'에서 글자가 순서대로 다 나왔는지를 보세요. 영문 이력서라면 Experience·Education·Skills 같은 흔한 제목을 쓰면 올라가요.</li><li><strong>스킬이 안 불려요</strong><br>요청 맨 앞에 /resume-quantifier 처럼 스킬 이름을 붙이세요. 클로드 코드를 스킬을 넣은 그 폴더에서 열었는지도 확인하세요.</li><li><strong>공고 사이트 주소를 넣었는데 못 읽어요</strong><br>잡코리아·사람인 같은 사이트는 자동으로 못 여는 경우가 많아요. 공고 글을 복사해 붙여 넣으세요.</li><li><strong>Resume-Matcher 설치가 어려워요</strong><br>이 7개 중 가장 어려운 편이에요. 공고 맞춤 이력서는 career-ops(②)도 만들어 주니 그쪽부터 써 보세요.</li></ul></section>
+<section><h2>이런 것도 돼요</h2>
+<p>공식 도구 목록 기준이에요. 이번 편에서 직접 돌려 보지 않았어요.</p>
+<div class="step"><div class="no">1</div><h3>코딩 테스트 준비할 때 → algo-sensei (★300 · MIT)</h3><p>답을 바로 주지 않고 5단계 힌트로 이끌어 줘요. 모의 코딩 면접 모드도 있어요. 깃허브에서 받아 .claude/skills 폴더에 복사 · github.com/karanb192/algo-sensei</p></div>
+<div class="step"><div class="no">2</div><h3>여러 곳 지원했을 때 → Reactive Resume 지원 현황</h3><p>지원한 곳을 단계별 보드로 관리해요(공식 문서 기준).</p></div>
+<div class="step"><div class="no">3</div><h3>외국계에 낼 때 → ResumeSkills linkedin-profile-optimizer</h3><p>이력서에 맞춰 링크드인 프로필을 다듬어요.</p></div>
+<div class="step"><div class="no">4</div><h3>경력을 바꿀 때 → ResumeSkills career-changer-translator</h3><p>다른 업계로 옮겨 쓸 수 있는 경험을 찾아요.</p></div>
+</section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>AI가 쓴 이력서·자소서는 초안이에요. 숫자·경험은 내가 실제로 한 것만 남기고, 내 말투로 다시 써서 내세요. 면접에서 '이 숫자 어떻게 셌어요?'에 답할 수 있어야 해요.</li><li>Reactive Resume 검사·Resume-Matcher·ResumeSkills는 영문 이력서·해외 채용 프로그램 기준이 많아요. 한국어 자소서는 jobstack·면접관 3명이 맞아요.</li><li>지원은 어떤 도구도 대신 하지 않아요(career-ops도 초안까지). 제출 버튼은 내가 직접.</li><li>이력서에는 주민번호·주소·연락처가 들어 있어요. 클로드·AI 키로 보내기 전에 지워도 결과에는 거의 상관없어요.</li><li>점수·판정은 참고용이에요. 합격을 약속하지 않아요.</li><li>출처: github.com/career-ops-hq/career-ops · github.com/reactive-resume/reactive-resume · docs.rxresu.me · github.com/srbhr/Resume-Matcher · github.com/Paramchoudhary/ResumeSkills · github.com/thesun4sky/jobstack · github.com/karanb192/algo-sensei (별 수는 11월 6일 기준)</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
