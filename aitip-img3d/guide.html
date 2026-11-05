@@ -1,0 +1,383 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>img2threejs — 설치부터 사용 방법까지 | AI ANTENNA</title><meta property="og:title" content="img2threejs — 설치부터 사용 방법까지"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>img2threejs — 설치부터 사용 방법까지</h1><p class="outcome">img2threejs는 클로드 코드·코덱스 같은 코딩 AI에 붙여 쓰는 무료 오픈소스 스킬(Apache-2.0)이에요. 물건 사진 한 장을 주면, AI가 그 물건을 3D 파일(.glb 같은 것) 없이 three.js 코드로만 다시 지어요. three.js는 웹 브라우저에서 3D를 그리는 도구라, 결과는 웹페이지에서 바로 돌려 볼 수 있어요.
+
+단계마다 직접 렌더해서 사진과 나란히 비교하고, 다른 곳은 스스로 고쳐요. 부품(눈·지느러미·속 재료…)마다 따로 지어서 떼어 보거나 움직일 수 있어요.
+
+아래 '처음부터 끝까지 예시'는 저희가 윈도우 PC에서 클로드 코드로 직접 돌려 본 결과예요. 맥·리눅스 한 줄 설치와 코덱스 사용은 공식 설치 문서 기준이에요.</p><figure class="media"><video src="media/hero.mp4" poster="media/render-after.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>넣은 사진(위, 시연용으로 만든 사진) → 코드로 지은 3D(아래) · 직접 실행</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>코딩 AI 하나 — 클로드 코드(Claude Code) / 코덱스(Codex) / OpenCode / Hermes. AI 요금(구독·API)은 따로 들고, 한 번에 사용량을 많이 써요(공식 문서 추정: 물건 하나에 약 8만~18만 토큰)</li><li>Node.js 18 이상 · Git · Python 3.10 이상 — 파이썬은 기본 기능만 써서 따로 깔 패키지가 없어요</li><li>물건 사진 한 장 — 배경이 단순하고 물건이 통째로 보이는 사진이 좋아요</li><li>그래픽 카드는 없어도 돼요 — 저희 PC도 없었어요(대신 렌더가 느려요)</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① 설치 — 맥·리눅스 (공식 한 줄)</h3><p>터미널에서 '복사해서 쓰기'의 설치 명령을 실행해요. PC에 있는 코딩 AI(~/.claude, ~/.codex 등 폴더가 있는 것)를 찾아 스킬을 연결해 줘요. 이어서 확인 명령(doctor)을 돌려 'managed'가 보이면 설치된 거예요. 그다음 AI를 껐다 켜요.</p></div><div class="step"><div class="no">2</div><h3>② 설치 — 윈도우 (저희가 한 방법)</h3><p>공식 설치 명령은 아직 윈도우를 지원하지 않아요(공식 문서). 그래서 공식 문서의 '손으로 설치'대로 했어요: 저장소를 내려받아 클로드 스킬 폴더(내 사용자 폴더\.claude\skills\img2threejs)에 통째로 넣기. 저희는 폴더를 복사했어요. 그리고 스킬이 python3 라는 명령을 부르는데, 윈도우에선 python3가 스토어 바로가기로 잡혀 안 돌 수 있어요 — 저희는 python3라는 이름의 작은 연결 파일을 만들어 설치된 파이썬으로 이어 줬어요. Git Bash에서 '복사해서 쓰기'의 python3 연결 한 줄이 같은 일을 해요(~/bin 폴더가 Git Bash 경로에 들어 있을 때).</p></div><div class="step"><div class="no">3</div><h3>③ 사진 넣고 한 줄 요청</h3><p>작업 폴더에 사진을 넣고(예: reference.png) 클로드 코드를 켠 뒤 '복사해서 쓰기'의 첫 요청을 그대로 붙여 넣어요. 클로드 코드에선 앞에 /img2threejs 를 붙여야 스킬을 확실히 써요. 코덱스는 '설치한 img2threejs 스킬로 ./reference.png 를 다시 지어 줘'처럼 적어요(공식 문서).</p></div><div class="step"><div class="no">4</div><h3>④ AI가 하는 순서</h3><p>사진 검사 → 물건 종류·난이도 판단 → 부품·재질 계획(어떤 부품이 몇 개, 무슨 색) → three.js 코드 작성 → 렌더 → 사진과 나란히 놓은 비교 그림 한 장을 보고 통과/다시 → 다음 단계. 단계는 모양 → 구조 → 형태 → 재질 → 표면 → 조명 → 움직임 → 최적화 8개예요. 검사가 떨어지면 다음 단계로 안 넘어가요.</p></div><div class="step"><div class="no">5</div><h3>⑤ 결과 보는 법</h3><p>결과는 TypeScript 코드 파일(src/create○○Model.ts)과 설계 파일(spec.json), 단계별 렌더·비교 그림이에요. AI가 만든 미리보기 페이지(preview)를 로컬 서버로 열면 브라우저에서 돌려 볼 수 있어요. 모델 안에는 부품마다 회전축·연결점이 들어 있어서 떼어 보거나(분해) 움직이게 만들 수 있어요.</p></div><div class="step"><div class="no">6</div><h3>⑥ 마음에 안 들면 — 고쳐 시키기</h3><p>같은 대화에서 다른 곳을 콕 집어 말해요. 예: '비늘은 겹친 반달 줄로, 눈은 또렷하게'. 공식 README의 '더 세게 시키기' 틀처럼 모양·재질·움직임·검사 기준을 줄마다 적으면 그 기준대로 검사해요. 대화가 끊겼으면 같은 폴더에서 다시 켜고 '중간에 끊겼어, .img2threejs/state.json 에서 이어서 해 줘'라고 하면 기록된 단계부터 이어 가요.</p></div><div class="step"><div class="no">7</div><h3>이럴 때 쓰세요 / 안 맞는 때</h3><p>쓰기 좋은 때: 웹페이지·게임에 넣을 소품(그릇·도구·간식·장난감)을 사진 한 장으로 잡을 때, 3D 파일 없이 코드로 들고 다니고 싶을 때, 부품을 움직이거나 터지게 만들 3D가 필요할 때. 안 맞는 때: 빨리 끝내야 할 때(몇 시간 걸릴 수 있어요), 사람 얼굴을 똑같이 만들어야 할 때(캐릭터는 비슷하게만), 뒷면 모양이 중요한데 사진이 한 장뿐일 때, AI 사용량을 아껴야 할 때.</p></div><div class="step"><div class="no">8</div><h3>처음부터 끝까지 예시 (직접 실행)</h3><p>11/6 저희 윈도우 PC(그래픽 카드 없음)에서 클로드 코드로 돌렸어요. 넣은 사진은 시연용으로 만든 '꼬리 먹힌 붕어빵' 한 장이에요. 첫 요청은 공식 문장 그대로 한 번 → 클로드가 사진에서 윤곽을 따고, 부품 12개(몸통·테두리·팥·부스러기·눈·입·아가미·지느러미·비늘…)로 나누고, 사진 칸마다 색을 뽑아 코드를 썼어요 → 첫 렌더가 가로세로 비율 검사에서 떨어지자 스스로 고쳐 통과 → 비늘 표면의 주름도 스스로 매끈하게. 여기까지 91분(8단계 중 첫 단계의 검사까지 — 저희가 여기서 멈춤). 비늘·눈이 흐려서 고쳐 달라고 한 번 더 시켰어요('비늘은 사진처럼 겹친 반달 줄로, 눈은 또렷한 동그라미와 눈동자로, 지느러미 줄무늬는 평행한 홈으로 바꿔 줘. 사진이랑 나란히 비교하면서 맞을 때까지 고쳐 줘.') → 69분 뒤 반달 비늘·눈·지느러미·놀란 입이 사진처럼 또렷해졌어요(사진과 겹치는 정도 0.895 → 0.936). 사진에 없는 아랫면은 윗면 무늬를 70% 세기로 뒤집어 채웠다고 스스로 밝혔어요.</p><figure class="media"><img src="media/render-before.png" loading="lazy" alt=""><figcaption>첫 렌더(직접 실행)</figcaption></figure><figure class="media"><img src="media/compare-final.png" loading="lazy" alt=""><figcaption>사진(왼쪽)과 고친 뒤 렌더(오른쪽) · 직접 실행</figcaption></figure><figure class="media"><video src="media/explode.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>부품마다 따로 — 분해해 본 모습 · 직접 실행</figcaption></figure></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>설치(맥·리눅스)</h3><p>터미널에서</p><pre class="copy">npx --yes img2threejs@latest install</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>설치 확인</h3><p>터미널에서</p><pre class="copy">npx --yes img2threejs@latest doctor</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>윈도우 손으로 설치</h3><p>Git Bash에서</p><pre class="copy">git clone https://github.com/img2threejs/img2threejs.git ~/.claude/skills/img2threejs</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>윈도우 python3 연결</h3><p>Git Bash에서(한 번만)</p><pre class="copy">mkdir -p ~/bin &amp;&amp; printf '#!/bin/sh\nexec python &quot;$@&quot;\n' &gt; ~/bin/python3 &amp;&amp; chmod +x ~/bin/python3</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>첫 요청(저희가 쓴 그대로)</h3><p>클로드 코드에</p><pre class="copy">/img2threejs Rebuild the object in ./reference.png as a procedural Three.js model.
+Keep its proportions, silhouette and colours. Follow the quality gates.
+Report the output files, render-review evidence and any inferred regions.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>고쳐 시키기(저희가 쓴 뜻)</h3><p>같은 대화에</p><pre class="copy">비늘은 사진처럼 겹친 반달 줄로, 눈은 또렷한 동그라미와 눈동자로, 지느러미 줄무늬는 평행한 홈으로 바꿔 줘. 사진이랑 나란히 비교하면서 맞을 때까지 고쳐 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>끊겼을 때 이어 하기</h3><p>같은 폴더에서 다시 켜고</p><pre class="copy">중간에 끊겼어. .img2threejs/state.json 에서 이어서 해 줘.</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>/img2threejs 가 안 보여요</strong><br>설치한 뒤 AI를 껐다 켜야 해요(새 대화). 윈도우 손 설치면 폴더가 정확히 .claude\skills\img2threejs 이고 안에 SKILL.md가 바로 있는지 보세요.</li><li><strong>'python3를 찾을 수 없음' / 스토어가 열려요</strong><br>윈도우의 python3 바로가기 때문이에요. python.org 파이썬 3.10 이상을 깔고 '윈도우 python3 연결' 한 줄을 실행하세요.</li><li><strong>렌더(화면 찍기)가 안 돼요</strong><br>AI가 브라우저로 결과를 찍어야 해요. 저희는 붙여 준 브라우저 도구가 크롬을 못 띄워서, 클로드가 스스로 크롬 headless 캡처로 바꿨어요. 크롬이 깔려 있으면 대개 알아서 길을 찾아요. 같은 크롬 프로필로 여러 장을 한꺼번에 찍으면 몇 장이 빠질 수 있어요.</li><li><strong>너무 오래 걸려요</strong><br>정상이에요 — 단계마다 렌더·비교를 해서 몇 시간 걸릴 수 있어요. 공식 README의 'Stay at low effort'(비용 상한) 문장을 요청에 붙이면 꼭 필요한 렌더만 해요.</li><li><strong>Exit 2 / 이미 있는 스킬이 막아요</strong><br>같은 자리에 손으로 넣은 폴더가 있으면 설치 명령이 덮어쓰지 않아요(공식 문서). 둘 중 하나만 쓰세요.</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>사진 한 장으론 안 보이는 뒷면은 보이는 쪽을 뒤집어 채운 추측이에요(공식 README 'Honesty about limits').</li><li>단단한 물건(그릇·도구·간식)에 강하고, 사람·캐릭터는 '비슷한 스타일'까지예요.</li><li>시간과 AI 사용량이 많이 들어요. 공식 문서 추정으로 물건 하나에 약 8만~18만 토큰, 캐릭터는 15만~35만 토큰.</li><li>공식 설치 명령은 맥·리눅스만 돼요. 윈도우는 손으로 설치해요.</li><li>남의 사진·캐릭터·브랜드 로고를 3D로 만들어 올리면 저작권 문제가 될 수 있어요. 내가 찍은 사진이나 자유 이용(CC0) 사진을 쓰세요.</li><li>명령은 업데이트로 바뀔 수 있어요. 막히면 저장소 README와 docs/INSTALL.md를 먼저 보세요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
