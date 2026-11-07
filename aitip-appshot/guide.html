@@ -1,0 +1,379 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>챗GPT 데스크톱 앱 — 단축키 두 개 | AI ANTENNA</title><meta property="og:title" content="챗GPT 데스크톱 앱 — 단축키 두 개"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>챗GPT 데스크톱 앱 — 단축키 두 개</h1><p class="outcome">챗GPT 데스크톱 앱(윈도·맥)에는 지금 보는 화면을 통째로 넘기는 '앱샷'과, 어느 창 위에든 뜨는 작은 입력창이 단축키로 들어 있어요. 복사하고 캡처하고 설명하지 않아도 화면째 물어볼 수 있어요.
+
+이 정리본은 OpenAI 공식 문서(learn.chatgpt.com, 11/7 확인) 기준이에요. 아래 화면은 공식 문서 내용대로 다시 그린 그림이고, 정산표는 시연용으로 만든 가짜 표예요.</p><figure class="media"><video src="media/hero.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>양쪽 Alt → 맨 앞 창(표)이 입력창에 붙고 → '이 표에서 이상한 숫자 찾아 줘' · 공식 문서 기준 재구성(답은 같은 표를 GPT에 실제로 보내 받은 문장)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>ChatGPT 데스크톱 앱 — 윈도·맥, OpenAI 공식 사이트에서 받아요. 웹·모바일에선 앱샷이 안 돼요</li><li>앱샷: Plus·Pro·Business 요금제(공식 요금표). 회사 계정은 관리자가 앱샷을 막아 둘 수 있어요</li><li>빠른 입력창: 계정·작업 공간에서 이 기능(공식 이름 Pets)이 켜져 있어야 해요 — 요금제는 문서에 적혀 있지 않아요</li><li>맥은 처음 쓸 때 '화면 및 시스템 오디오 녹음'·'손쓰기 쉬운 기능(Accessibility)' 권한을 물을 수 있어요</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① 앱샷 — 양쪽 Alt를 동시에 (맥은 양쪽 Command)</h3><p>물어보고 싶은 창(엑셀·한글·메모장 등)을 맨 앞에 띄워 두고, 키보드 스페이스바 양옆의 Alt 두 개를 동시에 눌러요. 맥은 양옆 Command(⌘) 두 개예요. 윈도에선 메인 ChatGPT 앱에 새 대화가 열려요.</p><figure class="media"><img src="media/altalt.png" loading="lazy" alt=""><figcaption>스페이스바 양옆 Alt 두 개를 같이 · 공식 문서 기준 재구성</figcaption></figure></div><div class="step"><div class="no">2</div><h3>② 무엇이 넘어가나</h3><p>맨 앞 창 하나만 넘어가요. 보이는 창의 그림 한 장 + 그 앱이 내주는 글자(스크롤해야 보이는 아래쪽 글자가 들어갈 때도 있어요). 구글 문서·Gmail·구글 시트·구글 슬라이드 같은 웹 앱은 보이는 화면 그림만 넘어가요(공식 문서).</p><figure class="media"><img src="media/official-appshot.png" loading="lazy" alt=""><figcaption>공식 문서에 실린 앱샷 예시(맥 가계부 창)</figcaption></figure><figure class="media"><img src="media/attach.png" loading="lazy" alt=""><figcaption>창 그림 한 장 + 글자 줄이 입력창에 같이 붙어요 · 공식 문서 기준 재구성</figcaption></figure></div><div class="step"><div class="no">3</div><h3>③ 붙은 채로 한 줄만 물어보기</h3><p>붙은 화면에 대해 묻거나 시킬 일을 적어요. 예: '이 표에서 이상한 숫자 찾아 줘'. 시연용 정산표(1~6월 재료비, 3월만 4,210,000원)를 그림+글자로 GPT에 보냈을 때 나온 답: '이상한 숫자는 3월 재료비 4,210,000원입니다. 다른 달은 약 40만 원인데, 3월만 약 10배로 높습니다. 421,000원을 잘못 입력한 것인지 원본 내역을 확인해 보세요.'(OpenAI API로 보낸 답이에요. 데스크톱 앱 화면은 아니에요.)</p><figure class="media"><img src="media/answer.png" loading="lazy" alt=""><figcaption>표 + 요청 한 줄 → 3월 칸을 짚은 답 · 공식 문서 기준 재구성</figcaption></figure></div><div class="step"><div class="no">4</div><h3>④ 빠른 입력창 — Win + Alt + P (맥은 Option + Space)</h3><p>다른 앱을 쓰던 화면 그대로, 단축키를 누르면 작은 입력창(캐릭터와 함께)이 다른 창 위에 떠요. 바로 글로 치거나 말로 시작할 수 있어요. 한 번 더 누르면 입력칸으로 커서가 가요. 캐릭터가 '작업 중·입력 필요·완료·막힘' 상태를 보여 줘요. 캐릭터 없이 입력창만 쓰려면 설정에서 'Mini'를 골라요(공식 문서).</p><figure class="media"><img src="media/winaltp.png" loading="lazy" alt=""><figcaption>윈도 키 + Alt + P · 공식 문서 기준 재구성</figcaption></figure><figure class="media"><img src="media/quick.png" loading="lazy" alt=""><figcaption>쓰던 메일 창 위에 뜬 작은 입력창 · 공식 문서 기준 재구성(메일은 시연용 가상 내용)</figcaption></figure></div><div class="step"><div class="no">5</div><h3>⑤ 단축키 바꾸기</h3><p>앱샷 단축키는 ChatGPT 설정에서 원하는 키로 바꿀 수 있어요. 빠른 입력창 단축키는 설정 › Keyboard shortcuts(키보드 단축키)에서 바꿔요(공식 문서).</p></div></section>
+<section><h2>복사해서 쓰기 (앱샷 찍고 붙여 넣는 한 줄)</h2><div class="item"><h3>표·엑셀</h3><p>숫자 표를 맨 앞에 두고 앱샷</p><pre class="copy">이 표에서 이상한 숫자 찾아 줘</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>오류 창</h3><p>에러 메시지 창을 앱샷</p><pre class="copy">이 오류가 왜 났는지, 내가 뭘 누르면 되는지 순서대로 알려 줘</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>긴 문서</h3><p>읽던 문서 창을 앱샷</p><pre class="copy">이 문서 핵심만 세 줄로 정리해 줘</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>설정 화면</h3><p>헷갈리는 프로그램 설정 창을 앱샷</p><pre class="copy">이 화면에서 ○○을 하려면 어디를 눌러야 해?</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>양쪽 Alt를 눌러도 아무 일이 없어요</strong><br>ChatGPT 데스크톱 앱이 깔려 있고 켜져 있는지, 요금제가 Plus·Pro·Business인지 봐요. 회사 계정이면 관리자가 앱샷을 막았을 수 있어요. 설정에서 앱샷 단축키가 다른 키로 바뀌어 있지 않은지도 확인해요.</li><li><strong>구글 시트를 앱샷했더니 아래쪽 내용을 몰라요</strong><br>구글 문서·Gmail·시트·슬라이드 같은 웹 앱은 보이는 화면 그림만 넘어가요. 필요한 부분을 화면에 띄운 뒤 찍어요(공식 문서).</li><li><strong>Win + Alt + P가 안 돼요</strong><br>계정·작업 공간에서 빠른 입력창(Pets) 기능이 켜져 있어야 해요. 다른 프로그램이 같은 단축키를 쓰면 설정 › Keyboard shortcuts에서 바꿔요.</li><li><strong>맥에서 앱샷이 안 찍혀요</strong><br>시스템 설정 › 개인정보 보호 및 보안에서 ChatGPT에 '화면 및 시스템 오디오 녹음'과 '손쓰기 쉬운 기능' 권한을 줘요(공식 문서).</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>앱샷은 화면 그림과 글자를 ChatGPT로 보내요. 메신저·비밀번호·통장·주민번호가 보이는 창에선 누르지 마세요. 공식 문서도 '꼭 필요할 때가 아니면 민감한 내용은 앱샷하지 말라'고 해요.</li><li>맨 앞 창 하나만 넘어가요. 두 창을 같이 보여 주려면 하나씩 찍어요.</li><li>윈도 앱샷은 메인 ChatGPT 앱에서 열려요. 빠른 입력창으로 앱샷 보내기는 맥에서만 돼요(공식 문서).</li><li>공식 요금표 기준 앱샷은 Plus·Pro·Business에서 되고, Enterprise는 '안 됨'으로 적혀 있어요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
