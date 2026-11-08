@@ -1,0 +1,382 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ponytail — 클로드 코드가 덜 짜게 만드는 스킬 | AI ANTENNA</title><meta property="og:title" content="Ponytail — 클로드 코드가 덜 짜게 만드는 스킬"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>Ponytail — 클로드 코드가 덜 짜게 만드는 스킬</h1><p class="outcome">Ponytail은 클로드 코드에 붙이는 무료 스킬(MIT)이에요. 코드를 쓰기 전에 '이게 꼭 필요한지, 이미 있는 걸로 되는지'를 순서대로 따지고, 안 될 때만 최소한으로 새로 짜요. 입력 검증·보안·접근성은 자르지 않는다고 적혀 있어요.
+
+이 정리본은 공식 설치 문서(README, 11/8 확인) 기준이에요. 저희가 직접 돌린 화면은 없고, 그림은 공식 README 그림과 공식 예제 코드를 옮긴 그림이에요.</p><figure class="media"><video src="media/hero.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>공식 예제 '카운트다운 타이머': 스킬 없이 267줄, Ponytail 9줄 · 공식 예제 기준 재구성(Claude Haiku 4.5로 잰 예제)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>Claude Code — 클로드 Pro 이상 요금제나 API 결제가 있어야 써요</li><li>Ponytail 자체는 무료(MIT). 설정 파일 없이 바로 켜져요</li><li>Codex·Cursor·Copilot 등 다른 코딩 AI도 돼요(공식 INSTALL.md)</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① 설치 — 명령 두 줄을 하나씩</h3><p>Claude Code 입력칸에 아래 두 줄을 따로따로 넣어요(한 번에 붙이지 말고 하나 넣고 엔터, 다음 줄 넣고 엔터).
+/plugin marketplace add DietrichGebert/ponytail
+/plugin install ponytail@ponytail
+공식 저장소(GitHub DietrichGebert/ponytail, npm @dietrichgebert/ponytail)에서만 받으세요. .exe·.dll이 든 사본은 가짜라고 만든 사람이 적어 뒀어요.</p><figure class="media"><img src="media/install.png" loading="lazy" alt=""><figcaption>설치 명령을 넣는 자리 · 공식 문서 기준 재구성</figcaption></figure></div><div class="step"><div class="no">2</div><h3>② 켜졌는지 보고, 세기 고르기</h3><p>설치하면 모든 세션에서 켜져 있어요. /ponytail 만 치면 지금 세기를 알려 줘요. 세기는 /ponytail lite · full · ultra, 끄려면 /ponytail off. 처음엔 기본값으로 두고 써 보세요.</p></div><div class="step"><div class="no">3</div><h3>③ 평소처럼 시키면 돼요 — 대신 이렇게 따져요</h3><p>코드를 쓰기 전에 아래 순서에서 '되는 첫 칸'에서 멈춰요: 1 꼭 있어야 하나 → 2 이미 이 프로젝트에 있나 → 3 표준 라이브러리 → 4 브라우저·플랫폼 기본 기능 → 5 이미 설치된 패키지 → 6 한 줄로 되나 → 7 그다음에야 최소한의 코드(로직이 있으면 작은 테스트 하나). 문제를 먼저 읽고 나서 이 순서를 돈다고 적혀 있어요.</p><figure class="media"><img src="media/ladder-ko.png" loading="lazy" alt=""><figcaption>공식 README '작동 방식' 그림</figcaption></figure></div><div class="step"><div class="no">4</div><h3>④ 예: 카운트다운 타이머</h3><p>'초를 받아 거꾸로 세는 React 타이머 만들어 줘'를 같은 모델에 시킨 공식 예제예요. 스킬 없이는 기본형에 일시정지·형식·스타일 버전까지 267줄, Ponytail은 남은 초를 보여 주는 9줄. 9줄 쪽은 '일시정지·mm:ss 표시·소리·꾸미기는 필요할 때 추가'라고 빼먹은 걸 밝혀요.</p><figure class="media"><img src="media/timers.png" loading="lazy" alt=""><figcaption>같은 '남은 초' 화면, 코드 길이만 다름 · 공식 예제 기준 재구성</figcaption></figure></div><div class="step"><div class="no">5</div><h3>⑤ 다 짠 뒤 점검 — /ponytail-review</h3><p>바꾼 코드뿐 아니라 그 코드가 닿는 파일까지 읽고 버그·보안·빠진 테스트·느린 곳·지울 것을 짚어 줘요. 지적마다 무엇이 문제인지, 고치는 법, 안 고치면 생기는 일을 적어요. 프로젝트 전체는 /ponytail-audit(고칠 순서까지).</p><figure class="media"><img src="media/review-ko.png" loading="lazy" alt=""><figcaption>공식 README '다시 만든 리뷰' 그림</figcaption></figure></div><div class="step"><div class="no">6</div><h3>⑥ 비용 띠 보기</h3><p>Claude Code 2.1.290 이상(터미널·데스크톱 앱)에선 입력칸 위에 지금 작업 비용·토큰·시간·재사용 비율이 뜨는 띠가 나와요. 숨기려면 /ponytail band. VS Code 채팅 패널·claude -p에선 안 보여요.</p><figure class="media"><img src="media/band.png" loading="lazy" alt=""><figcaption>공식 README 밴드 그림</figcaption></figure></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>설치 1</h3><p>Claude Code 입력칸에 먼저</p><pre class="copy">/plugin marketplace add DietrichGebert/ponytail</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>설치 2</h3><p>1번 다음 따로</p><pre class="copy">/plugin install ponytail@ponytail</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>점검</h3><p>기능 하나 다 만든 뒤</p><pre class="copy">/ponytail-review</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>전체 점검</h3><p>프로젝트를 처음 넘겨받았을 때</p><pre class="copy">/ponytail-audit</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>끄기</h3><p>길게 다 짜 달라고 할 때</p><pre class="copy">/ponytail off</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>설치 명령이 안 먹어요</strong><br>두 줄을 한 번에 붙이면 안 돼요. 첫 줄 넣고 엔터, 끝난 뒤 둘째 줄. Claude Code를 다시 열면 켜져 있어요.</li><li><strong>너무 짧게만 짜서 기능이 빠졌어요</strong><br>답 끝에 '건너뛴 것'이 적혀 있어요. 필요한 걸 콕 집어 다시 시키거나 /ponytail lite로 세기를 낮춰요. 아예 끄려면 /ponytail off.</li><li><strong>코드에 shortcut: 주석이 생겨요</strong><br>일부러 미룬 지름길 표시예요. /ponytail-debt가 모아 줘요. 싫으면 CLAUDE.md에 그렇게 적어 두면 돼요(공식 FAQ).</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>숫자(코드 -53%, 시간 -41%, 비용 -26%, 출력 토큰 -45%)는 만든 사람이 Claude Code·Opus 5.5로 과제 39개를 5번씩 돌려 잰 값이에요. 내 프로젝트에선 다를 수 있어요.</li><li>정답·보안은 '그대로'예요. 숨은 검사 통과 스킬 없이 86/90, Ponytail 87/90, 보안 과제 6개는 둘 다 30/30. 더 안전해지는 도구는 아니에요.</li><li>CLAUDE.md에 '필요한 것만 짧게 짜'라고 적는 것만으로도 일부는 돼요. Ponytail은 따지는 순서, 자르면 안 되는 것, 점검 명령을 묶어 둔 거예요.</li><li>Claude Code는 유료 요금제(Pro 이상)나 API 결제가 필요해요. 스킬은 무료예요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
