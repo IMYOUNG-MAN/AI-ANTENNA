@@ -1,0 +1,377 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BFS Best Face Swap — 단체 사진 속 눈 감은 얼굴 바꿔 끼우기 | AI ANTENNA</title><meta property="og:title" content="BFS Best Face Swap — 단체 사진 속 눈 감은 얼굴 바꿔 끼우기"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>BFS Best Face Swap — 단체 사진 속 눈 감은 얼굴 바꿔 끼우기</h1><p class="outcome">사진 두 장(고칠 사진 + 넣을 얼굴)을 넣으면, 그 사람 머리만 바꿔 끼우고 옆 사람·배경·조명은 그대로 둬요. 고개 기울기와 표정은 원래 사진을 따라가요. 허깅페이스에 공개된 페이지라 설치 없이 브라우저에서 바로 쓰고, 로그인 없이도 하루 몇 장은 돼요.</p><figure class="media"><img src="media/hero.jpg" loading="lazy" alt=""><figcaption>왼쪽 원본(노란 카디건 친구만 눈 감음) → 오른쪽 결과(그 얼굴만 바뀜). 인물은 시연용으로 만든 가상 인물이에요.</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>PC나 폰 브라우저(설치할 것 없음)</li><li>고칠 사진 — 눈 감았거나 표정이 아쉬운 그 사진</li><li>넣을 얼굴 — 같은 사람이 눈 뜨고 있는 다른 컷. 정면에 가깝고 밝을수록, 머리 모양이 같을수록 자연스러워요</li><li>본인이거나 허락받은 사람 사진만(원작 안내)</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① 페이지 열기</h3><p>아래 '복사해서 쓰기'의 주소를 브라우저에 넣어요. 로그인 없이도 돼요. 허깅페이스 무료 계정으로 로그인하면 하루에 더 많이 돌릴 수 있어요.</p></div><div class="step"><div class="no">2</div><h3>② 1번 칸 Reference Face — 넣을 얼굴</h3><p>눈 뜬 얼굴이 나온 컷을 올려요. 이 사진의 머리카락·눈·코 생김새를 가져가요.</p><figure class="media"><img src="media/steps.png" loading="lazy" alt=""><figcaption>1 넣을 얼굴 · 2 고칠 사진 · 3 Swap Face · 4 전후 슬라이더(직접 돌린 화면)</figcaption></figure></div><div class="step"><div class="no">3</div><h3>③ 2번 칸 Target Image — 고칠 사진</h3><p>단체 사진처럼 바꾸고 싶은 사진을 올려요. 결과는 이 사진 크기·구도를 그대로 따라가요.</p></div><div class="step"><div class="no">4</div><h3>④ Swap Face 누르기</h3><p>기본값(Turbo · Viggle 6-step)이면 대기열이 없을 때 30초 안팎이에요. 사람이 많으면 순서를 기다려요.</p></div><div class="step"><div class="no">5</div><h3>⑤ 전후 슬라이더로 확인하고 받기</h3><p>결과 칸 가운데 손잡이를 좌우로 끌면 전후가 비교돼요. 오른쪽 위 내려받기 버튼으로 저장해요. 마음에 안 들면 Swap Face를 한 번 더 — 누를 때마다 결과가 조금씩 달라요.</p></div><div class="step"><div class="no">6</div><h3>처음부터 끝까지 예시 — 단체 사진</h3><p>고칠 사진: 바다 앞 네 명, 노란 카디건 친구만 눈 감음. 넣을 얼굴: 같은 친구가 같은 날 혼자 찍은 컷. 결과: 그 친구 얼굴만 눈 뜬 얼굴로 바뀌고 나머지 세 명과 바다는 그대로였어요.</p><figure class="media"><img src="media/ref.jpg" loading="lazy" alt=""><figcaption>넣을 얼굴(같은 친구의 다른 컷, 가상 인물)</figcaption></figure><figure class="media"><img src="media/hero.jpg" loading="lazy" alt=""><figcaption>전(왼쪽) · 후(오른쪽)</figcaption></figure></div><div class="step"><div class="no">7</div><h3>이렇게도 — 사극 장면에 내 셀카</h3><p>고칠 사진 자리에 사극 임금님 장면, 넣을 얼굴에 내 셀카를 넣으면 옷·옥좌·병풍은 그대로 두고 얼굴만 내 얼굴이 돼요. 머리 모양은 넣은 얼굴 쪽을 따라가서 관모가 사라질 수 있어요.</p><figure class="media"><img src="media/king.jpg" loading="lazy" alt=""><figcaption>셀카 · 원래 장면 · 결과(전부 가상 인물)</figcaption></figure></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>페이지 주소</h3><p>브라우저 주소창</p><pre class="copy">https://huggingface.co/spaces/hugging-apps/bfs-best-face-swap</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>'exceeded your ZeroGPU runs limit'가 떠요</strong><br>하루 무료 GPU 한도를 다 쓴 거예요(로그인 없이 하루 2분, 무료 계정 5분, PRO 40분 — 허깅페이스 공식 문서). 무료 계정으로 로그인하거나 첫 사용 24시간 뒤 다시 하세요. 한 장에 30초 안팎을 써요.</li><li><strong>사람이 여럿인데 엉뚱한 얼굴이 바뀌어요</strong><br>바꿀 사람 둘레만 잘라서 고칠 사진 칸에 넣고, 결과를 원래 사진에 다시 붙이세요. 이번 예시(네 명)는 통째로 넣어도 맞는 얼굴이 바뀌었어요.</li><li><strong>얼굴이 어색해요</strong><br>넣을 얼굴을 정면에 가깝고 밝은 컷으로 바꿔 보세요. Advanced Settings의 Resolution을 2K로 올리면 더 또렷하지만 한도를 두 배로 써요.</li><li><strong>클로드에서 바로 쓰고 싶어요</strong><br>이 페이지는 MCP 서버로도 열려 있어요(페이지 맨 아래 'Use via API or MCP'). 연결 방법은 그 창의 안내를 따르세요.</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>원작 안내: 동의하지 않은 사람이 나온 결과는 쓰지도 퍼뜨리지도 마세요. 남의 얼굴로 합성물을 만들어 퍼뜨리면 처벌받을 수 있어요.</li><li>바탕 모델(Qwen-Image-2.1·Viggle turbo)은 Qwen Research License라 상업적으로 쓰면 안 돼요. BFS 얼굴 바꾸기 부분과 예시 그림은 MIT예요.</li><li>머리카락·눈·코는 넣은 얼굴에서, 고개 방향·눈길·표정·조명·배경은 원래 사진에서 가져와요(페이지의 기본 요청문 기준).</li><li>이 정리의 화면은 저희가 직접 돌린 결과이고, 등장인물은 전부 AI로 만든 가상 인물이에요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
