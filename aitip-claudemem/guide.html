@@ -1,0 +1,377 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>claude-mem — 클로드 코드가 어제 한 일을 기억하게 하는 플러그인 | AI ANTENNA</title><meta property="og:title" content="claude-mem — 클로드 코드가 어제 한 일을 기억하게 하는 플러그인"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>claude-mem — 클로드 코드가 어제 한 일을 기억하게 하는 플러그인</h1><p class="outcome">클로드 코드가 일하는 동안 읽고·고치고·돌린 것을 두 번째 클로드가 짧은 기록으로 남기고, 다음 새 창은 그 기록의 목차부터 깔고 시작해요. 그래서 새 창에서 '어제 그 버그 왜 그렇게 고쳤지?'라고 물으면 기록을 찾아 이유까지 답해요. 아래 화면은 빈 설정으로 새로 깐 클로드 코드에서 실제로 돌린 거예요. 오픈소스(Apache-2.0)예요.</p><figure class="media"><video src="media/ask.mp4" poster="media/ask-poster.png" autoplay muted loop playsinline preload="metadata"></video><figcaption>다음 날 새 창 — 시작하자마자 지난 기록 목차가 깔리고, 질문하면 기록을 찾아(mem-search) 이유까지 답해요</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>Claude Code(최신판, 플러그인 되는 버전)와 클로드 요금제</li><li>Node.js 20.19 이상(20번대) 또는 22.12 이상</li><li>Bun·uv는 없으면 알아서 깔려요</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① 설치 — 클로드 코드 안에서 두 줄</h3><p>클로드 코드 입력창에 아래 '복사해서 쓰기'의 설치 1·2를 차례로 넣어요. 그다음 클로드 코드를 껐다 켜요. 터미널에서 npx claude-mem install로 깔아도 돼요(설치 중 로그인·공식 관찰자 체험을 물으면 건너뛰어도 돼요).</p></div><div class="step"><div class="no">2</div><h3>② 기록을 한국어로</h3><p>내 PC의 ~/.claude-mem/settings.json에 &quot;CLAUDE_MEM_MODE&quot;: &quot;code--ko&quot;를 넣고 클로드 코드를 다시 켜요. 기록 제목·내용이 한국어로 남아요. 파일이 없으면 처음 실행 때 생겨요.</p></div><div class="step"><div class="no">3</div><h3>③ 평소처럼 일하기</h3><p>따로 '기억해 줘'라고 할 필요가 없어요. 클로드가 파일을 읽고, 고치고, 명령을 돌릴 때마다 옆에서 두 번째 클로드가 한 줄 기록으로 정리해요. 기록은 내 PC ~/.claude-mem에 쌓여요.</p></div><div class="step"><div class="no">4</div><h3>④ 다음 날 새 창</h3><p>같은 프로젝트 폴더에서 새 창을 열면, 시작하자마자 지난 기록 목차가 깔려요(기억은 그 프로젝트의 두 번째 세션부터 들어가요). 자세한 내용은 필요할 때만 꺼내 와요.</p><figure class="media"><img src="media/start-index.png" loading="lazy" alt=""><figcaption>새 창 첫 화면 — 지난 기록 #3~#6이 시간과 함께 깔림(실제 화면)</figcaption></figure></div><div class="step"><div class="no">5</div><h3>⑤ 물어보기</h3><p>'어제 ○○ 왜 그렇게 고쳤지?', '지난주에 로그인 쪽 뭐 바꿨지?'처럼 물어요. 클로드가 기록 검색(mem-search)으로 목차 → 시간순 → 자세히 순서로 찾아 답해요. 기록에 없는 건 없다고 말해요.</p><figure class="media"><img src="media/answer.png" loading="lazy" alt=""><figcaption>대답 — 어제 기록 번호(#5·#6)를 짚으며 이유와 남은 점까지(실제 화면)</figcaption></figure></div><div class="step"><div class="no">6</div><h3>⑥ 기록 눈으로 보기</h3><p>클로드 코드를 켤 때 나오는 주소(View Observations Live @ http://localhost:…)를 브라우저로 열면 기록이 시간순으로 보여요. 필요 없는 기록은 지울 수 있어요.</p><figure class="media"><img src="media/viewer.png" loading="lazy" alt=""><figcaption>기록 화면 — 종류(발견·버그 수정)·프로젝트·시간(실제 화면)</figcaption></figure></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>설치 1</h3><p>클로드 코드 입력창</p><pre class="copy">/plugin marketplace add thedotmack/claude-mem</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>설치 2</h3><p>클로드 코드 입력창 — 그다음 클로드 코드를 껐다 켜기</p><pre class="copy">/plugin install claude-mem</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>한국어 기록</h3><p>~/.claude-mem/settings.json 안</p><pre class="copy">{ &quot;CLAUDE_MEM_MODE&quot;: &quot;code--ko&quot; }</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>다음 날 물어보기</h3><p>같은 프로젝트에서 새 창</p><pre class="copy">어제 이 프로젝트에서 고친 버그랑, 왜 그렇게 고쳤는지 기록 찾아서 알려 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>비밀 빼기</h3><p>대화에 붙여 넣을 비밀번호·키를 감싸기</p><pre class="copy">&lt;private&gt;여기에 비밀번호나 키&lt;/private&gt;</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>새 창인데 기억을 안 깔아 줘요</strong><br>기억은 같은 프로젝트 폴더의 두 번째 세션부터 들어가요. 첫 세션이 끝나고 다시 열어 보세요. 그래도 없으면 터미널에서 npx claude-mem doctor로 점검해요.</li><li><strong>윈도우에서 'claude-mem을 찾을 수 없다'고 나와요</strong><br>설치가 %LOCALAPPDATA%\claude-mem\bin을 사용자 Path에 넣어요. 터미널이나 VS Code를 껐다 켜야 반영돼요. 안 되면 npx claude-mem doctor.</li><li><strong>훅이 오래 걸린다·시간 초과라고 떠요</strong><br>저희 PC에서도 처음엔 'UserPromptSubmit hook timed out'이 떴지만 대답은 정상으로 나왔어요. 계속 느리면 npx claude-mem doctor로 작업자 상태를 봐요.</li><li><strong>원래 클로드 코드 기억이랑 뭐가 달라요?</strong><br>요즘 클로드 코드도 '내일 이거 할 거야'처럼 말해 둔 건 스스로 메모해요. claude-mem은 말하지 않아도 읽고·고치고·돌린 일을 전부 기록으로 남기고 검색해 꺼내 와요. 저희가 같은 질문을 해 보니 기본 클로드는 '어제 대화 기록은 저한테 없어요'라고 답했어요.</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>기록 정리(두 번째 클로드)는 기본으로 내 클로드 요금제 사용량을 써요. 설치 중 나오는 공식 관찰자 30일 체험은 결제 수단을 받으니 필요할 때만 고르세요. OpenRouter·Gemini 키로 바꿀 수도 있어요.</li><li>익명 사용 통계가 기본으로 켜져 있어요. 끄려면 터미널에서 npx claude-mem telemetry disable.</li><li>기록은 내 PC(~/.claude-mem)에만 있어요. 클라우드 동기화는 직접 켤 때만.</li><li>클로드 코드 말고 Codex·Cursor·OpenCode 등에도 붙어요(npx claude-mem install --ide …).</li><li>README 맨 끝의 코인(CMEM) 이야기는 이 도구 쓰는 데 필요 없어요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
