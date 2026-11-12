@@ -1,0 +1,380 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>소크라테스 튜터 — 실력표가 다 찰 때까지 안 끝나는 AI 과외 스킬 | AI ANTENNA</title><meta property="og:title" content="소크라테스 튜터 — 실력표가 다 찰 때까지 안 끝나는 AI 과외 스킬"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>소크라테스 튜터 — 실력표가 다 찰 때까지 안 끝나는 AI 과외 스킬</h1><p class="outcome">월가 회사 제인 스트리트가 깃허브에 공개한 스킬(socratic-tutor)이에요. AI가 가르치기 전에 시험부터 보고, 배울 걸 여러 칸으로 쪼개 칸마다 0~5점을 매겨요. 점수는 다른 문제로 두 번 넘게 증명해야 오르고, 예고 없는 복습에서 틀리면 내려가요. 모든 칸이 4점이 돼야 종합 시험을 보고 끝나요. 아래 화면은 빈 설정으로 새로 깐 클로드 코드에서 정처기 실기 파이썬으로 실제로 돌린 대화예요. MIT 라이선스, 무료.</p><figure class="media"><img src="media/map.png" loading="lazy" alt=""><figcaption>진단 문제 다섯 개 뒤에 나온 실력표 — 목표는 전 항목 4/5(실제 대화)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>클로드 코드(또는 SKILL.md를 읽는 코딩 에이전트) — 클로드 요금제 필요</li><li>또는 챗GPT·클로드·제미나이 같은 채팅창 아무거나(무료 계정도 됨 — 대화가 길면 사용 한도에 걸릴 수 있어요)</li><li>배우고 싶은 과목 하나(시험 과목·업무 도구·취미 다 돼요)</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① 설치 — 클로드 코드</h3><p>저장소(github.com/janestreet/agent_skills)에서 socratic-tutor 폴더를 받아 스킬 폴더에 복사해요. 모든 프로젝트에서 쓰려면 내 홈의 .claude/skills/ 안에(윈도우는 C:Users내이름.claudeskills), 한 프로젝트에서만 쓰려면 그 프로젝트의 .claude/skills/ 안에 넣어요. 아래 '복사해서 쓰기'의 명령 한 줄로도 돼요. 그다음 클로드 코드를 새로 켜요.</p></div><div class="step"><div class="no">2</div><h3>① 설치 — 채팅창(챗GPT·클로드·제미나이)</h3><p>socratic-tutor/SKILL.md 파일을 열어 맨 위 ---로 감싼 부분 아래 본문을 통째로 복사해 대화창 첫 메시지에 붙여 넣고, 그 아래에 배우고 싶은 걸 적어요. 매번 붙이기 귀찮으면 챗GPT 프로젝트 지침·클로드 프로젝트 지침에 넣어 두세요.</p><figure class="media"><img src="media/paste.png" loading="lazy" alt=""><figcaption>본문을 붙여 넣고 '토익 시제 가르쳐 줘' — 항목을 나누고 진단 Q1부터(실제 대화, 클로드로 확인)</figcaption></figure></div><div class="step"><div class="no">3</div><h3>② 시작 — '가르쳐 줘'라고 분명히</h3><p>'○○ 제대로 가르쳐 줘(teach me)', '○○ 문제 내 줘(quiz me)'처럼 말해요. 'X가 뭐야?'처럼 한 번 묻는 질문엔 수업을 시작하지 않고 그냥 답해요(헷갈리면 '빠른 답이 좋아요, 제대로 배울래요?'라고 되물어요).</p><figure class="media"><img src="media/q1.png" loading="lazy" alt=""><figcaption>세부 항목 9개로 쪼갠 뒤 진단 Q1 — 아직 아무것도 가르치지 않아요(실제 대화)</figcaption></figure></div><div class="step"><div class="no">4</div><h3>③ 진단에 솔직하게 답하기</h3><p>모르면 '모름', 찍었으면 '찍었어요'라고 해요. 진단 문제(3~5개)가 끝나면 실력표가 나오고, 어디부터 할지 추천해요. 순서는 바꿔 달라고 해도 돼요.</p></div><div class="step"><div class="no">5</div><h3>④ 틀리면 — 좁은 질문에 답하기</h3><p>틀려도 정답을 바로 안 알려 줘요. 내 생각의 어디가 틀렸는지 보이게 더 좁은 질문을 해요. 두세 번 막히면 그때 짧게 설명하고 바로 다른 각도로 다시 물어요.</p><figure class="media"><img src="media/narrow.png" loading="lazy" alt=""><figcaption>'b는 a를 복사한 거' → 'a[:]는 왜 따로 있을까요?'(실제 대화)</figcaption></figure></div><div class="step"><div class="no">6</div><h3>⑤ 점수는 증명해야 올라요</h3><p>방금 들은 걸 맞힌 건 점수에 안 넣어요. 다른 문제로 한 번 더 통과해야 한 칸 올라가요. 점수가 바뀔 때마다 실력표를 다시 그려 줘요.</p><figure class="media"><img src="media/levelhold.png" loading="lazy" alt=""><figcaption>'방금 원리를 익혔으니 레벨은 아직 그대로 둡니다'(실제 대화)</figcaption></figure><figure class="media"><img src="media/levelup.png" loading="lazy" alt=""><figcaption>다른 문제를 통과하자 2→3(실제 대화)</figcaption></figure></div><div class="step"><div class="no">7</div><h3>⑥ 급할 땐 '그냥 알려 줘'</h3><p>그 문제만 바로 정답과 설명을 줘요. 대신 그 문제는 점수에 안 치고, 다른 문제로 다시 확인해요.</p><figure class="media"><img src="media/justtell.png" loading="lazy" alt=""><figcaption>'그냥 알려 줘' 뒤 — '승급 점수에 넣지 않을게요'(실제 대화)</figcaption></figure></div><div class="step"><div class="no">8</div><h3>⑦ 그만할 땐 '저장해 줘' → 다음엔 새 창에 붙여 넣기</h3><p>'저장해 줘'(save state)라고 하면 주제·실력표·헷갈린 것·풀던 문제를 블록 하나로 뽑아 줘요. 메모장에 저장해 두고, 다음에 새 창을 열어 맨 앞에 'resume from:'을 적고 그 블록을 붙여 넣으면 풀던 문제부터 이어서 해요.</p><figure class="media"><img src="media/save.png" loading="lazy" alt=""><figcaption>저장 블록(실제 대화 — 아래 대기 문제 정답 줄은 가림)</figcaption></figure><figure class="media"><img src="media/resume.png" loading="lazy" alt=""><figcaption>새 창에 붙여 넣자 같은 실력표로 이어서(실제 대화)</figcaption></figure></div><div class="step"><div class="no">9</div><h3>⑧ 졸업까지</h3><p>모든 칸이 목표(기본 4/5, '완전히 마스터'라고 하면 5/5)에 닿아야 끝나요. 그다음 전 항목 섞은 종합 시험을 보고, 통과하면 최종 실력표와 약한 곳 정리를 줘요. 못 넘으면 다시 수업. 중간에 예고 없이 지난 칸을 다시 묻고, 틀리면 점수를 내려요(SKILL.md 원문).</p></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>설치 (윈도우 PowerShell)</h3><p>모든 프로젝트에서 쓰기 — 그다음 클로드 코드 다시 켜기</p><pre class="copy">git clone --depth 1 https://github.com/janestreet/agent_skills $env:TEMPagent_skills; mkdir -Force $HOME.claudeskills; Copy-Item -Recurse $env:TEMPagent_skillssocratic-tutor $HOME.claudeskills\</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>설치 (맥·리눅스)</h3><p>터미널</p><pre class="copy">git clone --depth 1 https://github.com/janestreet/agent_skills /tmp/agent_skills &amp;&amp; mkdir -p ~/.claude/skills &amp;&amp; cp -r /tmp/agent_skills/socratic-tutor ~/.claude/skills/</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>시작 — 시험 과목</h3><p>클로드 코드·채팅창</p><pre class="copy">정보처리기사 실기에 나오는 파이썬 코드 읽기 문제, 제대로 가르쳐 줘. teach me</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>시작 — 업무 도구</h3><p>클로드 코드·채팅창</p><pre class="copy">엑셀 피벗 테이블이랑 XLOOKUP, 혼자 쓸 수 있을 때까지 가르쳐 줘. teach me</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>시작 — 완전히</h3><p>목표를 5점으로</p><pre class="copy">토익 문법 시제, 완전히 마스터할 때까지 가르쳐 줘(5/5까지). teach me</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>진도 보기 · 난이도</h3><p>수업 중 아무 때나</p><pre class="copy">show progress / harder / easier</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>저장 · 이어 하기</h3><p>그만할 때 → 다음 새 창 첫 메시지</p><pre class="copy">저장해 줘
+
+resume from:
+(저장 블록 붙여 넣기)</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>스킬이 안 켜지고 그냥 설명만 해요</strong><br>'teach me', '가르쳐 줘', '문제 내 줘'처럼 배우겠다는 말을 분명히 넣어요. 'X가 뭐야'는 일부러 그냥 답하게 돼 있어요. 클로드 코드는 /socratic-tutor 로 직접 부를 수도 있어요.</li><li><strong>클로드 코드에서 스킬이 안 보여요</strong><br>폴더가 .claude/skills/socratic-tutor/SKILL.md 모양인지 확인하고(한 단계 더 들어가 있으면 안 돼요) 클로드 코드를 새로 켜요.</li><li><strong>새 창에서 이어 하기가 안 돼요</strong><br>첫 메시지 맨 앞에 'resume from:'을 쓰고 저장 블록 전체를 붙여 넣어요. 채팅창 방식이면 SKILL.md 본문도 같이 붙여야 해요.</li><li><strong>실력표 칸이 비뚤게 보여요</strong><br>한글이 섞이면 글자 폭이 달라 막대가 조금 어긋나 보여요. 내용(점수)은 그대로예요.</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>프로그램이 아니라 AI에게 주는 설명서 한 장(SKILL.md)이에요. 수업의 질은 쓰는 AI 모델에 따라 달라져요.</li><li>저장 블록 안에 풀던 문제의 정답이 '튜터 전용'으로 적혀 나올 수 있어요. 스스로 풀 거면 그 줄은 보지 마세요.</li><li>클로드 코드처럼 코드를 돌릴 수 있는 곳에선 '이 쿼리 짜 봐' 같은 숙제를 내고, 말로 한 설명 말고 실제 결과로 확인해요(SKILL.md 원문).</li><li>칭찬을 일부러 안 해요. '잘했어요' 대신 '정말요? 그럼 X는요?'처럼 되물어요.</li><li>AI도 틀릴 수 있어요. 시험 범위·정답은 교재로 한 번 더 확인하세요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
