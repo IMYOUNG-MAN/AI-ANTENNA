@@ -1,0 +1,377 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Recordly — 녹화만 했는데, 클릭한 곳이 확대돼요 | AI ANTENNA</title><meta property="og:title" content="Recordly — 녹화만 했는데, 클릭한 곳이 확대돼요"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>Recordly — 녹화만 했는데, 클릭한 곳이 확대돼요</h1><p class="outcome">화면을 녹화하면 마우스로 누른 자리를 기억해 두었다가, 그 자리로 화면을 스르륵 당겨 주는 무료 녹화 앱이에요. 커서도 크고 매끈하게 다시 그려 주고(누를 때마다 톡 튀어요), 배경·그림자를 입혀 바로 올릴 수 있는 MP4로 뽑아 줘요. 윈도·맥·리눅스에서 되고, 깃허브 공개 오픈소스(AGPL-3.0)예요.</p><figure class="media"><video src="media/hero.mp4" poster="media/hero-poster.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>엑셀 가계부에서 합계 칸을 누르자 그 자리로 확대 — 편집 없이 녹화만 한 결과</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>윈도 10(2020년 5월 업데이트, 빌드 19041) 이상 · 맥 14 이상 · 요즘 리눅스</li><li>녹화할 프로그램(엑셀·PPT·브라우저 무엇이든)</li><li>가입·결제는 필요 없어요</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① 설치</h3><p>github.com/webadderallorg/Recordly/releases 에서 윈도는 Recordly-windows-x64.exe, 맥은 Recordly-arm64.dmg(애플 칩)·Recordly-x64.dmg(인텔)를 받아 실행해요. 윈도에서 'Windows의 PC 보호' 창이 뜨면 '추가 정보 → 실행'을 눌러요(서명 안 된 설치 파일이라 뜨는 창이에요).</p></div><div class="step"><div class="no">2</div><h3>② 녹화 — 화면이나 창 고르고 빨간 버튼</h3><p>Recordly를 켜면 화면 아래에 작은 막대가 떠요. 왼쪽 칸(1)에서 화면 전체나 녹화할 창(예: 엑셀)을 고르고, 빨간 버튼(2)을 누르면 잠깐 숫자를 센 뒤 녹화가 시작돼요. 평소처럼 클릭하며 설명하면 되고, 끝나면 '중지'를 눌러요. 마이크·웹캠은 막대의 버튼으로 켜요.</p><figure class="media"><img src="media/1-hud.jpg" loading="lazy" alt=""><figcaption>1 — 녹화할 화면·창 고르기, 2 — 녹화</figcaption></figure></div><div class="step"><div class="no">3</div><h3>③ 편집기 — 확대는 이미 깔려 있어요</h3><p>중지하면 편집기가 열려요. 아래 줄(1)의 보라색 칸이 누른 자리마다 자동으로 생긴 확대예요. 칸을 누르면 확대 정도를 고를 수 있고(1.25배~5배), 칸을 끌어 옮기거나 '확대 삭제'로 지울 수 있어요. 원하는 곳에 확대를 직접 더할 수도 있어요(수동 확대).</p><figure class="media"><img src="media/2-editor.jpg" loading="lazy" alt=""><figcaption>1 — 누른 자리마다 생긴 확대 칸</figcaption></figure><figure class="media"><img src="media/3-zoom.jpg" loading="lazy" alt=""><figcaption>확대 칸을 누른 화면 — 1에서 배율을 골라요(이 편은 2.2배)</figcaption></figure></div><div class="step"><div class="no">4</div><h3>④ 커서 — 크게, 매끈하게, 누를 때 톡</h3><p>왼쪽 화살표 버튼을 누르면 커서 설정이 나와요. 커서 모양·크기, 부드럽게 움직이기, 누를 때 튀는 정도(1, 커서 클릭 바운스)를 바꿔요. 녹화할 때 진짜 커서는 빼고, 이 커서를 다시 그려 넣어요.</p><figure class="media"><img src="media/4-cursor.jpg" loading="lazy" alt=""><figcaption>1 — 누를 때 튀는 정도</figcaption></figure></div><div class="step"><div class="no">5</div><h3>⑤ 배경·그림자</h3><p>맨 위 반짝이 버튼에서 배경 그림(1)·단색·그라데이션, 그림자·둥근 모서리·여백을 골라요. 오른쪽 미리보기에 바로 보여요. 위의 '비디오 자르기'로 녹화 화면 가장자리를 잘라 낼 수도 있어요.</p><figure class="media"><img src="media/5-bg.jpg" loading="lazy" alt=""><figcaption>1 — 배경 그림을 누르면 바로 바뀌어요</figcaption></figure></div><div class="step"><div class="no">6</div><h3>⑥ 내보내기</h3><p>오른쪽 위 '내보내기' → MP4(또는 GIF)·화질·초당 장면 수를 고르고 'Video 내보내기'(1). 다 그려지면 저장 위치를 묻는 창이 떠요. 미리보기 위의 비율(16:9)을 눌러 다른 비율로 바꿀 수 있어요.</p><figure class="media"><img src="media/6-export.jpg" loading="lazy" alt=""><figcaption>1 — 내보내기</figcaption></figure></div></section>
+<section><h2>받는 곳</h2><div class="item"><h3>Recordly 릴리스(설치 파일)</h3><p>윈도·맥·리눅스</p><pre class="copy">https://github.com/webadderallorg/Recordly/releases</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>OpenScreen(비슷한 무료 앱, 한국어 화면)</h3><p>회사 영상·한국어 화면이 필요할 때</p><pre class="copy">https://github.com/getopenscreen/openscreen/releases</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>녹화에 진짜 커서와 그린 커서가 같이 보여요</strong><br>윈도 10 빌드 19041보다 오래된 윈도에선 진짜 커서를 못 숨겨요(README). 윈도 업데이트를 먼저 해요. 리눅스는 아직 진짜 커서를 못 숨겨요.</li><li><strong>확대가 너무 많거나 엉뚱한 곳이에요</strong><br>편집기 아래 줄의 보라색 칸을 눌러 '확대 삭제'로 지우거나 끌어서 옮겨요. 새 녹화마다 자동 확대가 기본으로 켜지는데, 설정에서 끌 수 있어요.</li><li><strong>녹화 중지 뒤 한참 기다려요</strong><br>녹화를 파일로 정리하는 시간이에요. 컴퓨터가 바쁘면 길어져요 — 다른 무거운 프로그램을 닫고 기다려요.</li><li><strong>녹화에 알림 창이 찍혔어요</strong><br>윈도 '방해 금지'를 켜고 녹화하거나, 찍힌 부분을 편집기에서 잘라 내요(가위 버튼).</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>개인 영상은 무료예요. 회사 홍보 영상처럼 상업용으로 쓸 거면 상업용까지 무료라고 밝힌 OpenScreen(MIT, 한국어 화면·자막 자동 생성)을 써요.</li><li>맥에서 이런 효과로 유명한 유료 앱은 월 29달러(연간 결제면 월 9달러)이고 윈도는 지원하지 않아요(공식 사이트 기준). Recordly는 윈도에서도 돼요.</li><li>이 정리의 화면은 Recordly v1.4.0(윈도)을 직접 깔아 엑셀 '11월 가계부'(가상 숫자)를 녹화·편집·내보내기 한 거예요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
