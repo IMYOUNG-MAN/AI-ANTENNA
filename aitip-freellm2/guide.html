@@ -1,0 +1,379 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>FreeLLMAPI — 클로드가 멈춘 자리, 다른 무료 AI가 이어받아요 | AI ANTENNA</title><meta property="og:title" content="FreeLLMAPI — 클로드가 멈춘 자리, 다른 무료 AI가 이어받아요"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>FreeLLMAPI — 클로드가 멈춘 자리, 다른 무료 AI가 이어받아요</h1><p class="outcome">Claude Code 한도가 걸렸을 때, 여러 AI 회사가 무료로 열어 둔 한도를 한 주소로 묶어 둔 FreeLLMAPI로 Claude Code를 다시 열면 하던 대화를 그대로 이어서 일할 수 있어요. 무료 모델 하나가 막히면 다음 무료 모델로 알아서 넘어가요. 내 컴퓨터에서 돌아가는 오픈소스(MIT)예요.</p><figure class="media"><img src="media/hero.jpg" loading="lazy" alt=""><figcaption>왼쪽 — 클로드(구독)가 만들다 멈춘 가계부 / 오른쪽 — 같은 대화를 무료 AI로 이어서 합계·막대그래프까지 붙인 결과</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>Claude Code가 깔린 컴퓨터(윈도·맥·리눅스)</li><li>FreeLLMAPI — 윈도는 Microsoft Store 앱이 가장 쉬워요(맥 .dmg, Docker, 소스도 돼요)</li><li>가입·결제 없이 시작 가능 — 키 없이 붙는 무료 제공사가 있어요. 더 좋은 모델을 쓰려면 무료 키를 받아 넣어요</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① 설치</h3><p>윈도: Microsoft Store에서 'FreeLLMAPI'를 받아요(서명된 앱이라 막히지 않아요). 맥: github.com/tashfeenahmed/freellmapi/releases 의 .dmg. 앱을 켜면 트레이 아이콘 → 'Open Dashboard'로 관리 화면(http://127.0.0.1:31415)이 열려요. 앱은 따로 로그인할 필요가 없어요.</p></div><div class="step"><div class="no">2</div><h3>② 무료 제공사 붙이기 — 열쇠 화면</h3><p>위 메뉴 '열쇠'에서 '키 추가'(1)를 눌러요. 'no key needed'라고 적힌 Kilo Gateway·OVH AI Endpoints는 키 없이 바로 붙어요(2·3, 켜짐 스위치). 더 좋은 모델을 쓰려면 Google AI Studio·Groq·OpenRouter 같은 곳에서 무료 키를 받아 같은 창에 넣어요.</p><figure class="media"><img src="media/1-keys.jpg" loading="lazy" alt=""><figcaption>1 — 키 추가, 2·3 — 키 없이 붙인 무료 제공사</figcaption></figure><figure class="media"><img src="media/2-add.jpg" loading="lazy" alt=""><figcaption>1 — 제공사 고르기, 2 — 받은 키 붙여 넣기(키 없는 곳은 비워 둬요), 3 — 추가</figcaption></figure></div><div class="step"><div class="no">3</div><h3>③ Claude Code를 이 주소로 다시 열기</h3><p>'열쇠' → 'Anthropic' 탭에 Claude Code가 쓸 주소(1)가 있어요. 오푸스·소네트·하이쿠는 기본이 auto(2) — 그때그때 살아 있는 무료 모델로 보내요. '통합 API 키' 탭에서 키를 복사한 다음, 한도가 걸린 그 폴더의 PowerShell에서 아래 '복사해서 쓰기'의 세 줄을 넣어요. --continue는 가장 최근 대화를 이어서 열고, --resume은 목록에서 골라요.</p><figure class="media"><img src="media/3-anth.jpg" loading="lazy" alt=""><figcaption>1 — Claude Code가 쓸 주소, 2 — 모델 이름별 연결(auto = 무료 모델 자동 선택)</figcaption></figure></div><div class="step"><div class="no">4</div><h3>④ 하던 말 그대로 이어서 시키기</h3><p>다시 열린 Claude Code에 지난 대화가 그대로 보여요. 이어서 시키면 돼요(1). 아래 화면은 클로드가 가계부 입력 칸·목록까지 만든 대화를 무료 모델로 다시 열어 '이어서 합계랑 막대그래프 붙여 줘'라고 한 실제 화면이에요.</p><figure class="media"><img src="media/4-continue.jpg" loading="lazy" alt=""><figcaption>위 — 클로드(구독)가 남긴 지난 답 / 1 — 무료 모델로 다시 열어 이어서 시킨 말</figcaption></figure></div><div class="step"><div class="no">5</div><h3>⑤ 어떤 무료 모델이 답하나 — 모델 화면</h3><p>'모델' 화면의 순서대로 보내요. 1번이 막히면(한도·오류) 2번, 3번… 으로 넘어가고, 어느 모델이 답했는지는 '분석'에서 볼 수 있어요. 순서는 끌어서 바꿀 수 있어요. 이 편 시연에서도 첫 모델이 오류를 내자 다음 무료 모델로 넘어가 끝까지 해냈어요.</p><figure class="media"><img src="media/5-chain.jpg" loading="lazy" alt=""><figcaption>막히면 다음 줄 모델로 넘어가는 순서(실제 화면)</figcaption></figure></div><div class="step"><div class="no">6</div><h3>⑥ 메모 기능 켜기(넘어갈 때 맥락 넘기기)</h3><p>모델이 바뀔 때 새 모델에게 '하던 일 이어서 하라'는 짧은 메모를 붙여 주는 기능이에요. 기본은 꺼져 있어요. Docker·소스로 띄웠다면 .env 파일에 FREELLMAPI_CONTEXT_HANDOFF=on_model_switch 한 줄을 넣고 다시 켜요. 윈도 앱은 PowerShell에서 setx FREELLMAPI_CONTEXT_HANDOFF on_model_switch 를 실행하고 앱을 다시 켜요(앱이 같은 값을 읽어요 — 소스 코드 기준).</p></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>Claude Code 다시 열기(윈도 PowerShell)</h3><p>한도가 걸린 그 폴더에서 — 키 자리에 '통합 API 키'</p><pre class="copy">$env:ANTHROPIC_BASE_URL = &quot;http://127.0.0.1:31415&quot;
+$env:ANTHROPIC_AUTH_TOKEN = &quot;&lt;통합 API 키&gt;&quot;
+claude --continue</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>명령 한 줄로 열기(설정 파일에 키를 안 남김)</h3><p>Node.js가 깔려 있을 때 — 열린 뒤 /resume 으로 지난 대화 고르기</p><pre class="copy">npx freellmapi launch --url http://127.0.0.1:31415 --api-key &lt;통합 API 키&gt;</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>메모 기능 켜기(.env 한 줄)</h3><p>Docker·소스로 띄웠을 때</p><pre class="copy">FREELLMAPI_CONTEXT_HANDOFF=on_model_switch</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>받는 곳</h3><p>설치 파일·문서</p><pre class="copy">https://github.com/tashfeenahmed/freellmapi</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>Claude Code가 예전처럼 클로드로 열려요</strong><br>환경 변수는 그 PowerShell 창에서만 살아 있어요. 새 창을 열었다면 두 줄을 다시 넣어요. 원래 클로드로 돌아가려면 창을 닫고 새로 열면 돼요.</li><li><strong>주소 끝에 /v1을 붙였더니 안 돼요</strong><br>Claude Code는 /v1 없이 주소만 넣어요(http://127.0.0.1:31415). /v1은 OpenAI 방식 도구용이에요.</li><li><strong>대답이 느리거나 중간에 끊겨요</strong><br>키 없이 붙는 무료 제공사는 속도·횟수 제한이 빡빡해요. Google AI Studio·Groq 같은 곳의 무료 키를 하나 더 넣으면 훨씬 안정적이에요.</li><li><strong>지난 대화가 안 보여요</strong><br>한도가 걸렸던 바로 그 폴더에서 claude --continue 를 실행해야 해요. 다른 폴더면 --resume 으로 목록에서 골라요.</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>무료 모델은 클로드보다 약해요. 큰 설계·어려운 버그는 한도가 풀린 뒤 클로드로, 이어서 마무리하는 일·간단한 수정은 무료 모델로 나눠 쓰는 게 좋아요. 늦은 시간엔 좋은 무료 모델의 하루 한도가 먼저 차요.</li><li>내 코드와 대화가 무료 업체로 넘어가요. 키 없이 쓰는 Kilo 무료 길은 기록이 학습에 쓰일 수 있다고 밝히고 있어요. 회사 코드·개인정보·비밀 키가 든 프로젝트엔 쓰지 말고, 개인 공부·실험용으로 써요.</li><li>메모 기능은 기본으로 꺼져 있어요 — .env에 FREELLMAPI_CONTEXT_HANDOFF=on_model_switch 한 줄을 넣어야 켜져요(⑥).</li><li>클로드 구독 한도가 끝나는 순간 저절로 무료로 넘어가는 건 아니에요. 이 주소로 Claude Code를 다시 여는 한 단계가 필요해요.</li><li>넣은 키는 내 컴퓨터 안 데이터베이스에 암호화(AES-256)해서 저장되고, 앱은 통합 키 하나만 써요.</li><li>이 정리의 화면은 FreeLLMAPI 소스(11/16 판)를 격리된 폴더에 띄워 직접 돌린 거예요. 윈도 앱은 같은 관리 화면을 써요(주소만 127.0.0.1:31415).</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
