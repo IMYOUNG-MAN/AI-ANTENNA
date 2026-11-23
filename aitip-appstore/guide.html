@@ -1,0 +1,378 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>App Store Compliance — 앱스토어 반려, 내기 전에 미리 걸러요 | AI ANTENNA</title><meta property="og:title" content="App Store Compliance — 앱스토어 반려, 내기 전에 미리 걸러요"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>App Store Compliance — 앱스토어 반려, 내기 전에 미리 걸러요</h1><p class="outcome">애플 앱스토어·구글플레이에서 반려되는 패턴 124가지와 고치는 법을 클로드 코드에 붙이는 스킬이에요. 앱 폴더에서 /app-store-audit 한 번이면 심각한 순서로 결과 표가 나오고, 심각한 게 남은 채로 클로드에게 올리기(eas submit·fastlane 등)를 시키면 그 명령을 막아요. 시연용으로 만든 가상 앱(칼로리스냅)에 직접 돌려 봤어요. 개인·작은 회사는 무료예요.</p><figure class="media"><img src="media/demo-blocked.png" loading="lazy" alt=""><figcaption>실제 실행 — 클로드에게 eas submit을 시키자 검사가 먼저 돌고, 탈퇴 기능이 없어서 올리기 명령이 막혔어요</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>iOS·안드로이드 앱 폴더(Xcode 프로젝트나 android 폴더가 있는 곳). Expo 앱은 npx expo prebuild를 한 번 하면 네이티브 코드까지 검사해요</li><li>git과 bash — 윈도는 Git Bash에서 설치해요</li><li>Claude Code(또는 코덱스·제미나이 CLI·커서·코파일럿 등 12가지 코딩 도구)</li><li>python3(있으면 마감일 목록·개인정보 manifest 검사까지 — 없어도 검사는 돌아요)</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① 설치(1분)</h3><p>터미널에서 두 줄: git clone https://github.com/mjmirza/app-store-compliance ~/repositories/app-store-compliance → bash ~/repositories/app-store-compliance/scripts/install.sh (1). 끝에 'Install verified.'가 나오면 끝. 클로드 코드를 한 번 껐다 켜요. 다른 도구는 --tool codex처럼 이름을 붙여요.</p><figure class="media"><img src="media/1-install.png" loading="lazy" alt=""><figcaption>1 — 도구마다 설치 한 줄(README)</figcaption></figure></div><div class="step"><div class="no">2</div><h3>② 앱 폴더에서 점검 한 번</h3><p>클로드 코드를 앱 폴더에서 열고 /app-store-audit 를 입력해요. '결과는 한국어로'를 붙이면 우리말로 정리해 줘요. 규칙 124가지와 앱 코드·설정 파일을 맞춰 보고, 코드로 못 잡는 것은 클로드가 직접 읽어 더해요.</p><figure class="media"><img src="media/demo-audit-table.png" loading="lazy" alt=""><figcaption>실제 실행 결과를 옮겨 정리 — 칼로리스냅 점검 표(심각 7건)</figcaption></figure></div><div class="step"><div class="no">3</div><h3>③ 결과 표 읽기 — CRITICAL부터</h3><p>표는 CRITICAL(출시 차단) → HIGH → MEDIUM 순이에요. 칸마다 패턴 이름, 걸리는 규정 번호, 고치는 법, 고칠 파일이 있어요. 칼로리스냅에선 카메라 쓰는 이유 문구 없음(5.1.1), 구글 로그인만 있고 애플 로그인 없음(4.8), 회원가입은 있는데 탈퇴 기능 없음(5.1.1(v)), 음식 사진을 동의 없이 외부 AI로 보냄(5.1.2), 앱 안에 AI 키가 그대로 들어감, 개인정보 처리방침 없음이 심각으로 나왔어요. 맨 아래엔 고치는 순서까지 정리돼요.</p><figure class="media"><img src="media/2-verdict.png" loading="lazy" alt=""><figcaption>1 — BLOCKED: 심각한 반려 위험이 있음, 2 — CLEAR: 심각한 것 없음(승인 보장은 아님)</figcaption></figure></div><div class="step"><div class="no">4</div><h3>④ 올리기 전 자동 검사 — 심각하면 막혀요</h3><p>설치하면 클로드가 eas submit·fastlane·gradle bundleRelease·xcrun altool 같은 올리기 명령을 실행하기 직전에 검사가 먼저 돌아요. CRITICAL이 하나라도 있으면 명령을 막고, 어디가 왜 걸렸는지와 fix 줄(고치는 법)을 보여 줘요. 고친 뒤 같은 명령을 다시 시키면 돼요. 내가 내 터미널에서 직접 치는 명령은 막지 않아요.</p><figure class="media"><img src="media/demo-hook-running.png" loading="lazy" alt=""><figcaption>실제 실행 — 'eas submit 실행해 줘' → 올리기 전에 검사(PreToolUse hook)가 돌아가는 중</figcaption></figure><figure class="media"><img src="media/3-flow.png" loading="lazy" alt=""><figcaption>1 — 검사가 올리기 명령 앞에서 자동으로 돌아요(README 흐름도)</figcaption></figure></div><div class="step"><div class="no">5</div><h3>⑤ 코드로 안 보이는 것 — 점검표로</h3><p>반려 이유 가운데 가장 흔한 두 가지는 코드로 안 보여요. ① 심사관이 들어가 볼 테스트 계정(2단계 인증 없이, 데이터가 들어 있게)과 심사 동안 켜 둔 서버 ② 개인정보 라벨(애플)·데이터 보안 양식(구글)이 실제 동작(쓰는 SDK까지)과 같은지. 그 밖에 스크린샷은 실제 쓰는 화면, 구글 새 개인 계정은 테스터 12명이 14일 동안 비공개 테스트. 점검 결과 끝의 체크 목록을 그대로 따라가요.</p></div><div class="step"><div class="no">6</div><h3>⑥ 이미 반려됐다면</h3><p>반려 메일에 적힌 규정 번호(예: 5.1.1)를 클로드에게 주고 '이 반려 고치는 법 알려 줘'라고 하면 해당 패턴과 고치는 법, 답장(Resolution Center) 쓰는 법을 찾아 줘요. 같은 빌드를 그대로 다시 내지 마세요 — 구글은 반복하면 계정 정지까지 갈 수 있어요.</p></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>설치(두 줄)</h3><p>터미널(윈도는 Git Bash)</p><pre class="copy">git clone https://github.com/mjmirza/app-store-compliance ~/repositories/app-store-compliance
+bash ~/repositories/app-store-compliance/scripts/install.sh</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>앱 점검</h3><p>클로드 코드, 앱 폴더에서</p><pre class="copy">/app-store-audit 결과는 한국어로</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>설치 없이 손으로 한 번</h3><p>터미널 — 앱 폴더 경로만 바꿔요</p><pre class="copy">bash ~/repositories/app-store-compliance/agent-os/hooks/app-store-compliance-guard.sh &quot;/앱/폴더/경로&quot;</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>반려 메일 받았을 때</h3><p>클로드 코드에</p><pre class="copy">앱스토어에서 Guideline 5.1.1로 반려됐어. app-store-compliance 기준으로 원인 패턴, 고치는 법, Resolution Center 답장 초안까지 정리해 줘</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>설치 확인</h3><p>검사가 안 걸릴 때</p><pre class="copy">bash ~/repositories/app-store-compliance/scripts/install.sh doctor</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>지우기</h3><p>그만 쓸 때</p><pre class="copy">bash ~/repositories/app-store-compliance/scripts/install.sh uninstall</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>받는 곳</h3><p>설치·문서</p><pre class="copy">https://github.com/mjmirza/app-store-compliance</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>설치 끝에 FAIL — settings.json이 안 바뀌었다고 나와요</strong><br>python3나 jq가 없으면 설정 파일을 자동으로 못 고쳐요(윈도에서 흔함). 설치 화면에 찍힌 &quot;hooks&quot; 블록을 ~/.claude/settings.json에 그대로 붙여 넣고 install.sh doctor로 다시 확인해요. 'Install verified.'가 나오면 돼요.</li><li><strong>NOT CHECKED라고 나와요</strong><br>그 폴더에 iOS·안드로이드 프로젝트가 없다는 뜻이에요. Xcode 프로젝트나 android 폴더가 있는 곳을 가리켜요. Expo 앱이면 npx expo prebuild 뒤에 다시 돌려요.</li><li><strong>클로드 코드에서 올리기 전 검사가 안 걸려요</strong><br>설치 뒤 클로드 코드를 한 번 껐다 켜야 해요. 그래도 안 되면 install.sh doctor.</li><li><strong>엉뚱한 CRITICAL이 잔뜩 나와요</strong><br>규칙 데이터(스킬 폴더)를 앱 폴더 안에 복사해 두면 그 데이터까지 앱 코드로 읽어서 오탐이 나요. 스킬은 설치가 넣어 주는 ~/.claude/skills 그대로 두세요.</li><li><strong>윈도에서 monitor.py가 한글 때문에 멈춰요</strong><br>PYTHONUTF8=1 을 앞에 붙여 실행해요(시연 때 클로드가 스스로 이렇게 다시 돌렸어요).</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>CLEAR는 승인 보장이 아니에요 — 코드로 안 보이는 것(테스트 계정·서버·개인정보 라벨)은 점검표로 따로 챙겨야 해요.</li><li>규칙은 날짜가 박힌 묶음이라 60일이 넘으면 'Rule pack STALE'이 떠요. git -C ~/repositories/app-store-compliance pull 로 새로 받아요.</li><li>라이선스는 OpenRoots Agent License 2.3 — 개인·비영리·학교·연매출 2천만 달러 이하 회사는 무료, 그 위는 로열티가 있고 AI 학습은 따로 허락이 필요해요. MIT 같은 오픈소스 라이선스는 아니에요.</li><li>애플 2025 App Store 투명성 보고서: 심사 9,100,620건 중 2,093,244건 반려.</li><li>이 정리는 시연용으로 만든 가상 앱(칼로리스냅)에 직접 돌린 화면과 공식 README 기준이에요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
