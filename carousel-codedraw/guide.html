@@ -1,0 +1,428 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>그림 AI 안 쓰고 코드로 그린 AI 작품 5개 — 직접 해 보는 법 | AI ANTENNA</title><meta property="og:title" content="그림 AI 안 쓰고 코드로 그린 AI 작품 5개 — 직접 해 보는 법"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">AI 안테나 정리본 · 11월 25일</div><h1>그림 AI 안 쓰고 코드로 그린 AI 작품 5개 — 직접 해 보는 법</h1><p class="outcome">작성자들이 원글과 저장소에 공개한 내용 기준이에요. 아틀란티스와 성 RPG는 공개 사이트를 저희가 직접 열어 녹화했고, 크리타·aibrush 요청 문장은 작성자가 올린 원문을 그대로 옮겼어요. 바로 열어 보는 것 둘(아틀란티스·성 RPG), 내 클로드로 그려 보는 것 둘(aibrush·크리타), 보기만 하는 것 하나(꿈의 집)예요.</p><figure class="media"><img src="media/06.jpg" loading="lazy" alt=""><figcaption>aibrush로 클로드(Fable 5.2)가 그린 자화상 — 요청은 한 줄 (ⓒneokrasav4ik)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>아틀란티스: 컴퓨터의 크롬 또는 엣지(WebGPU 필요, 파이어폭스는 잘 안 돼요). 폰에서도 열려요</li><li>성 RPG: 아무 브라우저 — 키보드·마우스가 있는 컴퓨터가 편해요</li><li>aibrush: 파이썬을 실행할 수 있는 AI(클로드 코드처럼 내 컴퓨터에서 파이썬을 돌리는 클로드) 또는 파이썬 3.10 이상 + NumPy·SciPy·Pillow</li><li>크리타: 무료 그림 앱 Krita(krita.org) + 내 컴퓨터를 다룰 수 있는 AI. 작성자는 Fable 5.2(high)를 썼어요</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① 아틀란티스 — 코드로 지은 도시 날아다니기</h3><p>noniv.github.io/atlantis 를 크롬·엣지로 열고 몇 초 기다렸다가 ENTER를 눌러요. W·A·S·D로 날고, Q·E로 내려가고 올라가요. Shift를 누르면 8배 빨라지고, 숫자 1~6은 미리 정해 둔 전망 자리로 바로 가요. 화면 조절 Low·Medium·High는 시작 메뉴에서 골라요. 폰에서는 손가락을 대고 있으면 앞으로 날아요. 그림·3D 모델·소리 파일 없이 96KB HTML 파일 하나이고, 코드는 전부 Claude Code(Fable 5.2)가 썼어요(작성자 README). 참고용 콘셉트 그림은 챗GPT로 만들었고, 도시 화면은 전부 코드예요(작성자 레딧 글). 시작 요청 문장은 저장소의 prompt.txt에 있어요.</p><figure class="media"><video src="media/atlantis-fly.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>저희가 사이트를 직접 열어 날아 본 화면(High)</figcaption></figure></div><div class="step"><div class="no">2</div><h3>② 성 RPG — 코딩 안 해 본 사람이 만든 게임 해 보기</h3><p>castle-rpg.ai.studio 를 열고 ENTER(또는 스페이스)로 시작해요. W·A·S·D로 움직이고, Shift는 달리기, 스페이스는 피하기, 왼쪽 클릭은 칼질 연속기예요. 만든 사람은 구조 엔지니어예요. 제미나이에게 '성 배경에 적 2종, 이런 조작'처럼 말해 첫 버전을 받고, 구글 AI 스튜디오로 옮겨 계획 모드로 시작한 뒤 전투 → 기술 → 스테이지 → 배경 순서로 하나씩 고쳐 달라고 했대요. 두세 시간 고치다 사용량이 다 차서 멈췄다고 해요.</p><figure class="media"><video src="media/castle-play.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>저희가 직접 열어 걷고 칼질해 본 화면</figcaption></figure></div><div class="step"><div class="no">3</div><h3>③ aibrush — 내 클로드로 유화 그리기</h3><p>방법 둘 중 하나예요. 가) 파이썬을 돌릴 수 있는 클로드(클로드 코드 등)에 저장소 주소 github.com/neokrasav4ik/aibrush 를 주거나 압축 파일을 올린다. 나) 직접 git clone 하고 pip install -r requirements.txt. 그다음 내 말로 'README.md 읽고 유화 그려 줘'라고 하면 돼요. 작성자 말로는 클로드 Opus·Fable급 모델이 가장 잘 그리고, 설명서가 러시아어여도 모델은 문제없이 읽어요. 그림을 따라 그리게 하려면 사진·스케치를 같이 줘도 돼요. 붓질 기록(다시 재생·한 획만 고치기·타임랩스), 물감 두께 높이 지도도 같이 나와요.</p><figure class="media"><img src="media/03.jpg" loading="lazy" alt=""><figcaption>aibrush로 그린 카페 유화 (ⓒneokrasav4ik)</figcaption></figure></div><div class="step"><div class="no">4</div><h3>④ 크리타 — 클로드에게 그림 앱으로 그리게 하기</h3><p>크리타를 깔고, 컴퓨터를 다룰 수 있는 클로드에게 아래 '크리타 요청 문장'을 그대로 줘요. 그림 AI는 쓰지 말고, 그림을 베끼지 말고, 크리타 도구로 직접 그리라는 조건이 핵심이에요. 작성자 그림에선 클로드가 나무가 마음에 안 들어 세 번 다시 그렸대요. 작성자가 밝힌 비용은 API로 약 12~14달러(구독으로 쓰면 더 싸다고 해요). 작성자도 요청이 길고 겹치는 말이 많다고 했어요 — 1번 항목은 줄여도 돼요.</p><figure class="media"><video src="media/krita-4x.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>작성자가 올린 작업 영상 4배속 (ⓒABSOLUTE-DEVELOPER)</figcaption></figure></div><div class="step"><div class="no">5</div><h3>⑤ 꿈의 집 — 보기만 하기</h3><p>렌더링을 모르는 작성자가 블렌더의 스크립트 기능과 클로드로 지은 집이에요. 코드는 1만 4천 줄이 넘고, '거실이랑 주방이 왜 전시장 같지?'처럼 보이는 대로 물으면 클로드가 '의자가 너무 반듯하고 조리대가 비어서'라고 답하고 고쳤대요. 장면을 다시 그리는 데 오래 걸려 일주일 넘게 걸렸고, 프로 요금제 약 2주 치를 썼다고 해요. 코드는 공개하지 않았어요.</p><figure class="media"><img src="media/02.jpg" loading="lazy" alt=""><figcaption>작성자가 올린 렌더 (ⓒLeoDostoievski)</figcaption></figure></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>아틀란티스 주소</h3><p>크롬·엣지로 열기</p><pre class="copy">https://noniv.github.io/atlantis/</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>성 RPG 주소</h3><p>바로 플레이</p><pre class="copy">https://castle-rpg.ai.studio/</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>aibrush 저장소</h3><p>클로드에게 주기</p><pre class="copy">https://github.com/neokrasav4ik/aibrush</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>aibrush 첫 요청</h3><p>저장소를 준 다음</p><pre class="copy">Read README.md and paint in oil.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>aibrush 자화상 요청(커버 그림, Fable 5.2)</h3><p>한 줄로 그리기</p><pre class="copy">Draw a self-portrait that reflects your inner world.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>aibrush 시작 틀(작성자 공개 원문)</h3><p>[ ] 칸을 채워서</p><pre class="copy">TASK Paint an oil painting in aibrush: [subject]. Format: [size, orientation]. References: [photo / sketch / description / none]. Style models: [artists or paintings]. What to take from them: [color, light, brushwork, composition…]. Mood: [2–3 words]. Focus of the painting: [object or area].
+
+BEFORE YOU START Study the engine documentation and the style models. Write a short plan: the idea, the palette, the order of work, where the paint is thick and where it is thin, where edges are hard and where they are soft, and what stays generalized. Ask all your questions now.
+
+A PAINTING, NOT IMAGE PROCESSING
+The reference gives you the motif, the drawing and the light. Color, tone, selection and brushwork are your decisions.
+Do not fit the canvas to the reference: do not take the color of each stroke from it, and do not place strokes by the difference between the canvas and the reference.
+Paint with a limited palette of your own mixes.
+Strokes follow the form of the object. Choose the brush for the task, from wide to narrow.
+Put detail into the focus; generalize what is secondary. Detail means drawn objects, not tiny strokes.
+Do not repeat one move on a grid: vary length, angle, pressure, tone and rhythm.
+
+WORKFLOW
+A small study of the whole canvas. Show it and wait for my answer.
+One finished fragment of the hardest area. Show it and wait for my answer.
+Then work autonomously: from general to specific, from far to near. After each major stage, show the whole canvas and several 1:1 crops. Test every new technique on a fragment first, in two or three variants.
+
+PAINT
+Cover the whole canvas from the first layer; neighboring areas overlap.
+Plan paint thickness from the start: unwanted relief is hard to remove later.
+Use texture where the idea needs it; keep the rest calm.
+
+CHECK AFTER EVERY STAGE Look at the whole canvas and at 1:1, with lighting and without it. Measure gaps and relief with the engine's own tools. Look for: ground or lower layers showing through, ripple, repeating patterns, seams and mask borders, flat empty areas, drawing and perspective errors, accidental color, inconsistent handling. Fix what you find before the next stage.
+
+CORRECTIONS
+Repair in place, with a before/after test.
+Do not repaint what already works. Restart the whole canvas only with my consent.
+Keep every version I have seen.
+DELIVERY Deliver when a repeated check finds nothing left to improve. Include a list of weak points: what did not work and what was not checked.
+
+TECHNICAL Use no more than [N] CPU cores; memory: [no limit]. Save the canvas state and the journal after every stage. Run long jobs so that an app crash does not kill them. Look up difficult techniques from artists who work in real oil paint, not in digital painting.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>크리타 요청 문장(작성자 원문 그대로)</h3><p>컴퓨터를 다루는 클로드에게</p><pre class="copy">Use krita to draw a 1920x1080 painting. Section 1. Task Make the painting the most &quot;good to see&quot; for an average person. Supplimentary criteria 1A. Make the painting the most beautiful. &quot;Beautiful&quot;, here, is based on how an average person would &quot;feel&quot; about the painting. 1B. Make the painting polished. &quot;polished&quot; means, even the most finest parts of the drawing are handled nuancedly and with care, and feels just as beautiful as the overall painting when viewed at glance. 1C. Make the painting coherent. The &quot;feel&quot;, &quot;theme&quot; of the painting should not be radically different for no reason. Differences in feel or theme across the painting are allowed, but the degrees of such differences should match the reason why such differences are introduced (For instance, a slight difference &quot;because a completely homogenous drawing would not feel as good, a significant difference &quot;because the drawing is about different eras of the world and each era should have different feel&quot;) 1D. Make the painting detailed. By &quot;detailed&quot;, I mean, make it have much detail. Section 2. Allowances 2A. You are allowed to use any tool within Krita. 2B. You are allowed to control my computer, and when I am using my computer, try to draw without controlling my cursor directly, or, if that would be impossible or would worsen the output, 2C. You are allowed, and are encouraged to create any scripts that may help yourself controlling krita program, provided that's different from simply copying an image into the krita program, as defined by constraint 3A. 2D. You are allowed, and are encouraged to search web or use browser in order to: i) search any information about the Krita app, ii) gather information about drawing techniques used by professional artists, iii) or for any other use that may help your work. 2E. You are allowed to download or install any programs that helps the work, provided you are downloading or installing the program while following the &quot;draw in Krita&quot; constraint (for example, for analysing the art using some sort of python module, and so on) Section 3. Constraints 3A. you are not allowed to copy an image somewhere else. you must draw -- using krita's tools directly -- within the krita app. &quot;Copying an image&quot; includes: i) copy-pasting an image directly. ii) seeing an image, and then without any modification, converting it -- mechanically or manually -- into completely equivalent krita form. iii) using a pre-made &quot;template&quot; or a &quot;sample&quot; of the entire krita project. It normally does not include: iv) specifying coordinates directly and executing actions one by one, v) preparing a list of coordinates you manually prepared and then executing actions with that in batch, vi) or any other cases for which you work simmilarly to how a human artist would work when asked to draw using krita. Ambiguous cases are when you vii) automate drawing, viii) calculate colors. Such cases are normally allowed, but take care to not end up essentially copying an image. 3B. you are not allowed to use an Image Generation Model, such as Codex's imagegen, Gemini's nano banana, and so on. 3C. you are not allowed to just load a sample image. 3D. if you have a better way to perform the task (while complying to this &quot;Constraints&quot; section), but some non-absolute blocker (which can be solved by my own intervention) blocks such way, you are not allowed to silently divert to a worse method. instead, if you can resolve the blocker yourself, do so, i approve any action you take unless it is extremely unsafe. Or, if impossible, notify me and wait for my judge. Section 4. Notes 4A. I do not know much about art, so this was the only advice I could give. This means, you will have to explore and plan on your own rather than necessarily relying on my call. 4B. take a video of you working in krita, if possible. it is also allowed to save images of the canvas or the full window every edit or every a few edits or every batch of edits, and then reconstruct a video based on the images saved. 4C. you may choose ANY type of art. the art type is not what matters. you may draw an art that feels anime like, you may draw an image that feels completely realistic, you may draw an image that feels like a painting, anything. 4D. I may have misstated &quot;image&quot; instead of &quot;art&quot; in above prompt, so please understand it well</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>크리타 요청 문장 — 한국어 뜻</h3><p>원문을 읽기 어려울 때(한국어로 줘도 돼요)</p><pre class="copy">크리타로 1920×1080 그림을 그려 줘.
+1. 할 일 — 보통 사람이 봤을 때 가장 '보기 좋은' 그림으로.
+ 1A. 가장 아름답게. 기준은 보통 사람이 그림을 보고 느끼는 마음.
+ 1B. 완성도 있게. 가장 작은 부분까지 신경 써서, 가까이 봐도 전체만큼 아름답게.
+ 1C. 한결같게. 이유 없이 느낌·주제가 확 달라지지 않게. 다르게 할 땐 그만한 이유만큼만(완전히 똑같으면 심심해서 살짝, 시대마다 다른 그림이라 크게 같은 식).
+ 1D. 자세하게. 그릴 거리를 많이.
+2. 해도 되는 것
+ 2A. 크리타 안의 도구는 뭐든 써도 돼.
+ 2B. 내 컴퓨터를 조작해도 돼. 내가 컴퓨터를 쓰는 중이면 되도록 커서를 직접 움직이지 말고 그려 줘(원문 문장이 여기서 끊겨 있어요).
+ 2C. 크리타를 다루는 데 도움이 되는 스크립트를 만들어 써도 되고, 오히려 권해. 단, 3A처럼 그림을 그대로 옮겨 넣는 건 안 돼.
+ 2D. 웹 검색·브라우저를 써도 되고 권해 — 크리타 정보, 전문 화가의 그리는 법, 그 밖에 작업에 도움이 되는 것.
+ 2E. 작업에 도움이 되는 프로그램을 받아 깔아도 돼(예: 그림을 분석하는 파이썬 모듈). 단 '크리타에서 그린다'는 조건 안에서.
+3. 하면 안 되는 것
+ 3A. 다른 곳의 그림을 베끼지 마. 크리타 도구로 크리타 안에서 직접 그려. 베끼기란 ① 그림을 그대로 붙여 넣기 ② 그림을 보고 손대지 않고 크리타 꼴로 똑같이 옮기기 ③ 미리 만든 견본·예제 파일 쓰기. 좌표를 직접 정해 하나씩 그리기, 직접 준비한 좌표 목록을 한꺼번에 실행하기처럼 사람이 크리타로 그리는 것과 비슷한 방식은 괜찮아. 자동으로 그리기·색 계산은 대체로 되지만 결국 그림 베끼기가 되지 않게 조심해.
+ 3B. 이미지 생성 모델(코덱스 이미지 생성, 제미나이 나노 바나나 등)은 쓰지 마.
+ 3C. 견본 그림을 불러오기만 하는 것도 안 돼.
+ 3D. 더 좋은 방법이 있는데 내가 풀어 줄 수 있는 걸림돌 때문에 막히면, 몰래 더 나쁜 방법으로 바꾸지 마. 네가 풀 수 있으면 풀어(아주 위험한 게 아니면 다 허락해). 못 풀면 나한테 알리고 기다려.
+4. 참고
+ 4A. 나는 그림을 잘 몰라서 줄 수 있는 조언이 이게 다야. 스스로 찾아보고 계획해 줘.
+ 4B. 되면 크리타에서 작업하는 모습을 영상으로 남겨 줘. 고칠 때마다(또는 몇 번마다) 캔버스·창 화면을 저장해 나중에 영상으로 이어 붙여도 돼.
+ 4C. 그림 종류는 아무거나 — 애니 느낌, 사진 같은 그림, 유화 느낌 다 돼.
+ 4D. 위에서 '그림(art)'을 '이미지(image)'라고 잘못 쓴 곳이 있을 수 있으니 뜻을 잘 알아들어 줘.</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>아틀란티스가 '그래픽 카드가 없다'며 안 열려요</strong><br>크롬·엣지를 최신으로 올리고 브라우저 창을 전부 닫았다 다시 열어요. 노트북이면 윈도우 설정 → 시스템 → 디스플레이 → 그래픽에서 브라우저를 '고성능'으로(작성자 README).</li><li><strong>아틀란티스 화면이 흐려져요</strong><br>60프레임을 지키려고 해상도를 자동으로 낮춰서 그래요. 시작 메뉴에서 Low·Medium을 골라 보세요.</li><li><strong>aibrush 설명서가 러시아어예요</strong><br>사람이 읽지 않아도 돼요. 모델에게 저장소를 주면 알아서 읽어요(작성자 글).</li><li><strong>크리타에서 클로드가 붓을 못 움직여요</strong><br>컴퓨터 조작 권한이 있는 환경이어야 해요. 요청 문장의 2B·2C(컴퓨터 조작, 스크립트 허용)가 들어갔는지 확인해요.</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>아틀란티스는 MIT 라이선스라 자유롭게 써도 돼요(작성자 답글). 참고용 콘셉트 그림 8장은 작성자가 챗GPT로 만들었고, 도시 화면은 전부 코드로 그려져요.</li><li>aibrush는 AGPL-3.0이에요. aibrush로 그린 그림은 그린 사람 것이에요(저장소 README). 엔진은 매일 바뀌고 있어요.</li><li>성 RPG는 작성자가 공개한 게임이에요. 저장소는 없어요.</li><li>꿈의 집은 결과 그림만 공개됐고 코드는 받을 수 없어요. 클로드 모델 이름은 밝히지 않았어요.</li><li>크리타 그림은 Fable 5.2(high)로, 비용은 API로 약 12~14달러(작성자 답글).</li><li>원글: 아틀란티스 reddit.com/r/ClaudeAI/comments/1y1yve8 (u/Any-Reputation8118 · 깃허브 Noniv) · 크리타 reddit.com/r/ClaudeAI/comments/1y0xoxy (u/ABSOLUTE-DEVELOPER) · 꿈의 집 reddit.com/r/ClaudeAI/comments/1y3a8ry (u/LeoDostoievski) · 성 RPG reddit.com/r/GeminiAI/comments/1y371w4 (u/Fefeslab) · aibrush reddit.com/r/StableDiffusion/comments/1y3grnl (u/FotoRe_store · 깃허브 neokrasav4ik)</li><li>출처: 각 작성자의 레딧 글·댓글과 깃허브 저장소(11월 25일 확인)</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
