@@ -1,0 +1,377 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>papercraft — 말 한 줄로 종이 팝업북 웹페이지 | AI ANTENNA</title><meta property="og:title" content="papercraft — 말 한 줄로 종이 팝업북 웹페이지"><meta name="robots" content="noindex"><style>/*
+ * 정리본 페이지.
+ *
+ * 인스타 DM 링크로 열린다 — 거의 전부 **폰 안에서, 인앱 브라우저로** 본다.
+ * 그래서 카드뉴스(2160x2700 고정)와 규격이 완전히 다르다.
+ * 여기는 흐르는 문서다. 폭은 모르고, 글자 크기는 독자가 바꿀 수 있다.
+ */
+
+:root {
+  --accent: #E2653C;   /* 개미 몸통. 카드와 같은 값 */
+  --accent-2: #FCC024; /* 개미 헬멧. 형광펜·배지 전용, 글자색으로 쓰지 않는다 */
+  --fg: #17171C;
+  --muted: #6E6E78;
+  --line: #E6E6EA;
+  --bg: #FFFFFF;
+  --panel: #F6F6F8;
+  --code-bg: #17171C;
+  --code-fg: #F2F2F4;
+  --font-kr: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-en: "Space Grotesk", var(--font-kr);
+  --mono: "SFMono-Regular", Consolas, "D2Coding", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-kr);
+  background: var(--bg);
+  color: var(--fg);
+  /* 폰에서 읽는 글이라 본문을 크게 잡는다. 16px 밑으로 내려가면 인앱 브라우저가 확대한다 */
+  font-size: 17px;
+  line-height: 1.72;
+  word-break: keep-all;       /* 한국어는 단어 중간에서 끊기면 읽기가 나빠진다 */
+  overflow-wrap: anywhere;    /* 단 긴 URL은 넘치느니 끊는다 */
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 20px 72px;
+}
+
+/* ── 머리 ─────────────────────────────────────────────── */
+
+.top {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+
+.wordmark {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.wordmark .hi { color: var(--accent); }
+
+.kicker {
+  margin-top: 20px;
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 8px 0 12px;
+  font-size: 30px;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.outcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 출처 줄. 남의 결과물이라 맨 위에 둔다 — 아래에 묻으면 안 읽힌다 */
+.credit-line {
+  margin-top: 18px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.credit-line a { color: var(--accent); }
+
+/* ── 섹션 ─────────────────────────────────────────────── */
+
+section { margin-bottom: 40px; }
+
+h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid var(--accent);
+  line-height: 1.35;
+}
+
+/* ── 준비물 ───────────────────────────────────────────── */
+
+.needs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.needs li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+}
+.needs li:last-child { border-bottom: 0; }
+/* 체크박스처럼 보이는 네모. 실제로 누를 수 있는 건 아니고 "확인할 목록"이라는 표시다 */
+.needs li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}
+
+/* ── 단계 ─────────────────────────────────────────────── */
+
+.step {
+  position: relative;
+  padding-left: 46px;
+  margin-bottom: 30px;
+}
+
+/*
+ * 번호 배지에 더듬이를 얹는다. 카드뉴스의 단계 배지와 같은 모양이라
+ * 정리본이 같은 계정에서 온 것임을 글자 없이 알린다.
+ */
+.step .no {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step .no::before,
+.step .no::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 2px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.step .no::before { left: 9px; transform: rotate(-22deg); }
+.step .no::after { right: 9px; transform: rotate(22deg); }
+
+.step h3 {
+  margin: 2px 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.step p { margin: 0; }
+
+/* ── 복사할 것 ─────────────────────────────────────────── */
+
+/*
+ * 프롬프트·명령어는 **요약하지 않고 전문**이 들어간다.
+ * 초보는 요약을 원래 형태로 되돌리지 못한다.
+ */
+.copy {
+  margin: 14px 0 0;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  /* 긴 명령어가 가로로 넘치면 폰에서 페이지 전체가 옆으로 스크롤된다 */
+  overflow-x: auto;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 7px 13px;
+  font-family: var(--font-kr);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copy-btn.done { border-color: var(--accent); color: var(--accent); }
+
+/* ── 출처 등급 ─────────────────────────────────────────── */
+
+/*
+ * post(원본에서 확인됨)에는 배지를 안 단다. 그게 기본이어야 하기 때문이다.
+ * docs·general만 표시한다 — "이건 원본에 없던 값"이라는 경고가 목적이다.
+ * 배지를 다 달면 아무것도 안 단 것과 같아진다.
+ */
+.tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+.tag.docs { background: var(--panel); color: var(--muted); }
+.tag.general {
+  background: rgba(252, 192, 36, 0.22);
+  color: #8A6200;
+}
+
+/* ── 막히는 곳 ─────────────────────────────────────────── */
+
+.pit {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.pit .sym {
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.pit .fix { margin: 0; color: #33333B; }
+
+/* ── 목록 ─────────────────────────────────────────────── */
+
+.plain { margin: 0; padding-left: 20px; }
+.plain li { margin-bottom: 8px; }
+
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin-bottom: 10px; }
+.links a { color: var(--accent); font-weight: 600; }
+
+/* ── 마무리 ───────────────────────────────────────────── */
+
+.end {
+  margin-top: 48px;
+  padding: 24px 20px;
+  background: var(--panel);
+  border-radius: 14px;
+  text-align: center;
+}
+.end p { margin: 0 0 6px; }
+.end .handle {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.disclaimer {
+  margin-top: 28px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #F2F2F4;
+    --muted: #9A9AA4;
+    --line: #2A2A33;
+    --bg: #101014;
+    --panel: #1A1A21;
+    --code-bg: #05050A;
+  }
+  .pit .fix { color: #C9C9D2; }
+  .tag.general { background: rgba(252, 192, 36, 0.16); color: var(--accent-2); }
+}
+
+/*
+ * 단계 확인 줄. "이렇게 되면 성공"을 알려준다.
+ * 따라 하는 사람이 제대로 가고 있는지 여기서 확인한다 — 눈에 띄게, 그러나 본문보다 작게.
+ */
+.check {
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(226, 101, 60, 0.08);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 프롬프트 모음 (prompt-pack) ───────────────────────── */
+
+.item {
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+.item:last-child { border-bottom: 0; }
+.item h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+/* 정리본 그림·영상 (10/13) — 폰 폭에 맞춰 꽉, 둥근 모서리 */
+.media { margin: 14px 0 4px; }
+.media img, .media video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.media figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.top .media { margin-top: 22px; }
+.step .media { margin-left: -46px; }
+.media video { max-height: 560px; width: auto; max-width: 100%; margin: 0 auto; }
+</style></head><body><div class="wrap">
+<div class="top"><div class="wordmark">AI <span class="hi">ANT</span>ENNA</div><div class="kicker">정리본</div><h1>papercraft — 말 한 줄로 종이 팝업북 웹페이지</h1><p class="outcome">클로드 코드에 붙이는 무료 스킬(MIT)이에요. 웹페이지·게임·애니메이션을 종이를 오려 세운 팝업북처럼 지어요 — 종이 결 있는 조각, 잘린 테두리, 그 세상 색을 따라가는 그림자, 위아래가 흐린 미니어처 렌즈, 경첩처럼 접혀 일어서는 움직임. 실제로 나온 브라우저 종이 게임에서 뽑은 규칙이 들어 있어요. 아래는 같은 요청('붕어빵 가게 홈페이지를 종이 팝업북처럼')을 스킬 없이 / 스킬로 직접 돌린 결과예요. 가게는 시연용으로 지어낸 곳이에요.</p><figure class="media"><img src="media/compare.jpg" loading="lazy" alt=""><figcaption>같은 요청, 위는 스킬 없이 · 아래는 papercraft 스킬(둘 다 직접 실행, 첫 시도 그대로)</figcaption></figure></div>
+<section><h2>준비물</h2><ul class="needs"><li>Claude Code(코덱스·커서·제미나이 CLI 등 에이전트 스킬을 쓰는 도구도 돼요)</li><li>크롬 — 결과를 열어 보고 영상을 뽑을 때</li><li>영상·자체 점검까지 하려면 파이썬3 + pip install playwright numpy pillow (없으면 클로드가 설치하자고 해요)</li></ul></section>
+<section><h2>사용 방법</h2><div class="step"><div class="no">1</div><h3>① 설치(한 줄)</h3><p>터미널에서 npx skills add xikhar/papercraft (1). 또는 저장소의 skills/papercraft 폴더를 프로젝트의 .claude/skills 안에 복사해요. 클로드 코드를 다시 열면 /papercraft 가 보여요.</p><figure class="media"><img src="media/1-install.png" loading="lazy" alt=""><figcaption>1 — 설치 한 줄(README)</figcaption></figure></div><div class="step"><div class="no">2</div><h3>② 요청 한 줄 — 무엇을, 어떤 분위기로</h3><p>/papercraft 뒤에 만들 것(가게 홈페이지·청첩장·포트폴리오·게임), 장소와 계절·시간, 꼭 넣을 칸을 적어요. 사진이나 무드보드를 같이 주면 그 색과 분위기를 종이로 다시 지어요. 이미지 생성은 시킬 때만 쓰고, 나머지는 전부 코드로 그려요.</p><figure class="media"><img src="media/2-ask.png" loading="lazy" alt=""><figcaption>1 — 웹페이지 요청 예(README), 2 — 세로 릴스 영상 요청 예</figcaption></figure></div><div class="step"><div class="no">3</div><h3>③ 기다리기 — 만들고, 재 보고, 고쳐요</h3><p>시연에선 약 50분 걸렸어요(스킬 없이는 약 14분). 클로드가 규칙 문서를 읽고 조각을 그린 뒤, 화면을 찍어 measure.py로 재고(초점 띠·빈 바닥·색·흐림 등 20가지), 걸린 곳을 고쳐요. 시연에선 '가운데가 비어 보인다'가 걸려서 조각을 더 넣었어요.</p></div><div class="step"><div class="no">4</div><h3>④ 열어 보기</h3><p>결과 폴더에서 python -m http.server 를 실행하고 크롬으로 http://localhost:8000 을 열어요. 파일을 더블클릭하면 브라우저가 스크립트를 막아 빈 화면이 나와요. 처음 뜰 때 종이 조각을 그리느라 몇 초~25초 걸려요.</p><figure class="media"><video src="media/b-rise.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>처음 열면 — 엎드린 종이 조각이 접혀 일어서요(직접 실행)</figcaption></figure></div><div class="step"><div class="no">5</div><h3>⑤ 내리면 칸마다 일어서요</h3><p>칸이 화면에 들어오면 먼 조각부터 경첩처럼 접혀 일어서고, 화면 밖으로 나가면 다시 접혀요. 요청에 '내리면 칸마다 종이 조각이 일어서게'를 넣었어요.</p><figure class="media"><video src="media/b-scroll.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>메뉴 칸 — 메뉴 카드가 일어서요(직접 실행)</figcaption></figure></div><div class="step"><div class="no">6</div><h3>⑥ 낮·밤 바꾸기</h3><p>요청에 '낮·밤 바꾸기 버튼'을 넣으면 오른쪽 위 스위치가 생겨요. 밤엔 가게 전구·창문·가로등이 켜지고 낙엽 대신 종이 눈이 내려요.</p><figure class="media"><video src="media/b-night.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>낮 → 밤(직접 실행)</figcaption></figure><figure class="media"><img src="media/phone-menu-night.png" loading="lazy" alt=""><figcaption>폰 화면 — 밤의 메뉴 칸(클로드가 스스로 찍은 확인 화면)</figcaption></figure></div><div class="step"><div class="no">7</div><h3>⑦ 세로 릴스 영상으로 뽑기</h3><p>'이 페이지가 일어서는 모습을 세로 9:16 8초 영상으로 뽑아 줘'라고 하면 스킬의 capture.py로 1080×1920 MP4를 뽑아요(고정 시계로 한 장씩 찍어서 끊김이 없어요). 직접 할 땐: python .claude/skills/papercraft/scripts/capture.py . reel:video=8,30 --size reel --page index.html</p><figure class="media"><video src="media/b-reel-phone.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>클로드가 뽑은 세로 영상 그대로(줄임)</figcaption></figure></div><div class="step"><div class="no">8</div><h3>⑧ 게임도 돼요</h3><p>'방향키로 걷는 캐릭터' 같은 요청이면 three.js 종이 세상에 걷는 인형을 넣어요. 스킬에 든 기본 템플릿(시골 마을)을 열어 보면 감이 와요: npx serve .claude/skills/papercraft/assets 뒤 /templates/popup-3d/ 를 열고 방향키나 WASD.</p><figure class="media"><video src="media/template-game.mp4" autoplay muted loop playsinline preload="metadata"></video><figcaption>스킬 기본 템플릿을 capture.py로 걸려 본 화면</figcaption></figure></div><div class="step"><div class="no">9</div><h3>⑨ 주문 버튼 같은 실제 기능</h3><p>시연 페이지는 주문하기를 누르면 종이 주문서가 아래서 올라오고, 수량을 고르면 합계가 계산되고, 문자 앱에 주문 내용이 채워져요. 서버가 없어서 실제 전송은 손님이 문자를 보내는 방식이에요. 주소·전화번호·소개 문구는 클로드가 임시로 지어 넣으니 꼭 바꿔요.</p><figure class="media"><img src="media/phone-order.png" loading="lazy" alt=""><figcaption>폰 화면 — 주문서(클로드가 스스로 찍은 확인 화면)</figcaption></figure></div></section>
+<section><h2>복사해서 쓰기</h2><div class="item"><h3>설치</h3><p>터미널</p><pre class="copy">npx skills add xikhar/papercraft</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>시연에 쓴 요청 그대로</h3><p>클로드 코드, 빈 폴더에서</p><pre class="copy">/papercraft 동네 붕어빵 가게 '골목붕어빵' 홈페이지를 종이 팝업북처럼 만들어 줘. 가게 소개, 메뉴(팥·슈크림·피자 붕어빵), 오시는 길, 주문 버튼까지 한 장. 화면을 내리면 칸마다 종이 조각(간판·메뉴 카드·나무·가게 건물)이 접혀 일어서게 하고, 낮·밤 바꾸기 버튼도 넣어 줘. 이 폴더 안에 만들고 시작 페이지는 index.html. 다 되면 이 페이지가 일어서는 모습을 세로 9:16 8초 영상 reel.mp4로도 뽑아 줘. 묻지 말고 끝까지 해 줘.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>내 가게·포트폴리오로</h3><p>괄호만 바꿔요</p><pre class="copy">/papercraft (내 가게·내 이름) 홈페이지를 종이 팝업북처럼 만들어 줘. (계절·시간·분위기). 칸은 (소개·메뉴·오시는 길·연락처). 내리면 칸마다 종이 조각이 접혀 일어서게. 시작 페이지는 index.html.</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>사진으로 분위기 맞추기</h3><p>사진을 폴더에 넣고</p><pre class="copy">/papercraft 이 폴더의 사진들 색과 분위기로, (만들 것)을 종이 팝업북처럼 만들어 줘</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>세로 릴스 영상</h3><p>다 만든 뒤</p><pre class="copy">이 페이지가 일어서는 모습을 세로 9:16 8초 영상 reel.mp4로 뽑아 줘</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>열어 보기</h3><p>결과 폴더에서</p><pre class="copy">python -m http.server</pre><button class="copy-btn" type="button">복사하기</button></div><div class="item"><h3>받는 곳</h3><p>설치·문서</p><pre class="copy">https://github.com/xikhar/papercraft</pre><button class="copy-btn" type="button">복사하기</button></div></section>
+<section><h2>막힐 때</h2><ul class="plain"><li><strong>index.html을 더블클릭했더니 빈 화면이에요</strong><br>브라우저가 파일로 연 페이지의 스크립트(모듈)를 막아서 그래요. 그 폴더에서 python -m http.server 를 실행하고 http://localhost:8000 으로 열어요.</li><li><strong>처음 뜰 때 한참 비어 있어요</strong><br>종이 조각 무늬를 그 자리에서 그리느라 몇 초~25초 걸려요. 다 그려진 칸부터 나타나요.</li><li><strong>영상 뽑기에서 playwright가 없다고 나와요</strong><br>pip install playwright numpy pillow 뒤 다시 시켜요. 크롬이 깔려 있으면 브라우저를 따로 받지 않아도 돼요.</li><li><strong>폰에서 글씨가 작아요</strong><br>'폰에서 글씨를 크게, 메뉴 가격은 아래 종이 패널에도' 처럼 한 줄 더 시켜요. 시연에서도 클로드가 폰용 가격 목록을 따로 붙였어요.</li></ul></section>
+<section><h2>꼭 알고 쓰기</h2><ul class="plain"><li>오래 걸리고 토큰을 많이 써요 — 시연에서 스킬 쪽은 약 50분, 스킬 없이는 약 14분.</li><li>스킬 없이도 '팝업북처럼'은 흉내 내요(펼쳐지고 일어서고 낮밤도 돼요). 차이는 종이 결·잘린 테두리·색 있는 그림자·미니어처 렌즈 같은 '진짜 종이' 느낌이에요.</li><li>실제 접는 도안·인쇄용 전개도는 만들지 않아요(스킬 설명에 'Not for' 로 적혀 있어요).</li><li>라이선스 MIT — 무료로 써도 되고 고쳐 써도 돼요.</li><li>이 정리는 시연용으로 지어낸 가게(골목붕어빵)에 직접 돌린 화면과 공식 README 기준이에요.</li></ul></section>
+<div class="end"><p>도움이 되셨다면</p><p class="handle">@ai.antenna.kr</p><p>에서 바로 쓰는 AI 활용법을 계속 올립니다.</p></div>
+</div><script>document.querySelectorAll(".copy-btn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var pre = btn.previousElementSibling;
+    if (!pre) return;
+    var text = pre.innerText;
+    var done = function () {
+      btn.textContent = "복사했습니다";
+      btn.classList.add("done");
+      setTimeout(function () {
+        btn.textContent = "복사하기";
+        btn.classList.remove("done");
+      }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { select(pre); });
+    } else {
+      select(pre);
+    }
+  });
+});
+function select(pre) {
+  var r = document.createRange();
+  r.selectNodeContents(pre);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(r);
+}</script></body></html>
